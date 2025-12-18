@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Relations\GalleryRelation;
 class Gallery extends Model
 {
     use HasFactory;
-
+    use GalleryRelation;
     protected $table = 'gallery';
 
     protected $fillable = [
@@ -17,8 +17,5 @@ class Gallery extends Model
         'uploaded_by',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'uploaded_by');
-    }
+ 
 }

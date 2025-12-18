@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Menu extends Model
+use App\Relations\MenusRelations;
+class Menus extends Model
 {
     use HasFactory;
+    use MenusRelation;
 
     protected $table = 'menus';
 

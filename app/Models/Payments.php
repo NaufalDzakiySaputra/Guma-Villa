@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Relations\PaymentsRelation;
 class Payment extends Model
 {
     use HasFactory;
-
+    use PaymentsRelation;
     protected $table = 'payments';
 
     protected $fillable = [
@@ -25,8 +25,5 @@ class Payment extends Model
         'amount' => 'decimal:2',
     ];
 
-    public function reservation()
-    {
-        return $this->belongsTo(Reservation::class, 'reservation_id');
-    }
+  
 }

@@ -13,6 +13,7 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nama'); // nama paket
             $table->text('description')->nullable(); // deskripsi paket
             $table->decimal('price', 12, 2); // harga paket

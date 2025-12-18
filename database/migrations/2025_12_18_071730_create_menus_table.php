@@ -14,6 +14,7 @@ return new class extends Migration
   public function up()
 {
     Schema::create('menus', function (Blueprint $table) {
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
         $table->id();
         $table->string('name');
         $table->text('description')->nullable();
