@@ -3,6 +3,7 @@ use App\Models\Reservations;
 use App\Models\Menus;
 use App\Models\gallery;
 use App\Models\Packages;
+USE App\Models\News;
 trait UserRelation
 {
 public function Reservations()
@@ -21,6 +22,11 @@ public function Packages()
 {
     return $this->hasManyThrough(Packages::class, 'user_id', 'id', 'id', 'package_id');
 }
+public function News()
+{
+    return $this->hasMany(\App\Models\News::class);
+}
+
 }
 
 ?>
