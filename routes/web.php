@@ -1,18 +1,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PackagesController;
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\ReservationsController;
+use App\Http\Controllers\MenusController;
+use App\Http\Controllers\GalleryController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('news', NewsController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('packages', PackagesController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('payments', PaymentsController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('reservations', ReservationsController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('menus', MenusController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('galleries', GalleryController::class);
 });

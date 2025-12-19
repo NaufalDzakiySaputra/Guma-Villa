@@ -12,6 +12,7 @@ class PaymentsController extends Controller
         $payments = Payment::with('user', 'reservation')->latest()->get();
         return view('payments.index', compact('payments'));
     }
+    
 
     public function update(Request $request, Payment $payment)
     {
