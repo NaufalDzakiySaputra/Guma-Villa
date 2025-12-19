@@ -38,6 +38,7 @@ class GalleryController extends Controller
         return view('galleries.edit', compact('gallery'));
     }
 
+    
     // Update foto
     public function update(Request $request, Gallery $gallery)
     {
