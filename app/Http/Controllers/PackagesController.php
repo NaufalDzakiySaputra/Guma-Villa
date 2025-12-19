@@ -10,7 +10,7 @@ class PackagesController extends Controller
     // Tampilkan semua package
     public function index()
     {
-        $packages = Package::all();
+        $packages = Packages::all();
         return view('packages.index', compact('packages'));
     }
 
@@ -36,13 +36,13 @@ class PackagesController extends Controller
     }
 
     // Form edit package
-    public function edit(Package $package)
+    public function edit(Packages $packages)
     {
         return view('packages.edit', compact('package'));
     }
 
     // Update package
-    public function update(Request $request, Package $package)
+    public function update(Request $request, Packages $packages)
     {
         $validated = $request->validate([
             'nama'         => 'required|string|max:255',
@@ -57,9 +57,9 @@ class PackagesController extends Controller
     }
 
     // Hapus package
-    public function destroy(Package $package)
+    public function destroy(Packages $packages)
     {
-        $package->delete();
+        $packages->delete();
         return redirect()->route('packages.index')->with('success', 'Package berhasil dihapus!');
     }
 }
