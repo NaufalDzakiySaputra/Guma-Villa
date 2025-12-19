@@ -36,13 +36,13 @@ class PackagesController extends Controller
     }
 
     // Form edit package
-    public function edit(Package $package)
+    public function edit(Package $packages)
     {
         return view('packages.edit', compact('package'));
     }
 
     // Update package
-    public function update(Request $request, Package $package)
+    public function update(Request $request, Package $packages)
     {
         $validated = $request->validate([
             'nama'         => 'required|string|max:255',
@@ -51,15 +51,17 @@ class PackagesController extends Controller
             'service_type' => 'required|in:villa,wisata,nikah,mice',
         ]);
 
-        $package->update($validated);
+        $packages->update($validated);
 
         return redirect()->route('packages.index')->with('success', 'Package berhasil diupdate!');
+
+        
     }
 
     // Hapus package
-    public function destroy(Package $package)
+    public function destroy(Package $packages)
     {
-        $package->delete();
+        $packages->delete();
         return redirect()->route('packages.index')->with('success', 'Package berhasil dihapus!');
     }
 }
