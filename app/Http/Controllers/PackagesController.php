@@ -8,27 +8,27 @@ use Illuminate\Support\Facades\Storage;
 
 class PackagesController extends Controller
 {
-    // Menampilkan semua data paket
+    // Tampilkan semua paket
     public function index()
     {
         $packages = Packages::with('user')->latest()->get();
         return view('packages.index', compact('packages'));
     }
 
-    // Menampilkan form tambah paket
+    // Tampilkan form tambah paket
     public function create()
     {
         return view('packages.create');
     }
 
-    // Menyimpan data paket baru
+    // Simpan paket baru
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nama'         => 'required|string|max:255',
-            'description'  => 'required|string',
+            'description'  => 'nullable|string',
             'price'        => 'required|numeric|min:0',
-            'service_type' => 'required|string|max:100',
+            'service_type' => 'required|in:villa,wisata,nikah,mice',
             'image'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -43,25 +43,24 @@ class PackagesController extends Controller
         return redirect()->route('packages.index')->with('success', 'Paket berhasil ditambahkan!');
     }
 
-    // Menampilkan form edit paket
+    // Tampilkan form edit paket
     public function edit(Packages $packages)
     {
         return view('packages.edit', compact('packages'));
     }
 
-    // Menyimpan perubahan data paket
+    // Update data paket
     public function update(Request $request, Packages $packages)
     {
         $validated = $request->validate([
             'nama'         => 'required|string|max:255',
-            'description'  => 'required|string',
+            'description'  => 'nullable|string',
             'price'        => 'required|numeric|min:0',
-            'service_type' => 'required|string|max:100',
+            'service_type' => 'required|in:villa,wisata,nikah,mice',
             'image'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
             if ($packages->image_path) {
                 Storage::disk('public')->delete($packages->image_path);
             }
@@ -74,7 +73,7 @@ class PackagesController extends Controller
         return redirect()->route('packages.index')->with('success', 'Paket berhasil diperbarui!');
     }
 
-    // Menghapus data paket
+    // Hapus paket
     public function destroy(Packages $packages)
     {
         if ($packages->image_path) {
