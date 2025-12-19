@@ -37,13 +37,13 @@ class MenusController extends Controller
     }
 
     // Form edit menu
-    public function edit(Menu $menu)
+    public function edit(Menu $menus)
     {
         return view('menus.edit', compact('menu'));
     }
 
     // Update menu
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, Menu $menus)
     {
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
@@ -53,15 +53,15 @@ class MenusController extends Controller
             'image_path'  => 'nullable|string',
         ]);
 
-        $menu->update($validated);
+        $menus->update($validated);
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil diupdate!');
     }
 
     // Hapus menu
-    public function destroy(Menu $menu)
+    public function destroy(Menu $menus)
     {
-        $menu->delete();
+        $menus->delete();
         return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus!');
     }
 }
