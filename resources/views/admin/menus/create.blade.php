@@ -1,45 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Tambah Menu</title>
+    <link rel="stylesheet" href="{{ asset('css/menus.css') }}">
 </head>
 <body>
-
-<h3>Tambah Menu</h3>
-
-<form action="{{ route('menus.store') }}"
-      method="POST"
-      enctype="multipart/form-data">
-    @csrf
-
-    <p>
-        Nama Menu<br>
-        <input type="text" name="name" required>
-    </p>
-
-    <p>
-        Deskripsi<br>
-        <textarea name="description"></textarea>
-    </p>
-
-    <p>
-        Harga<br>
-        <input type="number" name="price" required>
-    </p>
-
-    <p>
-        Diskon (%)<br>
-        <input type="number" name="discount">
-    </p>
-
-    <p>
-        Gambar<br>
-        <input type="file" name="image">
-    </p>
-
-    <button type="submit">Simpan</button>
-    <a href="{{ route('menus.index') }}">Kembali</a>
-</form>
-
+<div class="container">
+    <h4>Tambah Menu</h4>
+    <form action="{{ route('menus.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group">
+            <label>Nama Menu</label>
+            <input type="text" name="name" class="input-field" required>
+        </div>
+        <div class="form-group">
+            <label>Deskripsi</label>
+            <textarea name="description" class="input-field" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Harga</label>
+            <input type="number" name="price" class="input-field" required>
+        </div>
+        <div class="form-group">
+            <label>Diskon (%)</label>
+            <input type="number" name="discount" class="input-field">
+        </div>
+        <div class="form-group">
+            <label>Gambar</label>
+            <input type="file" name="image" class="input-field">
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="{{ route('menus.index') }}" class="btn btn-secondary">Kembali</a>
+    </form>
+</div>
 </body>
 </html>
