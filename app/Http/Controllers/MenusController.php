@@ -11,13 +11,13 @@ class MenusController extends Controller
     public function index()
     {
         $menus = Menus::all();
-        return view('menus.index', compact('menus'));
+        return view('admin.menus.index', compact('menus'));
     }
 
     // Form tambah menu
     public function create()
     {
-        return view('menus.create');
+        return view('admin.menus.create');
     }
 
     // Simpan menu baru
@@ -31,19 +31,21 @@ class MenusController extends Controller
             'image_path'  => 'nullable|string',
         ]);
 
-        Menu::create($validated);
+        Menus::create($validated);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan!');
+        return redirect()
+            ->route('menus.index')
+            ->with('success', 'Menu berhasil ditambahkan!');
     }
 
     // Form edit menu
-    public function edit(Menu $menus)
+    public function edit(Menus $menu)
     {
-        return view('menus.edit', compact('menu'));
+        return view('admin.menus.edit', compact('menu'));
     }
 
     // Update menu
-    public function update(Request $request, Menu $menus)
+    public function update(Request $request, Menus $menu)
     {
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
@@ -53,15 +55,20 @@ class MenusController extends Controller
             'image_path'  => 'nullable|string',
         ]);
 
-        $menus->update($validated);
+        $menu->update($validated);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil diupdate!');
+        return redirect()
+            ->route('menus.index')
+            ->with('success', 'Menu berhasil diupdate!');
     }
 
     // Hapus menu
-    public function destroy(Menu $menus)
+    public function destroy(Menus $menu)
     {
-        $menus->delete();
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus!');
+        $menu->delete();
+
+        return redirect()
+            ->route('menus.index')
+            ->with('success', 'Menu berhasil dihapus!');
     }
 }

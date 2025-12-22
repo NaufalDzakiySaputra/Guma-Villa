@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Menus extends Model
 {
     use HasFactory;
-    use MenusRelation;
+    //use MenusRelation;
 
     protected $table = 'menus';
 
