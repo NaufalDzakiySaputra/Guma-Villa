@@ -15,5 +15,7 @@ class Packages extends Model
         'description',
         'price',
         'service_type',
+        'image_path',
+        'user-id',
     ];
 }

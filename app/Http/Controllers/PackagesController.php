@@ -15,12 +15,11 @@ class PackagesController extends Controller
         return view('admin.packages.index', compact('packages'));
     }
 
-    // Tampilkan form tambah paket
+    // Form tambah paket
     public function create()
     {
         return view('admin.packages.create');
     }
-
 
     // Simpan paket baru
     public function store(Request $request)
@@ -41,18 +40,18 @@ class PackagesController extends Controller
 
         Packages::create($validated);
 
-        return redirect()->route('packages.index')->with('success', 'Paket berhasil ditambahkan!');
+        return redirect()->route('packages.index')
+            ->with('success', 'Paket berhasil ditambahkan');
     }
 
-    // Tampilkan form edit paket
+    // Form edit paket
     public function edit(Packages $package)
     {
         return view('admin.packages.edit', compact('package'));
     }
 
-
-    // Update data paket
-    public function update(Request $request, Packages $packages)
+    // Update paket
+    public function update(Request $request, Packages $package)
     {
         $validated = $request->validate([
             'nama'         => 'required|string|max:255',
@@ -63,16 +62,18 @@ class PackagesController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($packages->image_path) {
-                Storage::disk('public')->delete($packages->image_path);
+            if ($package->image_path) {
+                Storage::disk('public')->delete($package->image_path);
             }
 
-            $validated['image_path'] = $request->file('image')->store('packages', 'public');
+            $validated['image_path'] =
+                $request->file('image')->store('packages', 'public');
         }
 
-        $packages->update($validated);
+        $package->update($validated);
 
-        return redirect()->route('packages.index')->with('success', 'Paket berhasil diperbarui!');
+        return redirect()->route('packages.index')
+            ->with('success', 'Paket berhasil diperbarui');
     }
 
     // Hapus paket
@@ -84,6 +85,7 @@ class PackagesController extends Controller
 
         $package->delete();
 
-        return redirect()->route('packages.index')->with('success', 'Paket berhasil dihapus!');
+        return redirect()->route('packages.index')
+            ->with('success', 'Paket berhasil dihapus');
     }
 }

@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Tambah Package</title>
+    <link rel="stylesheet" href="{{ asset('css/packages.css') }}">
 </head>
 <body>
 

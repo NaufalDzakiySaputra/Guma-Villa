@@ -2,15 +2,15 @@
 <html>
 <head>
     <title>Edit Package</title>
+    <link rel="stylesheet" href="{{ asset('css/packages.css') }}">
 </head>
 <body>
 
 <h1>Edit Package</h1>
 
-<form action="{{ route('packages.update', $package->id) }}" 
-      method="POST" 
+<form action="{{ route('packages.update', $package->id) }}"
+      method="POST"
       enctype="multipart/form-data">
-
     @csrf
     @method('PUT')
 
@@ -31,7 +31,12 @@
 
     <p>
         Service Type:<br>
-        <input type="text" name="service_type" value="{{ $package->service_type }}">
+        <select name="service_type">
+            <option value="villa"  {{ $package->service_type=='villa'?'selected':'' }}>Villa</option>
+            <option value="wisata" {{ $package->service_type=='wisata'?'selected':'' }}>Wisata</option>
+            <option value="nikah"  {{ $package->service_type=='nikah'?'selected':'' }}>Nikah</option>
+            <option value="mice"   {{ $package->service_type=='mice'?'selected':'' }}>MICE</option>
+        </select>
     </p>
 
     <p>
