@@ -28,9 +28,12 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('reservations', ReservationsController::class);
 });
-Route::middleware(['auth'])->group(function () {
+ {
     Route::resource('menus', MenusController::class);
-});
+};
+
+    Route::resource('menus', MenusController::class);
+
 Route::middleware(['auth'])->group(function () {
     Route::resource('galleries', GalleryController::class);
 });
