@@ -34,6 +34,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('menus', MenusController::class);
 
-Route::middleware(['auth'])->group(function () {
-    Route::resource('galleries', GalleryController::class);
-});
+{
+    Route::resource('gallery', GalleryController::class);
+};

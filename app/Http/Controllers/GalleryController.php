@@ -4,57 +4,76 @@ namespace App\Http\Controllers;
 
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
-    // Tampilkan semua foto
     public function index()
     {
-        $galleries = Gallery::all();
-        return view('galleries.index', compact('galleries'));
+        $galleries = Gallery::latest()->get();
+        return view('admin.gallery.index', compact('galleries'));
     }
 
-    // Form upload foto
     public function create()
     {
-        return view('galleries.create');
+        return view('admin.gallery.create');
     }
 
-    // Simpan foto baru
     public function store(Request $request)
     {
-        Gallery::create($request->validate([
-            'title' => 'required|string|max:255',
-            'image_path' => 'required|string',
-            'uploaded_by' => 'required|exists:users,id',
-        ]));
+        $validated = $request->validate([
+            'title' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-        return redirect()->route('galleries.index')->with('success', 'Foto berhasil ditambahkan!');
+        // upload file
+        $validated['image_path'] = $request->file('image')
+            ->store('gallery', 'public');
+
+        // sementara null (karena tanpa auth)
+        $validated['uploaded_by'] = null;
+
+        Gallery::create($validated);
+
+        return redirect()
+            ->route('gallery.index')
+            ->with('success', 'Gallery berhasil ditambahkan');
     }
 
-    // Form edit foto
     public function edit(Gallery $gallery)
     {
-        return view('galleries.edit', compact('gallery'));
+        return view('admin.gallery.edit', compact('gallery'));
     }
 
-    
-    // Update foto
     public function update(Request $request, Gallery $gallery)
     {
-        $gallery->update($request->validate([
-            'title' => 'required|string|max:255',
-            'image_path' => 'required|string',
-            'uploaded_by' => 'required|exists:users,id',
-        ]));
+        $validated = $request->validate([
+            'title' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-        return redirect()->route('galleries.index')->with('success', 'Foto berhasil diupdate!');
+        if ($request->hasFile('image')) {
+            // hapus foto lama
+            Storage::disk('public')->delete($gallery->image_path);
+
+            $validated['image_path'] = $request->file('image')
+                ->store('gallery', 'public');
+        }
+
+        $gallery->update($validated);
+
+        return redirect()
+            ->route('gallery.index')
+            ->with('success', 'Gallery berhasil diupdate');
     }
 
-    // Hapus foto
     public function destroy(Gallery $gallery)
     {
+        Storage::disk('public')->delete($gallery->image_path);
         $gallery->delete();
-        return redirect()->route('galleries.index')->with('success', 'Foto berhasil dihapus!');
+
+        return redirect()
+            ->route('gallery.index')
+            ->with('success', 'Gallery berhasil dihapus');
     }
 }

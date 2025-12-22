@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Relations\GalleryRelation;
+
 class Gallery extends Model
 {
-    use HasFactory;
-    use GalleryRelation;
+    use HasFactory, GalleryRelation;
+
     protected $table = 'gallery';
 
     protected $fillable = [
@@ -16,6 +17,4 @@ class Gallery extends Model
         'image_path',
         'uploaded_by',
     ];
-
- 
 }
