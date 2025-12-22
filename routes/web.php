@@ -15,10 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
+ {
     Route::resource('news', NewsController::class);
-});
+};
  {
     Route::resource('packages', PackagesController::class);
     };

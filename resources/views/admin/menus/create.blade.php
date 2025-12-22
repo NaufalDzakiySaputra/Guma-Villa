@@ -1,50 +1,38 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container mt-4">
-    <h4 class="mb-3">Tambah Menu</h4>
-
-    <form action="{{ route('menus.store') }}" method="POST">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Menu</title>
+    <link rel="stylesheet" href="{{ asset('css/menus.css') }}">
+</head>
+<body>
+<div class="container">
+    <h4>Tambah Menu</h4>
+    <form action="{{ route('menus.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-
-        <div class="mb-3">
+        <div class="form-group">
             <label>Nama Menu</label>
-            <input type="text" name="name"
-                   class="form-control"
-                   value="{{ old('name') }}" required>
+            <input type="text" name="name" class="input-field" required>
         </div>
-
-        <div class="mb-3">
+        <div class="form-group">
             <label>Deskripsi</label>
-            <textarea name="description"
-                      class="form-control">{{ old('description') }}</textarea>
+            <textarea name="description" class="input-field" rows="4"></textarea>
         </div>
-
-        <div class="mb-3">
+        <div class="form-group">
             <label>Harga</label>
-            <input type="number" name="price"
-                   class="form-control"
-                   value="{{ old('price') }}" required>
+            <input type="number" name="price" class="input-field" required>
         </div>
-
-        <div class="mb-3">
+        <div class="form-group">
             <label>Diskon (%)</label>
-            <input type="number" name="discount"
-                   class="form-control"
-                   value="{{ old('discount') }}">
+            <input type="number" name="discount" class="input-field">
         </div>
-
-        <div class="mb-3">
-            <label>Image Path</label>
-            <input type="text" name="image_path"
-                   class="form-control"
-                   value="{{ old('image_path') }}">
+        <div class="form-group">
+            <label>Gambar</label>
+            <input type="file" name="image" class="input-field">
         </div>
-
-        <button class="btn btn-primary">Simpan</button>
-        <a href="{{ route('menus.index') }}" class="btn btn-secondary">
-            Kembali
-        </a>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="{{ route('menus.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
-@endsection
+</body>
+</html>

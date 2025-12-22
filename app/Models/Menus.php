@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use App\Relations\MenusRelations;
+use App\Relations\MenusRelation; // Import the MenusRelation trait
+
 class Menus extends Model
 {
-    use HasFactory;
-    //use MenusRelation;
+    use HasFactory, MenusRelation; // 
 
     protected $table = 'menus';
 

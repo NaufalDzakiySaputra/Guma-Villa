@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menus;
 use Illuminate\Http\Request;
 
+
 class MenusController extends Controller
 {
     // Tampilkan semua menu
@@ -28,8 +29,13 @@ class MenusController extends Controller
             'description' => 'nullable|string',
             'price'       => 'required|numeric',
             'discount'    => 'nullable|numeric',
-            'image_path'  => 'nullable|string',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('menus', 'public');
+            $validated['image_path'] = 'storage/' . $path;
+        }
 
         Menus::create($validated);
 
@@ -52,8 +58,13 @@ class MenusController extends Controller
             'description' => 'nullable|string',
             'price'       => 'required|numeric',
             'discount'    => 'nullable|numeric',
-            'image_path'  => 'nullable|string',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('menus', 'public');
+            $validated['image_path'] = 'storage/' . $path;
+        }
 
         $menu->update($validated);
 
