@@ -1,6 +1,14 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Menu</title>
 
-@section('content')
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
 <div class="container mt-4">
 
     @if(session('success'))
@@ -81,4 +89,6 @@
         @endforelse
     </div>
 </div>
-@endsection
+
+</body>
+</html>
