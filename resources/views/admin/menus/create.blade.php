@@ -1,50 +1,45 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Menu</title>
+</head>
+<body>
 
-@section('content')
-<div class="container mt-4">
-    <h4 class="mb-3">Tambah Menu</h4>
+<h3>Tambah Menu</h3>
 
-    <form action="{{ route('menus.store') }}" method="POST">
-        @csrf
+<form action="{{ route('menus.store') }}"
+      method="POST"
+      enctype="multipart/form-data">
+    @csrf
 
-        <div class="mb-3">
-            <label>Nama Menu</label>
-            <input type="text" name="name"
-                   class="form-control"
-                   value="{{ old('name') }}" required>
-        </div>
+    <p>
+        Nama Menu<br>
+        <input type="text" name="name" required>
+    </p>
 
-        <div class="mb-3">
-            <label>Deskripsi</label>
-            <textarea name="description"
-                      class="form-control">{{ old('description') }}</textarea>
-        </div>
+    <p>
+        Deskripsi<br>
+        <textarea name="description"></textarea>
+    </p>
 
-        <div class="mb-3">
-            <label>Harga</label>
-            <input type="number" name="price"
-                   class="form-control"
-                   value="{{ old('price') }}" required>
-        </div>
+    <p>
+        Harga<br>
+        <input type="number" name="price" required>
+    </p>
 
-        <div class="mb-3">
-            <label>Diskon (%)</label>
-            <input type="number" name="discount"
-                   class="form-control"
-                   value="{{ old('discount') }}">
-        </div>
+    <p>
+        Diskon (%)<br>
+        <input type="number" name="discount">
+    </p>
 
-        <div class="mb-3">
-            <label>Image Path</label>
-            <input type="text" name="image_path"
-                   class="form-control"
-                   value="{{ old('image_path') }}">
-        </div>
+    <p>
+        Gambar<br>
+        <input type="file" name="image">
+    </p>
 
-        <button class="btn btn-primary">Simpan</button>
-        <a href="{{ route('menus.index') }}" class="btn btn-secondary">
-            Kembali
-        </a>
-    </form>
-</div>
-@endsection
+    <button type="submit">Simpan</button>
+    <a href="{{ route('menus.index') }}">Kembali</a>
+</form>
+
+</body>
+</html>

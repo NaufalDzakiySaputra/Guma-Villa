@@ -1,57 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Edit Package</title>
-    <link rel="stylesheet" href="{{ asset('css/packages.css') }}">
+    <meta charset="UTF-8">
+    <title>Edit Menu</title>
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
 </head>
 <body>
 
-<h1>Edit Package</h1>
+<div class="container">
+    <h3>Edit Menu</h3>
 
-<form action="{{ route('packages.update', $package->id) }}"
-      method="POST"
-      enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
+    <form action="{{ route('menus.update', $menu->id) }}"
+          method="POST"
+          enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
-    <p>
-        Nama:<br>
-        <input type="text" name="nama" value="{{ $package->nama }}">
-    </p>
+        <div class="form-group">
+            <label>Nama Menu</label>
+            <input type="text" name="name"
+                   value="{{ old('name', $menu->name) }}" required>
+        </div>
 
-    <p>
-        Deskripsi:<br>
-        <textarea name="description">{{ $package->description }}</textarea>
-    </p>
+        <div class="form-group">
+            <label>Deskripsi</label>
+            <textarea name="description">{{ old('description', $menu->description) }}</textarea>
+        </div>
 
-    <p>
-        Harga:<br>
-        <input type="number" name="price" value="{{ $package->price }}">
-    </p>
+        <div class="form-group">
+            <label>Harga</label>
+            <input type="number" name="price"
+                   value="{{ old('price', $menu->price) }}" required>
+        </div>
 
-    <p>
-        Service Type:<br>
-        <select name="service_type">
-            <option value="villa"  {{ $package->service_type=='villa'?'selected':'' }}>Villa</option>
-            <option value="wisata" {{ $package->service_type=='wisata'?'selected':'' }}>Wisata</option>
-            <option value="nikah"  {{ $package->service_type=='nikah'?'selected':'' }}>Nikah</option>
-            <option value="mice"   {{ $package->service_type=='mice'?'selected':'' }}>MICE</option>
-        </select>
-    </p>
+        <div class="form-group">
+            <label>Diskon (%)</label>
+            <input type="number" name="discount"
+                   value="{{ old('discount', $menu->discount) }}">
+        </div>
 
-    <p>
-        Gambar:<br>
-        <input type="file" name="image">
-        @if($package->image_path)
-            <br>
-            <img src="{{ asset('storage/'.$package->image_path) }}" width="150">
-        @endif
-    </p>
+        <div class="form-group">
+            <label>Gambar Saat Ini</label><br>
+            @if($menu->image_path)
+                <img src="{{ asset($menu->image_path) }}" width="150">
+            @else
+                <em>Belum ada gambar</em>
+            @endif
+        </div>
 
-    <button type="submit">Update</button>
-</form>
+        <div class="form-group">
+            <label>Ganti Gambar</label>
+            <input type="file" name="image">
+        </div>
 
-<a href="{{ route('packages.index') }}">⬅ Kembali</a>
+        <button class="btn btn-primary">Update</button>
+        <a href="{{ route('menus.index') }}" class="btn btn-secondary">Kembali</a>
+    </form>
+</div>
 
 </body>
 </html>

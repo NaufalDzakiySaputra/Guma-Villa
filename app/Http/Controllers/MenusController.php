@@ -5,19 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Menus;
 use Illuminate\Http\Request;
 
+
 class MenusController extends Controller
 {
     // Tampilkan semua menu
     public function index()
     {
-        $menus = Menu::all();
-        return view('menus.index', compact('menus'));
+        $menus = Menus::all();
+        return view('admin.menus.index', compact('menus'));
     }
 
     // Form tambah menu
     public function create()
     {
-        return view('menus.create');
+        return view('admin.menus.create');
     }
 
     // Simpan menu baru
@@ -28,40 +29,57 @@ class MenusController extends Controller
             'description' => 'nullable|string',
             'price'       => 'required|numeric',
             'discount'    => 'nullable|numeric',
-            'image_path'  => 'nullable|string',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        Menu::create($validated);
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('menus', 'public');
+            $validated['image_path'] = 'storage/' . $path;
+        }
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan!');
+        Menus::create($validated);
+
+        return redirect()
+            ->route('menus.index')
+            ->with('success', 'Menu berhasil ditambahkan!');
     }
 
     // Form edit menu
-    public function edit(Menu $menus)
+    public function edit(Menus $menu)
     {
-        return view('menus.edit', compact('menu'));
+        return view('admin.menus.edit', compact('menu'));
     }
 
     // Update menu
-    public function update(Request $request, Menu $menus)
+    public function update(Request $request, Menus $menu)
     {
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'price'       => 'required|numeric',
             'discount'    => 'nullable|numeric',
-            'image_path'  => 'nullable|string',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $menus->update($validated);
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('menus', 'public');
+            $validated['image_path'] = 'storage/' . $path;
+        }
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil diupdate!');
+        $menu->update($validated);
+
+        return redirect()
+            ->route('menus.index')
+            ->with('success', 'Menu berhasil diupdate!');
     }
 
     // Hapus menu
-    public function destroy(Menu $menus)
+    public function destroy(Menus $menu)
     {
-        $menus->delete();
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus!');
+        $menu->delete();
+
+        return redirect()
+            ->route('menus.index')
+            ->with('success', 'Menu berhasil dihapus!');
     }
 }
