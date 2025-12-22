@@ -11,15 +11,16 @@ class PackagesController extends Controller
     // Tampilkan semua paket
     public function index()
     {
-        $packages = Packages::with('user')->latest()->get();
-        return view('packages.index', compact('packages'));
+        $packages = Packages::latest()->get();
+        return view('admin.packages.index', compact('packages'));
     }
 
     // Tampilkan form tambah paket
     public function create()
     {
-        return view('packages.create');
+        return view('admin.packages.create');
     }
+
 
     // Simpan paket baru
     public function store(Request $request)
@@ -44,10 +45,11 @@ class PackagesController extends Controller
     }
 
     // Tampilkan form edit paket
-    public function edit(Packages $packages)
+    public function edit(Packages $package)
     {
-        return view('packages.edit', compact('packages'));
+        return view('admin.packages.edit', compact('package'));
     }
+
 
     // Update data paket
     public function update(Request $request, Packages $packages)
@@ -74,13 +76,13 @@ class PackagesController extends Controller
     }
 
     // Hapus paket
-    public function destroy(Packages $packages)
+    public function destroy(Packages $package)
     {
-        if ($packages->image_path) {
-            Storage::disk('public')->delete($packages->image_path);
+        if ($package->image_path) {
+            Storage::disk('public')->delete($package->image_path);
         }
 
-        $packages->delete();
+        $package->delete();
 
         return redirect()->route('packages.index')->with('success', 'Paket berhasil dihapus!');
     }

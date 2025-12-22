@@ -1,4 +1,6 @@
 <?php
+
+namespace App\Relations;
 use App\Models\Reservations;
 use App\Models\Menus;
 use App\Models\gallery;

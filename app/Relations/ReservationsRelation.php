@@ -1,4 +1,6 @@
 <?php
+
+namespace App\Relations;
 use App\Models\User;
 use App\Models\Payments;
 use App\Models\Packages;

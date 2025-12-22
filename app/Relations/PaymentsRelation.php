@@ -1,4 +1,6 @@
 <?php
+
+namespace App\Relations;
 use App\Models\Reservations;
 trait PaymentsRelation
 {

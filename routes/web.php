@@ -14,15 +14,14 @@ use App\Http\Controllers\GalleryController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
+Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::middleware(['auth'])->group(function () {
     Route::resource('news', NewsController::class);
 });
-Route::middleware(['auth'])->group(function () {
+ {
     Route::resource('packages', PackagesController::class);
-});
+    };
 Route::middleware(['auth'])->group(function () {
     Route::resource('payments', PaymentsController::class);
 });
