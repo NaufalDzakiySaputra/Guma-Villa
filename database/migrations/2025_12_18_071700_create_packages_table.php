@@ -4,29 +4,33 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePackagesTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('nama'); // nama paket
-            $table->text('description')->nullable(); // deskripsi paket
-            $table->decimal('price', 12, 2); // harga paket
-            $table->enum('service_type', ['villa', 'wisata', 'nikah', 'mice']); // tipe layanan
-            $table->timestamps(); // created_at & updated_at
+
+            // user_id dibuat nullable (DEV MODE, belum pakai auth)
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained()
+                  ->onDelete('cascade');
+
+            $table->string('nama');
+            $table->text('description')->nullable();
+            $table->decimal('price', 12, 2);
+            $table->enum('service_type', ['villa', 'wisata', 'nikah', 'mice']);
+
+            // image_path HANYA DI SINI
+            $table->string('image_path')->nullable();
+
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('packages');
     }
-}
+};

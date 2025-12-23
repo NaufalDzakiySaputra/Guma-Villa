@@ -2,59 +2,83 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Menu</title>
-    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+    <title>Edit Paket</title>
+    <link rel="stylesheet" href="{{ asset('css/packages.css') }}">
 </head>
 <body>
 
 <div class="container">
-    <h3>Edit Menu</h3>
+    <h2>Edit Paket</h2>
 
-    <form action="{{ route('menus.update', $menu->id) }}"
+    {{-- error validasi --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('packages.update', $package->id) }}"
           method="POST"
           enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div class="form-group">
-            <label>Nama Menu</label>
-            <input type="text" name="name"
-                   value="{{ old('name', $menu->name) }}" required>
+            <label>Nama Paket</label>
+            <input type="text"
+                   name="nama"
+                   value="{{ old('nama', $package->nama) }}"
+                   required>
         </div>
 
         <div class="form-group">
             <label>Deskripsi</label>
-            <textarea name="description">{{ old('description', $menu->description) }}</textarea>
+            <textarea name="description"
+                      rows="4">{{ old('description', $package->description) }}</textarea>
         </div>
 
         <div class="form-group">
             <label>Harga</label>
-            <input type="number" name="price"
-                   value="{{ old('price', $menu->price) }}" required>
+            <input type="number"
+                   name="price"
+                   value="{{ old('price', $package->price) }}"
+                   required>
         </div>
 
         <div class="form-group">
-            <label>Diskon (%)</label>
-            <input type="number" name="discount"
-                   value="{{ old('discount', $menu->discount) }}">
+            <label>Tipe Layanan</label>
+            <select name="service_type" required>
+                <option value="villa" {{ $package->service_type == 'villa' ? 'selected' : '' }}>Villa</option>
+                <option value="wisata" {{ $package->service_type == 'wisata' ? 'selected' : '' }}>Wisata</option>
+                <option value="nikah" {{ $package->service_type == 'nikah' ? 'selected' : '' }}>Nikah</option>
+                <option value="mice" {{ $package->service_type == 'mice' ? 'selected' : '' }}>MICE</option>
+            </select>
         </div>
 
         <div class="form-group">
             <label>Gambar Saat Ini</label><br>
-            @if($menu->image_path)
-                <img src="{{ asset($menu->image_path) }}" width="150">
+            @if ($package->image_path)
+                <img src="{{ asset('storage/'.$package->image_path) }}"
+                     width="200"
+                     style="margin-bottom:10px;">
             @else
-                <em>Belum ada gambar</em>
+                <p><i>Tidak ada gambar</i></p>
             @endif
         </div>
 
         <div class="form-group">
-            <label>Ganti Gambar</label>
+            <label>Ganti Gambar (opsional)</label>
             <input type="file" name="image">
         </div>
 
-        <button class="btn btn-primary">Update</button>
-        <a href="{{ route('menus.index') }}" class="btn btn-secondary">Kembali</a>
+        <div class="form-action">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{ route('packages.index') }}" class="btn btn-secondary">Batal</a>
+        </div>
     </form>
 </div>
 
