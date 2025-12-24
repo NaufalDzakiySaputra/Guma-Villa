@@ -73,10 +73,15 @@
                             <i class="fas fa-bars me-2"></i>Menu Admin
                         </h6>
                         <div class="list-group list-group-flush">
+                            <!-- Menu Dashboard -->
+                        <a href="{{ route('admin.dashboard') }}" 
+                            class="list-group-item list-group-item-action {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
                             <!-- Paket Wisata -->
                             <a href="{{ route('packages.index') }}" 
                                class="list-group-item list-group-item-action {{ request()->routeIs('packages.*') ? 'active' : '' }}">
-                                <i class="fas fa-box me-2"></i>Paket Wisata
+                                <i class="fas fa-box me-2"></i>Paket Guma
                             </a>
                             
                             <!-- Menu Cafe -->
@@ -109,7 +114,7 @@
                         <div class="small">
                             <!-- Packages Count -->
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="text-muted">Paket Wisata:</span>
+                                <span class="text-muted">Paket Guma:</span>
                                 <span class="fw-bold text-accent">
                                     @php
                                         $packagesCount = 0;

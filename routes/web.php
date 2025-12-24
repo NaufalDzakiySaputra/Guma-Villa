@@ -36,3 +36,7 @@ Route::middleware(['auth'])->group(function () {
 {
     Route::resource('gallery', GalleryController::class);
 };
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
