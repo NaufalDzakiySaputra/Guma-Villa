@@ -1,0 +1,29 @@
+:root {
+    /* Color Palette */
+    --primary-color: #F3EBDD;    /* Cream soft - utama */
+    --secondary-color: #8B7D6B;   /* Earth tone gray */
+    --accent-color: #A0522D;      /* Brown sienna */
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    
+    /* Text Colors */
+    --text-dark: #333333;
+    --text-muted: #666666;
+    --text-light: #888888;
+    
+    /* Backgrounds */
+    --bg-body: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+    
+    /* Borders */
+    --border-color: rgba(139, 125, 107, 0.15);
+    --border-light: rgba(139, 125, 107, 0.1);
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}
