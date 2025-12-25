@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Admin CSS -->
-    <link href="{{ asset('css/admin-colors.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
+    <link href="<?php echo e(asset('css/admin-colors.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('css/admin-style.css')); ?>" rel="stylesheet">
     
     <style>
         /* Additional inline styles for safety */
@@ -39,7 +39,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
                 <i class="fas fa-leaf me-2"></i>
                 Guma Landscape
                 <small class="ms-2 text-muted d-none d-md-inline">Admin Panel</small>
@@ -52,7 +52,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}" target="_blank">
+                        <a class="nav-link" href="<?php echo e(url('/')); ?>" target="_blank">
                             <i class="fas fa-external-link-alt me-1"></i>Lihat Website
                         </a>
                     </li>
@@ -74,38 +74,38 @@
                         </h6>
                         <div class="list-group list-group-flush">
                             <!-- Menu Dashboard -->
-                            <a href="{{ route('admin.dashboard') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('admin.dashboard')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                                 <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                             </a>
                             
                             <!-- Kelola Reservasi -->
-                            <a href="{{ route('reservations.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('reservations.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('reservations.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('reservations.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-calendar-check me-2"></i>Kelola Reservasi
                             </a>
                             
                             <!-- Paket Wisata -->
-                            <a href="{{ route('packages.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('packages.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('packages.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('packages.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-box me-2"></i>Paket Guma
                             </a>
                             
                             <!-- Menu Cafe -->
-                            <a href="{{ route('menus.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('menus.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('menus.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('menus.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-utensils me-2"></i>Menu Cafe
                             </a>
                             
                             <!-- Berita & Event -->
-                            <a href="{{ route('news.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('news.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('news.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('news.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-newspaper me-2"></i>Berita & Event
                             </a>
                             
                             <!-- Galeri -->
-                            <a href="{{ route('gallery.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('gallery.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('gallery.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('gallery.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-images me-2"></i>Galeri
                             </a>
                         </div>
@@ -123,7 +123,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-muted">Reservasi:</span>
                                 <span class="fw-bold text-primary">
-                                    @php
+                                    <?php
                                         $reservationsCount = 0;
                                         if (class_exists('App\Models\Reservation')) {
                                             try {
@@ -132,8 +132,9 @@
                                                 $reservationsCount = 0;
                                             }
                                         }
-                                    @endphp
-                                    {{ $reservationsCount }}
+                                    ?>
+                                    <?php echo e($reservationsCount); ?>
+
                                 </span>
                             </div>
                             
@@ -141,7 +142,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-muted">Reservasi Pending:</span>
                                 <span class="fw-bold text-warning">
-                                    @php
+                                    <?php
                                         $pendingCount = 0;
                                         if (class_exists('App\Models\Reservation')) {
                                             try {
@@ -150,8 +151,9 @@
                                                 $pendingCount = 0;
                                             }
                                         }
-                                    @endphp
-                                    {{ $pendingCount }}
+                                    ?>
+                                    <?php echo e($pendingCount); ?>
+
                                 </span>
                             </div>
                             
@@ -159,7 +161,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-muted">Paket Guma:</span>
                                 <span class="fw-bold text-accent">
-                                    @php
+                                    <?php
                                         $packagesCount = 0;
                                         if (class_exists('App\Models\Packages')) {
                                             try {
@@ -168,8 +170,9 @@
                                                 $packagesCount = 0;
                                             }
                                         }
-                                    @endphp
-                                    {{ $packagesCount }}
+                                    ?>
+                                    <?php echo e($packagesCount); ?>
+
                                 </span>
                             </div>
                             
@@ -177,7 +180,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-muted">Menu Cafe:</span>
                                 <span class="fw-bold text-success">
-                                    @php
+                                    <?php
                                         $menusCount = 0;
                                         if (class_exists('App\Models\Menus')) {
                                             try {
@@ -186,8 +189,9 @@
                                                 $menusCount = 0;
                                             }
                                         }
-                                    @endphp
-                                    {{ $menusCount }}
+                                    ?>
+                                    <?php echo e($menusCount); ?>
+
                                 </span>
                             </div>
                             
@@ -195,7 +199,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-muted">Berita & Event:</span>
                                 <span class="fw-bold text-info">
-                                    @php
+                                    <?php
                                         $newsCount = 0;
                                         if (class_exists('App\Models\News')) {
                                             try {
@@ -204,8 +208,9 @@
                                                 $newsCount = 0;
                                             }
                                         }
-                                    @endphp
-                                    {{ $newsCount }}
+                                    ?>
+                                    <?php echo e($newsCount); ?>
+
                                 </span>
                             </div>
                             
@@ -213,7 +218,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-muted">Galeri Foto:</span>
                                 <span class="fw-bold text-warning">
-                                    @php
+                                    <?php
                                         $galleryCount = 0;
                                         if (class_exists('App\Models\Gallery')) {
                                             try {
@@ -222,8 +227,9 @@
                                                 $galleryCount = 0;
                                             }
                                         }
-                                    @endphp
-                                    {{ $galleryCount }}
+                                    ?>
+                                    <?php echo e($galleryCount); ?>
+
                                 </span>
                             </div>
                             
@@ -246,22 +252,22 @@
                         </h6>
                         <div class="d-grid gap-2">
                             <!-- Lihat Reservasi Pending -->
-                            @if($pendingCount > 0)
-                            <a href="{{ route('reservations.index') }}?status=pending" class="btn btn-sm btn-outline-warning">
-                                <i class="fas fa-clock me-1"></i>Lihat {{ $pendingCount }} Pending
+                            <?php if($pendingCount > 0): ?>
+                            <a href="<?php echo e(route('reservations.index')); ?>?status=pending" class="btn btn-sm btn-outline-warning">
+                                <i class="fas fa-clock me-1"></i>Lihat <?php echo e($pendingCount); ?> Pending
                             </a>
-                            @endif
+                            <?php endif; ?>
                             
-                            <a href="{{ route('packages.create') }}" class="btn btn-sm btn-outline-primary">
+                            <a href="<?php echo e(route('packages.create')); ?>" class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-plus-circle me-1"></i>Tambah Paket
                             </a>
-                            <a href="{{ route('menus.create') }}" class="btn btn-sm btn-outline-success">
+                            <a href="<?php echo e(route('menus.create')); ?>" class="btn btn-sm btn-outline-success">
                                 <i class="fas fa-plus-circle me-1"></i>Tambah Menu
                             </a>
-                            <a href="{{ route('news.create') }}" class="btn btn-sm btn-outline-info">
+                            <a href="<?php echo e(route('news.create')); ?>" class="btn btn-sm btn-outline-info">
                                 <i class="fas fa-plus-circle me-1"></i>Tambah Berita
                             </a>
-                            <a href="{{ route('gallery.create') }}" class="btn btn-sm btn-outline-warning">
+                            <a href="<?php echo e(route('gallery.create')); ?>" class="btn btn-sm btn-outline-warning">
                                 <i class="fas fa-plus-circle me-1"></i>Tambah Foto
                             </a>
                         </div>
@@ -275,19 +281,19 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="mb-1 fw-bold text-accent">
-                            @yield('page-title', 'Dashboard Admin')
+                            <?php echo $__env->yieldContent('page-title', 'Dashboard Admin'); ?>
                         </h4>
                         <p class="text-muted mb-0 small">
-                            @yield('page-subtitle', 'Kelola konten website Guma Landscape')
+                            <?php echo $__env->yieldContent('page-subtitle', 'Kelola konten website Guma Landscape'); ?>
                         </p>
                     </div>
                     <div>
-                        @yield('page-actions')
+                        <?php echo $__env->yieldContent('page-actions'); ?>
                     </div>
                 </div>
                 
                 <!-- Main Content -->
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </div>
         </div>
     </div>
@@ -300,14 +306,14 @@
                     <p class="mb-0">
                         <i class="fas fa-leaf me-2 text-accent"></i>
                         <span class="text-muted">
-                            &copy; {{ date('Y') }} Guma Landscape Cafe & Resort
+                            &copy; <?php echo e(date('Y')); ?> Guma Landscape Cafe & Resort
                         </span>
                     </p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p class="mb-0 text-muted small">
                         Admin Panel v1.0 • 
-                        <span class="text-accent">Laravel {{ app()->version() }}</span>
+                        <span class="text-accent">Laravel <?php echo e(app()->version()); ?></span>
                     </p>
                 </div>
             </div>
@@ -343,27 +349,27 @@
         }
         
         // Notifikasi dari session
-        @if(session('success'))
+        <?php if(session('success')): ?>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
-                text: '{{ session('success') }}',
+                text: '<?php echo e(session('success')); ?>',
                 timer: 3000,
                 timerProgressBar: true,
                 showConfirmButton: false,
                 background: '#F3EBDD',
                 color: '#333'
             });
-        @endif
+        <?php endif; ?>
         
-        @if(session('error'))
+        <?php if(session('error')): ?>
             Swal.fire({
                 icon: 'error',
                 title: 'Terjadi Kesalahan!',
-                text: '{{ session('error') }}',
+                text: '<?php echo e(session('error')); ?>',
                 confirmButtonColor: '#A0522D'
             });
-        @endif
+        <?php endif; ?>
         
         // Auto-hide alerts after 5 seconds
         setTimeout(function() {
@@ -407,7 +413,7 @@
                 const href = item.getAttribute('href');
                 if (href && href !== '#') {
                     // Remove base URL for comparison
-                    const cleanHref = href.replace('{{ url('') }}', '');
+                    const cleanHref = href.replace('<?php echo e(url('')); ?>', '');
                     if (currentPath.includes(cleanHref) || currentPath === cleanHref) {
                         item.classList.add('active');
                     }
@@ -427,6 +433,6 @@
         });
     </script>
     
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\Guma_Villa\guma-landscape\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

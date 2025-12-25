@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Relations\ReservationsRelation;
-class Reservations extends Model
+use App\Relations\ReservationRelation;
+class Reservation extends Model
 {
     use HasFactory;
-    use ReservationsRelation;
+    use ReservationRelation;
     protected $fillable = [
         'user_id',
         'service_type',
