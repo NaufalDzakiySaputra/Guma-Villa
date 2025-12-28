@@ -52,7 +52,7 @@
                     <div>
                         <h6 class="text-muted mb-1">Event</h6>
                         <h4 class="fw-bold text-info">
-                            {{ App\Models\News::where('event_date', '>=', now())->count() }}
+                            {{ App\Models\News::where('event_date', '>=', now()->startOfDay())->count() }}
                         </h4>
                     </div>
                 </div>
@@ -91,7 +91,8 @@
             </div>
             <div class="card-body">
                 @php
-                    $upcomingEvents = App\Models\News::where('event_date', '>=', now())
+                    $today = \Carbon\Carbon::today()->startOfDay();
+                    $upcomingEvents = App\Models\News::where('event_date', '>=', $today)
                         ->orderBy('event_date')
                         ->take(5)
                         ->get();
@@ -112,16 +113,19 @@
                                     </div>
                                     <div>
                                         @php
-                                            $daysDiff = now()->diffInDays($event->event_date);
+                                            // PERBAIKAN: Gunakan startOfDay() dan parameter FALSE
+                                            $eventDate = $event->event_date->startOfDay();
+                                            $daysDiff = $today->diffInDays($eventDate, false); // FALSE = bisa negatif
+                                            
                                             if ($daysDiff == 0) {
                                                 $badgeClass = 'success';
                                                 $badgeText = 'Hari Ini';
                                             } elseif ($daysDiff == 1) {
                                                 $badgeClass = 'primary';
                                                 $badgeText = 'Besok';
-                                            } elseif ($daysDiff <= 7) {
+                                            } elseif ($daysDiff > 1 && $daysDiff <= 7) {
                                                 $badgeClass = 'warning';
-                                                $badgeText = $daysDiff . ' hari';
+                                                $badgeText = $daysDiff . ' hari lagi';
                                             } else {
                                                 $badgeClass = 'info';
                                                 $badgeText = 'Akan Datang';

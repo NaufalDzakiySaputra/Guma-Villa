@@ -83,6 +83,12 @@
                                class="list-group-item list-group-item-action <?php echo e(request()->routeIs('gallery.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-images me-2"></i>Galeri
                             </a>
+                            
+                            <!-- TAMBAH MENU USER MANAGEMENT -->
+                            <a href="<?php echo e(route('admin.users.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('admin.users.*') ? 'active' : ''); ?>">
+                                <i class="fas fa-users me-2"></i>Kelola User
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -105,6 +111,10 @@
                             </a>
                             <a href="<?php echo e(route('gallery.create')); ?>" class="btn btn-sm btn-outline-warning">
                                 <i class="fas fa-plus me-1"></i>Tambah Foto
+                            </a>
+                            <!-- TAMBAH QUICK ACTION USER -->
+                            <a href="<?php echo e(route('admin.users.create')); ?>" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-user-plus me-1"></i>Tambah User
                             </a>
                         </div>
                     </div>
@@ -162,7 +172,42 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
-        // SweetAlert untuk konfirmasi delete
+        // ===== GLOBAL FUNCTIONS =====
+        
+        // 1. Password Toggle Function
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            
+            const icon = button.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+        
+        // 2. Initialize all password toggles
+        function initPasswordToggles() {
+            document.querySelectorAll('[data-toggle-password]').forEach(button => {
+                const inputId = button.getAttribute('data-toggle-password');
+                button.addEventListener('click', function() {
+                    togglePasswordVisibility(inputId, this);
+                });
+            });
+        }
+        
+        // 3. Auto-initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initPasswordToggles();
+            console.log('Password toggles initialized');
+        });
+        
+        // 4. SweetAlert untuk konfirmasi delete
         function confirmDelete(event, formId) {
             event.preventDefault();
             Swal.fire({
@@ -181,7 +226,7 @@
             });
         }
         
-        // Notifikasi dari session
+        // 5. Notifikasi dari session
         <?php if(session('success')): ?>
             Swal.fire({
                 icon: 'success',
@@ -200,7 +245,7 @@
             });
         <?php endif; ?>
         
-        // Auto-hide alerts after 5 seconds
+        // 6. Auto-hide alerts after 5 seconds
         setTimeout(function() {
             const alerts = document.querySelectorAll('.alert:not(.alert-permanent)');
             alerts.forEach(function(alert) {
@@ -209,7 +254,7 @@
             });
         }, 5000);
         
-        // Image preview function
+        // 7. Image preview function
         function previewImage(input, previewId) {
             const preview = document.getElementById(previewId);
             const file = input.files[0];
