@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin - Guma Landscape')</title>
+    <title><?php echo $__env->yieldContent('title', 'Admin - Guma Landscape'); ?></title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,16 +11,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Admin CSS -->
-    <link href="{{ asset('css/admin-colors.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
+    <link href="<?php echo e(asset('css/admin-colors.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('css/admin-style.css')); ?>" rel="stylesheet">
     
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
                 <i class="fas fa-leaf me-2"></i>
                 Guma Landscape
                 <small class="ms-2 text-muted d-none d-md-inline">Admin Panel</small>
@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}" target="_blank">
+                        <a class="nav-link" href="<?php echo e(url('/')); ?>" target="_blank">
                             <i class="fas fa-external-link-alt me-1"></i>Lihat Website
                         </a>
                     </li>
@@ -54,33 +54,33 @@
                             <i class="fas fa-bars me-2"></i>Menu Admin
                         </h6>
                         <div class="list-group list-group-flush">
-                            <a href="{{ route('admin.dashboard') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('admin.dashboard')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                                 <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                             </a>
                             
-                            <a href="{{ route('reservations.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('reservations.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('reservations.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('reservations.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-calendar-check me-2"></i>Reservasi
                             </a>
                             
-                            <a href="{{ route('packages.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('packages.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('packages.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('packages.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-box me-2"></i>Paket
                             </a>
                             
-                            <a href="{{ route('menus.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('menus.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('menus.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('menus.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-utensils me-2"></i>Menu Cafe
                             </a>
                             
-                            <a href="{{ route('news.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('news.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('news.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('news.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-newspaper me-2"></i>Berita & Event
                             </a>
                             
-                            <a href="{{ route('gallery.index') }}"
-                               class="list-group-item list-group-item-action {{ request()->routeIs('gallery.*') ? 'active' : '' }}">
+                            <a href="<?php echo e(route('gallery.index')); ?>"
+                               class="list-group-item list-group-item-action <?php echo e(request()->routeIs('gallery.*') ? 'active' : ''); ?>">
                                 <i class="fas fa-images me-2"></i>Galeri
                             </a>
                         </div>
@@ -94,16 +94,16 @@
                             <i class="fas fa-bolt me-2"></i>Quick Actions
                         </h6>
                         <div class="d-grid gap-2">
-                            <a href="{{ route('packages.create') }}" class="btn btn-sm btn-outline-primary">
+                            <a href="<?php echo e(route('packages.create')); ?>" class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-plus me-1"></i>Tambah Paket
                             </a>
-                            <a href="{{ route('menus.create') }}" class="btn btn-sm btn-outline-success">
+                            <a href="<?php echo e(route('menus.create')); ?>" class="btn btn-sm btn-outline-success">
                                 <i class="fas fa-plus me-1"></i>Tambah Menu
                             </a>
-                            <a href="{{ route('news.create') }}" class="btn btn-sm btn-outline-info">
+                            <a href="<?php echo e(route('news.create')); ?>" class="btn btn-sm btn-outline-info">
                                 <i class="fas fa-plus me-1"></i>Tambah Berita
                             </a>
-                            <a href="{{ route('gallery.create') }}" class="btn btn-sm btn-outline-warning">
+                            <a href="<?php echo e(route('gallery.create')); ?>" class="btn btn-sm btn-outline-warning">
                                 <i class="fas fa-plus me-1"></i>Tambah Foto
                             </a>
                         </div>
@@ -117,19 +117,19 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="mb-1 fw-bold text-accent">
-                            @yield('page-title', 'Dashboard Admin')
+                            <?php echo $__env->yieldContent('page-title', 'Dashboard Admin'); ?>
                         </h4>
                         <p class="text-muted mb-0 small">
-                            @yield('page-subtitle', 'Kelola konten website Guma Landscape')
+                            <?php echo $__env->yieldContent('page-subtitle', 'Kelola konten website Guma Landscape'); ?>
                         </p>
                     </div>
                     <div>
-                        @yield('page-actions')
+                        <?php echo $__env->yieldContent('page-actions'); ?>
                     </div>
                 </div>
                 
                 <!-- Main Content -->
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </div>
         </div>
     </div>
@@ -142,7 +142,7 @@
                     <p class="mb-0">
                         <i class="fas fa-leaf me-2 text-accent"></i>
                         <span class="text-muted">
-                            &copy; {{ date('Y') }} Guma Landscape Cafe & Resort
+                            &copy; <?php echo e(date('Y')); ?> Guma Landscape Cafe & Resort
                         </span>
                     </p>
                 </div>
@@ -182,23 +182,23 @@
         }
         
         // Notifikasi dari session
-        @if(session('success'))
+        <?php if(session('success')): ?>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
-                text: '{{ session('success') }}',
+                text: '<?php echo e(session('success')); ?>',
                 timer: 3000,
                 showConfirmButton: false
             });
-        @endif
+        <?php endif; ?>
         
-        @if(session('error'))
+        <?php if(session('error')): ?>
             Swal.fire({
                 icon: 'error',
                 title: 'Terjadi Kesalahan!',
-                text: '{{ session('error') }}'
+                text: '<?php echo e(session('error')); ?>'
             });
-        @endif
+        <?php endif; ?>
         
         // Auto-hide alerts after 5 seconds
         setTimeout(function() {
@@ -228,6 +228,6 @@
         }
     </script>
     
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

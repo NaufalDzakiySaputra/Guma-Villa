@@ -1,53 +1,54 @@
-@extends('layouts.admin')
 
-@section('page-title', 'Kelola Reservasi')
-@section('page-actions')
+
+<?php $__env->startSection('page-title', 'Kelola Reservasi'); ?>
+<?php $__env->startSection('page-actions'); ?>
     <button class="btn btn-outline-secondary" id="toggleFilter">
         <i class="fas fa-filter"></i> Filter
     </button>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-@if(session('success'))
+<?php $__env->startSection('content'); ?>
+<?php if(session('success')): ?>
     <div class="alert alert-success alert-dismissible fade show">
-        {{ session('success') }}
+        <?php echo e(session('success')); ?>
+
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
-@endif
+<?php endif; ?>
 
 <!-- Filter Section -->
 <div class="card mb-4 d-none" id="filterSection">
     <div class="card-body">
         <h6 class="card-title mb-3">Filter Reservasi</h6>
-        <form method="GET" action="{{ route('reservations.index') }}" class="row g-3">
+        <form method="GET" action="<?php echo e(route('reservations.index')); ?>" class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Status</label>
                 <select name="status" class="form-select">
                     <option value="">Semua</option>
-                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                    <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
-                    <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                    <option value="pending" <?php echo e(request('status') == 'pending' ? 'selected' : ''); ?>>Pending</option>
+                    <option value="approved" <?php echo e(request('status') == 'approved' ? 'selected' : ''); ?>>Approved</option>
+                    <option value="rejected" <?php echo e(request('status') == 'rejected' ? 'selected' : ''); ?>>Rejected</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Jenis Layanan</label>
                 <select name="service_type" class="form-select">
                     <option value="">Semua</option>
-                    <option value="villa" {{ request('service_type') == 'villa' ? 'selected' : '' }}>Villa</option>
-                    <option value="wisata" {{ request('service_type') == 'wisata' ? 'selected' : '' }}>Wisata</option>
-                    <option value="nikah" {{ request('service_type') == 'nikah' ? 'selected' : '' }}>Wedding</option>
-                    <option value="mice" {{ request('service_type') == 'mice' ? 'selected' : '' }}>MICE</option>
+                    <option value="villa" <?php echo e(request('service_type') == 'villa' ? 'selected' : ''); ?>>Villa</option>
+                    <option value="wisata" <?php echo e(request('service_type') == 'wisata' ? 'selected' : ''); ?>>Wisata</option>
+                    <option value="nikah" <?php echo e(request('service_type') == 'nikah' ? 'selected' : ''); ?>>Wedding</option>
+                    <option value="mice" <?php echo e(request('service_type') == 'mice' ? 'selected' : ''); ?>>MICE</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Tanggal</label>
-                <input type="date" name="date" class="form-control" value="{{ request('date') }}">
+                <input type="date" name="date" class="form-control" value="<?php echo e(request('date')); ?>">
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-search"></i> Terapkan
                 </button>
-                <a href="{{ route('reservations.index') }}" class="btn btn-outline-secondary">
+                <a href="<?php echo e(route('reservations.index')); ?>" class="btn btn-outline-secondary">
                     Reset
                 </a>
             </div>
@@ -55,14 +56,14 @@
     </div>
 </div>
 
-@if($reservations->isEmpty())
+<?php if($reservations->isEmpty()): ?>
     <div class="card">
         <div class="card-body text-center py-5">
             <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
             <h5 class="text-muted">Belum ada reservasi</h5>
         </div>
     </div>
-@else
+<?php else: ?>
     <div class="card">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -78,54 +79,58 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($reservations as $reservation)
+                        <?php $__currentLoopData = $reservations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reservation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td>
                                 <strong class="text-primary">
-                                    #{{ str_pad($reservation->id, 6, '0', STR_PAD_LEFT) }}
+                                    #<?php echo e(str_pad($reservation->id, 6, '0', STR_PAD_LEFT)); ?>
+
                                 </strong>
                             </td>
                             <td>
-                                <div class="fw-bold">{{ $reservation->user->name ?? 'Guest' }}</div>
+                                <div class="fw-bold"><?php echo e($reservation->user->name ?? 'Guest'); ?></div>
                                 <small class="text-muted d-block">
-                                    {{ $reservation->user->email ?? '' }}
+                                    <?php echo e($reservation->user->email ?? ''); ?>
+
                                 </small>
                             </td>
                             <td>
-                                @php
+                                <?php
                                     $badgeColors = [
                                         'villa' => 'badge-villa',
                                         'wisata' => 'badge-wisata', 
                                         'nikah' => 'badge-nikah',
                                         'mice' => 'badge-mice'
                                     ];
-                                @endphp
-                                <span class="badge {{ $badgeColors[$reservation->service_type] ?? 'badge-villa' }}">
-                                    {{ ucfirst($reservation->service_type) }}
+                                ?>
+                                <span class="badge <?php echo e($badgeColors[$reservation->service_type] ?? 'badge-villa'); ?>">
+                                    <?php echo e(ucfirst($reservation->service_type)); ?>
+
                                 </span>
                             </td>
                             <td>
-                                {{ \Carbon\Carbon::parse($reservation->date)->format('d/m/Y') }}
+                                <?php echo e(\Carbon\Carbon::parse($reservation->date)->format('d/m/Y')); ?>
+
                             </td>
                             <td>
-                                @if($reservation->status == 'pending')
+                                <?php if($reservation->status == 'pending'): ?>
                                     <span class="badge bg-warning">Pending</span>
-                                @elseif($reservation->status == 'approved')
+                                <?php elseif($reservation->status == 'approved'): ?>
                                     <span class="badge bg-success">Approved</span>
-                                @else
+                                <?php else: ?>
                                     <span class="badge bg-danger">Rejected</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
-                                    <a href="{{ route('reservations.edit', $reservation->id) }}" 
+                                    <a href="<?php echo e(route('reservations.edit', $reservation->id)); ?>" 
                                        class="btn btn-sm btn-outline-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('reservations.destroy', $reservation->id) }}" 
+                                    <form action="<?php echo e(route('reservations.destroy', $reservation->id)); ?>" 
                                           method="POST" 
                                           onsubmit="return confirm('Hapus reservasi ini?')">
-                                        @csrf @method('DELETE')
+                                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -133,19 +138,20 @@
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
         </div>
         
-        @if($reservations->hasPages())
+        <?php if($reservations->hasPages()): ?>
         <div class="card-footer">
-            {{ $reservations->links() }}
+            <?php echo e($reservations->links()); ?>
+
         </div>
-        @endif
+        <?php endif; ?>
     </div>
-@endif
+<?php endif; ?>
 
 <script>
 document.getElementById('toggleFilter').addEventListener('click', function() {
@@ -160,4 +166,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/admin/reservations/index.blade.php ENDPATH**/ ?>

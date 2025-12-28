@@ -1,9 +1,9 @@
-@extends('layouts.admin')
 
-@section('page-title', 'Dashboard Admin')
-@section('page-subtitle', 'Overview Guma Landscape')
 
-@section('content')
+<?php $__env->startSection('page-title', 'Dashboard Admin'); ?>
+<?php $__env->startSection('page-subtitle', 'Overview Guma Landscape'); ?>
+
+<?php $__env->startSection('content'); ?>
 <!-- Stats Grid -->
 <div class="row g-3 mb-4">
     <div class="col-md-3 col-6">
@@ -16,7 +16,8 @@
                     <div>
                         <h6 class="text-muted mb-1">Paket</h6>
                         <h4 class="fw-bold" style="color: #A0522D;">
-                            {{ App\Models\Packages::count() ?? 0 }}
+                            <?php echo e(App\Models\Packages::count() ?? 0); ?>
+
                         </h4>
                     </div>
                 </div>
@@ -34,7 +35,8 @@
                     <div>
                         <h6 class="text-muted mb-1">Menu</h6>
                         <h4 class="fw-bold text-success">
-                            {{ App\Models\Menus::count() ?? 0 }}
+                            <?php echo e(App\Models\Menus::count() ?? 0); ?>
+
                         </h4>
                     </div>
                 </div>
@@ -52,7 +54,8 @@
                     <div>
                         <h6 class="text-muted mb-1">Event</h6>
                         <h4 class="fw-bold text-info">
-                            {{ App\Models\News::where('event_date', '>=', now())->count() }}
+                            <?php echo e(App\Models\News::where('event_date', '>=', now())->count()); ?>
+
                         </h4>
                     </div>
                 </div>
@@ -70,7 +73,8 @@
                     <div>
                         <h6 class="text-muted mb-1">Galeri</h6>
                         <h4 class="fw-bold text-warning">
-                            {{ App\Models\Gallery::count() ?? 0 }}
+                            <?php echo e(App\Models\Gallery::count() ?? 0); ?>
+
                         </h4>
                     </div>
                 </div>
@@ -90,28 +94,29 @@
                 </h6>
             </div>
             <div class="card-body">
-                @php
+                <?php
                     $upcomingEvents = App\Models\News::where('event_date', '>=', now())
                         ->orderBy('event_date')
                         ->take(5)
                         ->get();
-                @endphp
+                ?>
                 
-                @if($upcomingEvents->isEmpty())
+                <?php if($upcomingEvents->isEmpty()): ?>
                     <p class="text-muted">Tidak ada event mendatang</p>
-                @else
+                <?php else: ?>
                     <div class="list-group">
-                        @foreach($upcomingEvents as $event)
+                        <?php $__currentLoopData = $upcomingEvents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="list-group-item border-0 px-0 py-2">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <strong>{{ $event->title }}</strong>
+                                        <strong><?php echo e($event->title); ?></strong>
                                         <div class="small text-muted">
-                                            {{ $event->event_date->format('d M Y') }}
+                                            <?php echo e($event->event_date->format('d M Y')); ?>
+
                                         </div>
                                     </div>
                                     <div>
-                                        @php
+                                        <?php
                                             $daysDiff = now()->diffInDays($event->event_date);
                                             if ($daysDiff == 0) {
                                                 $badgeClass = 'success';
@@ -126,21 +131,22 @@
                                                 $badgeClass = 'info';
                                                 $badgeText = 'Akan Datang';
                                             }
-                                        @endphp
-                                        <span class="badge bg-{{ $badgeClass }}">
-                                            {{ $badgeText }}
+                                        ?>
+                                        <span class="badge bg-<?php echo e($badgeClass); ?>">
+                                            <?php echo e($badgeText); ?>
+
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     <div class="mt-3 text-end">
-                        <a href="{{ route('news.index') }}" class="btn btn-sm btn-outline-primary">
+                        <a href="<?php echo e(route('news.index')); ?>" class="btn btn-sm btn-outline-primary">
                             Lihat Semua Event
                         </a>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -155,34 +161,35 @@
                 </h6>
             </div>
             <div class="card-body">
-                @php
+                <?php
                     $recentGalleries = App\Models\Gallery::latest()->take(4)->get();
-                @endphp
+                ?>
                 
-                @if($recentGalleries->isEmpty())
+                <?php if($recentGalleries->isEmpty()): ?>
                     <p class="text-muted">Belum ada foto di galeri</p>
-                @else
+                <?php else: ?>
                     <div class="row g-2">
-                        @foreach($recentGalleries as $gallery)
+                        <?php $__currentLoopData = $recentGalleries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gallery): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="col-6">
-                                <img src="{{ asset('storage/' . $gallery->image_path) }}" 
-                                     alt="{{ $gallery->title ?? 'Foto' }}"
+                                <img src="<?php echo e(asset('storage/' . $gallery->image_path)); ?>" 
+                                     alt="<?php echo e($gallery->title ?? 'Foto'); ?>"
                                      class="img-fluid rounded"
                                      style="height: 120px; width: 100%; object-fit: cover;">
-                                @if($gallery->title)
+                                <?php if($gallery->title): ?>
                                     <p class="small text-muted mb-0 mt-1 text-truncate">
-                                        {{ $gallery->title }}
+                                        <?php echo e($gallery->title); ?>
+
                                     </p>
-                                @endif
+                                <?php endif; ?>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     <div class="mt-3 text-end">
-                        <a href="{{ route('gallery.index') }}" class="btn btn-sm btn-outline-primary">
+                        <a href="<?php echo e(route('gallery.index')); ?>" class="btn btn-sm btn-outline-primary">
                             Lihat Semua Foto
                         </a>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -198,22 +205,22 @@
                 </h6>
                 <div class="row g-2">
                     <div class="col-md-3 col-6">
-                        <a href="{{ route('packages.create') }}" class="btn btn-outline-primary w-100">
+                        <a href="<?php echo e(route('packages.create')); ?>" class="btn btn-outline-primary w-100">
                             <i class="fas fa-plus me-1"></i>Paket
                         </a>
                     </div>
                     <div class="col-md-3 col-6">
-                        <a href="{{ route('menus.create') }}" class="btn btn-outline-success w-100">
+                        <a href="<?php echo e(route('menus.create')); ?>" class="btn btn-outline-success w-100">
                             <i class="fas fa-plus me-1"></i>Menu
                         </a>
                     </div>
                     <div class="col-md-3 col-6">
-                        <a href="{{ route('news.create') }}" class="btn btn-outline-info w-100">
+                        <a href="<?php echo e(route('news.create')); ?>" class="btn btn-outline-info w-100">
                             <i class="fas fa-plus me-1"></i>Event
                         </a>
                     </div>
                     <div class="col-md-3 col-6">
-                        <a href="{{ route('gallery.create') }}" class="btn btn-outline-warning w-100">
+                        <a href="<?php echo e(route('gallery.create')); ?>" class="btn btn-outline-warning w-100">
                             <i class="fas fa-plus me-1"></i>Foto
                         </a>
                     </div>
@@ -222,4 +229,5 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>

@@ -1,30 +1,31 @@
-@extends('layouts.admin')
 
-@section('page-title', 'Kelola Berita & Event')
-@section('page-actions')
-    <a href="{{ route('news.create') }}" class="btn btn-success">
+
+<?php $__env->startSection('page-title', 'Kelola Berita & Event'); ?>
+<?php $__env->startSection('page-actions'); ?>
+    <a href="<?php echo e(route('news.create')); ?>" class="btn btn-success">
         <i class="fas fa-plus"></i> Tambah Berita
     </a>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-@if(session('success'))
+<?php $__env->startSection('content'); ?>
+<?php if(session('success')): ?>
     <div class="alert alert-success alert-dismissible fade show">
-        {{ session('success') }}
+        <?php echo e(session('success')); ?>
+
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
-@endif
+<?php endif; ?>
 
 <div class="card">
-    @if($news->isEmpty())
+    <?php if($news->isEmpty()): ?>
         <div class="card-body text-center py-5">
             <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
             <h5 class="text-muted mb-3">Belum ada berita/event</h5>
-            <a href="{{ route('news.create') }}" class="btn btn-primary">
+            <a href="<?php echo e(route('news.create')); ?>" class="btn btn-primary">
                 <i class="fas fa-plus me-1"></i> Tambah Berita Pertama
             </a>
         </div>
-    @else
+    <?php else: ?>
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -38,44 +39,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($news as $item)
+                        <?php $__currentLoopData = $news; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td>
-                                @if($item->image_path)
-                                    <img src="{{ asset('storage/' . $item->image_path) }}" 
-                                         alt="{{ $item->title }}" 
+                                <?php if($item->image_path): ?>
+                                    <img src="<?php echo e(asset('storage/' . $item->image_path)); ?>" 
+                                         alt="<?php echo e($item->title); ?>" 
                                          class="rounded" 
                                          width="50" height="50"
                                          style="object-fit: cover;">
-                                @else
+                                <?php else: ?>
                                     <div class="bg-light rounded d-flex align-items-center justify-content-center" 
                                          style="width: 50px; height: 50px;">
                                         <i class="fas fa-newspaper text-muted"></i>
                                     </div>
-                                @endif
+                                <?php endif; ?>
                             </td>
                             <td>
-                                <div class="fw-bold">{{ $item->title }}</div>
-                                @if($item->description)
+                                <div class="fw-bold"><?php echo e($item->title); ?></div>
+                                <?php if($item->description): ?>
                                     <small class="text-muted d-block mt-1">
-                                        {{ Str::limit(strip_tags($item->description), 60) }}
+                                        <?php echo e(Str::limit(strip_tags($item->description), 60)); ?>
+
                                     </small>
-                                @endif
+                                <?php endif; ?>
                                 <small class="text-muted">
                                     <i class="far fa-calendar me-1"></i>
-                                    {{ $item->created_at->format('d/m/Y') }}
+                                    <?php echo e($item->created_at->format('d/m/Y')); ?>
+
                                 </small>
                             </td>
                             <td>
                                 <div class="fw-bold">
-                                    {{ $item->event_date->format('d/m/Y') }}
+                                    <?php echo e($item->event_date->format('d/m/Y')); ?>
+
                                 </div>
                                 <small class="text-muted d-block">
-                                    {{ $item->event_date->translatedFormat('l') }}
+                                    <?php echo e($item->event_date->translatedFormat('l')); ?>
+
                                 </small>
                             </td>
                             <td>
-                                @php
+                                <?php
                                     // PERBAIKAN DI SINI!
                                     $today = \Carbon\Carbon::today();
                                     $eventDate = $item->event_date->startOfDay();
@@ -100,21 +105,22 @@
                                         $statusClass = 'danger';
                                         $statusText = 'Selesai';
                                     }
-                                @endphp
-                                <span class="badge bg-{{ $statusClass }}">
-                                    {{ $statusText }}
+                                ?>
+                                <span class="badge bg-<?php echo e($statusClass); ?>">
+                                    <?php echo e($statusText); ?>
+
                                 </span>
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
-                                    <a href="{{ route('news.edit', $item->id) }}" 
+                                    <a href="<?php echo e(route('news.edit', $item->id)); ?>" 
                                        class="btn btn-sm btn-outline-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('news.destroy', $item->id) }}" 
+                                    <form action="<?php echo e(route('news.destroy', $item->id)); ?>" 
                                           method="POST" 
                                           onsubmit="return confirm('Hapus berita ini?')">
-                                        @csrf @method('DELETE')
+                                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -122,23 +128,24 @@
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
         </div>
         
         <div class="card-footer text-muted small">
-            Total: {{ $news->count() }} berita
-            @php
+            Total: <?php echo e($news->count()); ?> berita
+            <?php
                 $upcomingCount = $news->filter(function($item) {
                     return $item->event_date->isFuture();
                 })->count();
-            @endphp
-            @if($upcomingCount > 0)
-                • {{ $upcomingCount }} event mendatang
-            @endif
+            ?>
+            <?php if($upcomingCount > 0): ?>
+                • <?php echo e($upcomingCount); ?> event mendatang
+            <?php endif; ?>
         </div>
-    @endif
+    <?php endif; ?>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/admin/news/index.blade.php ENDPATH**/ ?>

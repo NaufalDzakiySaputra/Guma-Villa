@@ -1,30 +1,31 @@
-@extends('layouts.admin')
 
-@section('page-title', 'Kelola Paket')
-@section('page-actions')
-    <a href="{{ route('packages.create') }}" class="btn btn-success">
+
+<?php $__env->startSection('page-title', 'Kelola Paket'); ?>
+<?php $__env->startSection('page-actions'); ?>
+    <a href="<?php echo e(route('packages.create')); ?>" class="btn btn-success">
         <i class="fas fa-plus"></i> Tambah Paket
     </a>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-@if(session('success'))
+<?php $__env->startSection('content'); ?>
+<?php if(session('success')): ?>
     <div class="alert alert-success alert-dismissible fade show">
-        {{ session('success') }}
+        <?php echo e(session('success')); ?>
+
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
-@endif
+<?php endif; ?>
 
 <div class="card">
-    @if($packages->isEmpty())
+    <?php if($packages->isEmpty()): ?>
         <div class="card-body text-center py-5">
             <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
             <h5 class="text-muted mb-3">Belum ada paket</h5>
-            <a href="{{ route('packages.create') }}" class="btn btn-primary">
+            <a href="<?php echo e(route('packages.create')); ?>" class="btn btn-primary">
                 <i class="fas fa-plus me-1"></i> Tambah Paket Pertama
             </a>
         </div>
-    @else
+    <?php else: ?>
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -38,56 +39,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($packages as $package)
+                        <?php $__currentLoopData = $packages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td>
-                                @if($package->image_path)
-                                    <img src="{{ asset('storage/' . $package->image_path) }}" 
-                                         alt="{{ $package->nama }}" 
+                                <?php if($package->image_path): ?>
+                                    <img src="<?php echo e(asset('storage/' . $package->image_path)); ?>" 
+                                         alt="<?php echo e($package->nama); ?>" 
                                          class="rounded" 
                                          width="50" height="50"
                                          style="object-fit: cover;">
-                                @else
+                                <?php else: ?>
                                     <div class="bg-light rounded d-flex align-items-center justify-content-center" 
                                          style="width: 50px; height: 50px;">
                                         <i class="fas fa-image text-muted"></i>
                                     </div>
-                                @endif
+                                <?php endif; ?>
                             </td>
                             <td>
-                                <div class="fw-bold">{{ $package->nama }}</div>
-                                @if($package->description)
+                                <div class="fw-bold"><?php echo e($package->nama); ?></div>
+                                <?php if($package->description): ?>
                                     <small class="text-muted d-block mt-1">
-                                        {{ Str::limit($package->description, 60) }}
+                                        <?php echo e(Str::limit($package->description, 60)); ?>
+
                                     </small>
-                                @endif
+                                <?php endif; ?>
                             </td>
                             <td>
-                                @php
+                                <?php
                                     $badgeColors = [
                                         'villa' => 'badge-villa',
                                         'wisata' => 'badge-wisata',
                                         'nikah' => 'badge-nikah',
                                         'mice' => 'badge-mice'
                                     ];
-                                @endphp
-                                <span class="badge {{ $badgeColors[$package->service_type] ?? 'badge-villa' }}">
-                                    {{ ucfirst($package->service_type) }}
+                                ?>
+                                <span class="badge <?php echo e($badgeColors[$package->service_type] ?? 'badge-villa'); ?>">
+                                    <?php echo e(ucfirst($package->service_type)); ?>
+
                                 </span>
                             </td>
                             <td class="fw-bold text-success">
-                                Rp {{ number_format($package->price, 0, ',', '.') }}
+                                Rp <?php echo e(number_format($package->price, 0, ',', '.')); ?>
+
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
-                                    <a href="{{ route('packages.edit', $package->id) }}" 
+                                    <a href="<?php echo e(route('packages.edit', $package->id)); ?>" 
                                        class="btn btn-sm btn-outline-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('packages.destroy', $package->id) }}" 
+                                    <form action="<?php echo e(route('packages.destroy', $package->id)); ?>" 
                                           method="POST" 
                                           onsubmit="return confirm('Hapus paket ini?')">
-                                        @csrf @method('DELETE')
+                                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -95,15 +99,16 @@
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
         </div>
         
         <div class="card-footer text-muted small">
-            Total: {{ $packages->count() }} paket
+            Total: <?php echo e($packages->count()); ?> paket
         </div>
-    @endif
+    <?php endif; ?>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/admin/packages/index.blade.php ENDPATH**/ ?>

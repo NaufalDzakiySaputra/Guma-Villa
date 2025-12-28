@@ -1,263 +1,136 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Tambah Berita/Event Baru')
-@section('page-subtitle', 'Tambahkan event atau promo baru')
-
+@section('page-title', 'Tambah Berita Baru')
 @section('page-actions')
     <a href="{{ route('news.index') }}" class="btn btn-outline-secondary">
-        <i class="fas fa-arrow-left me-2"></i>Kembali
+        <i class="fas fa-arrow-left"></i> Kembali
     </a>
 @endsection
 
 @section('content')
 <div class="card">
-    <div class="card-header">
-        <h5 class="mb-0">
-            <i class="fas fa-plus-circle me-2"></i>Form Tambah Berita/Event
-        </h5>
-    </div>
     <div class="card-body">
         <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
-            <div class="row">
+            <div class="row g-3">
                 <!-- Kolom Kiri -->
                 <div class="col-lg-8">
-                    <div class="mb-4">
-                        <label for="title" class="form-label">Judul Event/Promo <span class="text-danger">*</span></label>
+                    <div class="mb-3">
+                        <label class="form-label">Judul *</label>
                         <input type="text" 
-                               class="form-control @error('title') is-invalid @enderror" 
-                               id="title" 
                                name="title" 
-                               value="{{ old('title') }}" 
-                               placeholder="Contoh: Festival Musim Panas 2024"
-                               required
-                               autofocus>
-                        @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <div class="form-text">
-                            Beri judul yang menarik dan jelas.
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="description" class="form-label">Deskripsi Lengkap <span class="text-danger">*</span></label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" 
-                                  id="description" 
-                                  name="description" 
-                                  rows="6" 
-                                  placeholder="Deskripsikan event/promo secara detail...">{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <div class="form-text">
-                            Gunakan paragraf yang jelas. Informasikan waktu, lokasi, dan benefit.
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="event_date" class="form-label">Tanggal Event <span class="text-danger">*</span></label>
-                        <input type="date" 
-                               class="form-control @error('event_date') is-invalid @enderror" 
-                               id="event_date" 
-                               name="event_date" 
-                               value="{{ old('event_date') }}" 
+                               class="form-control @error('title') is-invalid @enderror" 
+                               value="{{ old('title') }}"
                                required>
-                        @error('event_date')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <div class="form-text">
-                            Tanggal pelaksanaan event/promo.
-                        </div>
+                        @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Deskripsi *</label>
+                        <textarea name="description" 
+                                  class="form-control @error('description') is-invalid @enderror" 
+                                  rows="5" 
+                                  required>{{ old('description') }}</textarea>
+                        @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Event *</label>
+                        <input type="date" 
+                               name="event_date" 
+                               class="form-control @error('event_date') is-invalid @enderror" 
+                               value="{{ old('event_date') }}"
+                               required>
+                        @error('event_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>
                 
                 <!-- Kolom Kanan -->
                 <div class="col-lg-4">
-                    <div class="card bg-soft-primary border-0 mb-4">
-                        <div class="card-body">
-                            <h6 class="card-title text-accent mb-3">
-                                <i class="fas fa-image me-2"></i>Gambar Utama
-                            </h6>
-                            
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Upload Gambar</label>
-                                <input type="file" 
-                                       class="form-control @error('image') is-invalid @enderror" 
-                                       id="image" 
-                                       name="image"
-                                       accept="image/*"
-                                       onchange="previewImage(this, 'imagePreview')">
-                                @error('image')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                                <div class="form-text small">
-                                    Format: JPG, JPEG, PNG. Maksimal 2MB.
-                                </div>
-                            </div>
-                            
-                            <!-- Preview Image -->
-                            <div class="mt-3">
-                                <div id="imagePreview">
-                                    <div class="border rounded p-4 text-center bg-white">
-                                        <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-3"></i>
-                                        <p class="text-muted small mb-0">Preview gambar akan muncul di sini</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="mb-3">
+                        <label class="form-label">Gambar</label>
+                        <input type="file" 
+                               name="image" 
+                               class="form-control @error('image') is-invalid @enderror" 
+                               accept="image/*"
+                               onchange="previewImage(this, 'imagePreview')">
+                        @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div class="form-text small">Format: JPG, PNG. Maks. 2MB</div>
+                        
+                        <div class="mt-3 border rounded p-3" id="imagePreview">
+                            <p class="text-muted small mb-0">Preview gambar</p>
                         </div>
                     </div>
                     
-                    <!-- Info Event -->
-                    <div class="card bg-soft-info border-0 mb-4">
+                    <div class="card bg-light border-0">
                         <div class="card-body">
-                            <h6 class="card-title text-accent mb-3">
-                                <i class="fas fa-info-circle me-2"></i>Info Event
-                            </h6>
-                            <div class="small text-muted">
-                                <div id="eventInfo">
-                                    <p class="mb-2">Isi form untuk melihat info event</p>
-                                </div>
+                            <h6 class="card-title small"><i class="fas fa-info-circle me-1"></i> Info Event</h6>
+                            <div class="small text-muted" id="eventInfo">
+                                Isi form untuk melihat info
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card bg-soft-primary border-0">
-                        <div class="card-body">
-                            <h6 class="card-title text-accent mb-3">
-                                <i class="fas fa-lightbulb me-2"></i>Tips Event
-                            </h6>
-                            <ul class="small text-muted mb-0">
-                                <li class="mb-2">Gambar menarik meningkatkan minat</li>
-                                <li class="mb-2">Jelaskan benefit untuk customer</li>
-                                <li class="mb-2">Sertakan kontak untuk informasi</li>
-                                <li>Update event yang sudah selesai</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <hr>
+            <hr class="my-4">
             
             <div class="d-flex justify-content-end gap-2">
-                <button type="reset" class="btn btn-secondary">
-                    <i class="fas fa-redo me-1"></i>Reset Form
-                </button>
+                <a href="{{ route('news.index') }}" class="btn btn-secondary">Batal</a>
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save me-1"></i>Simpan Berita
+                    <i class="fas fa-save me-1"></i> Simpan Berita
                 </button>
             </div>
         </form>
     </div>
 </div>
 
-@push('scripts')
 <script>
-    // Update event info real-time
-    function updateEventInfo() {
-        const title = document.getElementById('title').value;
-        const eventDate = document.getElementById('event_date').value;
-        const description = document.getElementById('description').value;
-        
-        const infoDiv = document.getElementById('eventInfo');
-        let html = '';
-        
-        if (title || eventDate) {
-            if (title) {
-                html += `<div class="mb-2"><strong>Judul:</strong><br>${title}</div>`;
-            }
-            
-            if (eventDate) {
-                const date = new Date(eventDate);
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = date.toLocaleDateString('id-ID', options);
-                
-                // Hitung hari menuju event
-                const today = new Date();
-                const timeDiff = date.getTime() - today.getTime();
-                const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                
-                let status = '';
-                let statusClass = '';
-                
-                if (daysDiff < 0) {
-                    status = 'Event telah lewat';
-                    statusClass = 'text-danger';
-                } else if (daysDiff === 0) {
-                    status = 'Event hari ini!';
-                    statusClass = 'text-success';
-                } else if (daysDiff <= 7) {
-                    status = `${daysDiff} hari lagi`;
-                    statusClass = 'text-warning';
-                } else {
-                    status = `${daysDiff} hari lagi`;
-                    statusClass = 'text-info';
-                }
-                
-                html += `
-                    <div class="mb-2">
-                        <strong>Tanggal:</strong><br>
-                        ${formattedDate}
-                    </div>
-                    <div class="${statusClass} fw-bold">
-                        <i class="far fa-clock me-1"></i>${status}
-                    </div>
-                `;
-            }
-            
-            if (description) {
-                const wordCount = description.trim().split(/\s+/).length;
-                html += `<div class="mt-2"><small>${wordCount} kata dalam deskripsi</small></div>`;
-            }
-        } else {
-            html = '<p class="mb-2">Isi form untuk melihat info event</p>';
-        }
-        
-        infoDiv.innerHTML = html;
-    }
+function previewImage(input, previewId) {
+    const preview = document.getElementById(previewId);
+    const file = input.files[0];
     
-    // Event listeners
-    document.getElementById('title').addEventListener('input', updateEventInfo);
-    document.getElementById('event_date').addEventListener('input', updateEventInfo);
-    document.getElementById('description').addEventListener('input', updateEventInfo);
-    
-    // Set minimum date to today
-    document.addEventListener('DOMContentLoaded', function() {
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('event_date').min = today;
-        updateEventInfo();
-    });
-    
-    // Image preview function (from layout)
-    function previewImage(input, previewId) {
-        const preview = document.getElementById(previewId);
-        const file = input.files[0];
-        
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.innerHTML = `
-                    <div class="text-center">
-                        <img src="${e.target.result}" class="img-thumbnail mb-2" style="max-height: 200px; max-width: 100%;">
-                        <p class="small text-success mb-0">
-                            <i class="fas fa-check-circle me-1"></i>
-                            ${file.name} (${(file.size / 1024).toFixed(1)} KB)
-                        </p>
-                    </div>
-                `;
-            }
-            reader.readAsDataURL(file);
-        } else {
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
             preview.innerHTML = `
-                <div class="border rounded p-4 text-center bg-white">
-                    <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-3"></i>
-                    <p class="text-muted small mb-0">Preview gambar akan muncul di sini</p>
+                <div class="text-center">
+                    <img src="${e.target.result}" class="img-fluid rounded mb-2" style="max-height: 150px;">
+                    <p class="small text-success mb-0">
+                        <i class="fas fa-check-circle me-1"></i> ${file.name}
+                    </p>
                 </div>
             `;
-        }
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.innerHTML = '<p class="text-muted small mb-0">Preview gambar</p>';
     }
+}
+
+// Update event info
+document.querySelector('input[name="event_date"]').addEventListener('change', function() {
+    const date = new Date(this.value);
+    const today = new Date();
+    const diffTime = date - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    let status = '';
+    if (diffDays < 0) {
+        status = 'Event telah lewat';
+    } else if (diffDays === 0) {
+        status = 'Event hari ini!';
+    } else if (diffDays <= 7) {
+        status = `${diffDays} hari lagi`;
+    } else {
+        status = `${diffDays} hari lagi`;
+    }
+    
+    document.getElementById('eventInfo').innerHTML = `
+        <div>Tanggal: ${date.toLocaleDateString('id-ID')}</div>
+        <div class="mt-1">Status: ${status}</div>
+    `;
+});
 </script>
-@endpush
 @endsection
