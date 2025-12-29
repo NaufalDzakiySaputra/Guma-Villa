@@ -1,10 +1,27 @@
+/* ===========================================
+   GUMA LANDSCAPE - SIMPLE ADMIN STYLES
+   =========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
 /* ========== AUTH PAGES - SIMPLE ========== */
 .auth-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, #F9F5F0 0%, #FFFFFF 100%);
     padding: 20px;
 }
 
@@ -13,7 +30,7 @@
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-color);
-    max-width: 400px;
+    max-width: 420px;
     width: 100%;
 }
 
@@ -26,79 +43,353 @@
 }
 
 .auth-logo {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
 }
 
 .auth-title {
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    opacity: 0.9;
+    font-size: 0.95rem;
+    margin: 0;
 }
 
 .auth-body {
     padding: 30px;
 }
 
-.auth-form-control {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    margin-bottom: 15px;
+/* Form Controls */
+.auth-body .form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    display: block;
 }
 
+.auth-form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    background: white;
+}
+
+.auth-form-control:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(160, 82, 45, 0.1);
+}
+
+.auth-form-control.is-invalid {
+    border-color: var(--danger-color);
+}
+
+/* Buttons */
 .auth-btn {
     background: var(--accent-color);
     color: white;
     border: none;
-    padding: 12px;
+    padding: 14px;
     width: 100%;
     border-radius: 8px;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
     margin-top: 10px;
 }
 
 .auth-btn:hover {
-    background: #8B4513;
+    background: var(--accent-hover);
 }
 
+/* Password Wrapper */
 .password-wrapper {
     position: relative;
 }
 
 .password-wrapper input {
-    padding-right: 40px;
+    padding-right: 50px;
 }
 
 .password-toggle {
     position: absolute;
-    right: 10px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     color: var(--text-muted);
     cursor: pointer;
+    padding: 8px;
 }
 
+.password-toggle:hover {
+    color: var(--accent-color);
+}
+
+/* Alerts */
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+}
+
+.text-danger.small {
+    font-size: 0.85rem;
+    color: var(--danger-color);
+    margin-top: 5px;
+    display: block;
+}
+
+/* Links */
+.auth-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+}
+
+/* Footer */
 .auth-footer {
     padding: 20px;
     text-align: center;
     border-top: 1px solid var(--border-color);
     color: var(--text-muted);
     font-size: 0.9rem;
+    background-color: rgba(243, 235, 221, 0.2);
 }
 
-.auth-link {
+/* ========== NAVBAR ========== */
+.navbar-custom {
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: 700;
     color: var(--accent-color);
-    text-decoration: none;
+    font-size: 1.4rem;
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 8px 15px;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover {
+    color: var(--accent-color);
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar-card {
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+}
+
+/* ========== MENU LIST ========== */
+.list-group-item {
+    border: none;
+    border-left: 3px solid transparent;
+    padding: 12px 15px;
+    color: var(--text-dark);
+    background: transparent;
+}
+
+.list-group-item.active {
+    background-color: rgba(160, 82, 45, 0.1);
+    border-left-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.list-group-item:hover:not(.active) {
+    background-color: rgba(160, 82, 45, 0.05);
+    color: var(--accent-color);
+}
+
+/* ========== CARD ========== */
+.card {
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: 18px 20px;
+    border-radius: 12px 12px 0 0;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+/* ========== TABLE ========== */
+.table th {
+    background-color: rgba(243, 235, 221, 0.5);
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: 15px;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.table td {
+    padding: 15px;
+    border-color: var(--border-light);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(243, 235, 221, 0.3);
+}
+
+/* ========== BADGES ========== */
+.badge-villa, .badge-wisata, .badge-nikah, .badge-mice {
+    padding: 6px 12px;
+    font-weight: 500;
+    border-radius: 20px;
+    border: 1px solid;
+}
+
+.badge-villa {
+    background-color: rgba(139, 107, 61, 0.15);
+    color: #8B6B3D;
+    border-color: rgba(139, 107, 61, 0.2);
+}
+
+.badge-wisata {
+    background-color: rgba(45, 139, 93, 0.15);
+    color: #2D8B5D;
+    border-color: rgba(45, 139, 93, 0.2);
+}
+
+.badge-nikah {
+    background-color: rgba(179, 71, 92, 0.15);
+    color: #B3475C;
+    border-color: rgba(179, 71, 92, 0.2);
+}
+
+.badge-mice {
+    background-color: rgba(58, 123, 140, 0.15);
+    color: #3A7B8C;
+    border-color: rgba(58, 123, 140, 0.2);
+}
+
+/* ========== BUTTONS ========== */
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    padding: 10px 20px;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.btn-success, .btn-outline-secondary {
+    border-radius: 8px;
+    padding: 10px 20px;
     font-weight: 500;
 }
 
-.auth-link:hover {
-    text-decoration: underline;
+/* ========== FORMS ========== */
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
 }
 
-/* Keep existing admin styles below... */
-/* ... (all your existing admin CSS remains unchanged) ... */
+.form-control:focus, .form-select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(160, 82, 45, 0.15);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+/* ========== ALERTS ========== */
+.alert {
+    border-radius: 10px;
+    padding: 15px 20px;
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #155724;
+    border-left: 4px solid var(--success-color);
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #721c24;
+    border-left: 4px solid var(--danger-color);
+}
+
+/* ========== FOOTER ========== */
+.footer-custom {
+    background-color: var(--bg-footer);
+    border-top: 1px solid var(--border-color);
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .auth-card {
+        max-width: 90%;
+    }
+    
+    .auth-header, .auth-body {
+        padding: 20px;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .table th, .table td {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-page {
+        padding: 10px;
+    }
+    
+    .auth-card {
+        max-width: 100%;
+    }
+    
+    .btn {
+        padding: 8px 16px;
+    }
+}
