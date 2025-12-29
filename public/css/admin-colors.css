@@ -1,8 +1,15 @@
+/* ===========================================
+   GUMA LANDSCAPE - COLOR VARIABLES SIMPLE
+   =========================================== */
+
 :root {
     /* Color Palette */
-    --primary-color: #F3EBDD;    /* Cream soft - utama */
-    --secondary-color: #8B7D6B;   /* Earth tone gray */
-    --accent-color: #A0522D;      /* Brown sienna */
+    --primary-color: #F3EBDD;          /* Cream soft */
+    --secondary-color: #8B7D6B;        /* Earth tone gray */
+    --accent-color: #A0522D;           /* Brown sienna */
+    --accent-hover: #8B4513;           /* Darker brown */
+    
+    /* System colors */
     --success-color: #28a745;
     --danger-color: #dc3545;
     --warning-color: #ffc107;
@@ -17,10 +24,11 @@
     --bg-body: #f8f9fa;
     --bg-card: #ffffff;
     --bg-sidebar: #ffffff;
+    --bg-footer: #E3C48C;
     
     /* Borders */
-    --border-color: rgba(139, 125, 107, 0.15);
-    --border-light: rgba(139, 125, 107, 0.1);
+    --border-color: rgba(139, 125, 107, 0.25);
+    --border-light: rgba(139, 125, 107, 0.15);
     
     /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
