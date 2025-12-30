@@ -3,111 +3,86 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
-use App\Models\Package;
+use App\Models\Packages;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of the reservations.
-     */
     public function index(Request $request)
     {
-        // Query untuk filter
-        $query = Reservation::with(['user', 'package']);
+        $query = Reservation::with(['user', 'packages']);
         
-        if ($request->has('status') && $request->status != '') {
-            $query->where('status', $request->status);
+        // Filter
+        $filters = ['status', 'service_type', 'payment_status', 'payment_method'];
+        foreach ($filters as $filter) {
+            if ($request->has($filter) && $request->$filter != '') {
+                $query->where($filter, $request->$filter);
+            }
         }
         
-        if ($request->has('service_type') && $request->service_type != '') {
-            $query->where('service_type', $request->service_type);
-        }
-        
-        if ($request->has('date') && $request->date != '') {
-            $query->whereDate('date', $request->date);
-        }
-        
-        if ($request->has('payment_status') && $request->payment_status != '') {
-            $query->where('payment_status', $request->payment_status);
+        if ($request->has('checkin_date') && $request->checkin_date != '') {
+            $query->whereDate('checkin_date', $request->checkin_date);
         }
         
         $reservations = $query->latest()->paginate(10);
         
-        // Hitung stats
+        // Stats
         $totalCount = Reservation::count();
         $pendingCount = Reservation::where('status', 'pending')->count();
         $approvedCount = Reservation::where('status', 'approved')->count();
-        $paidCount = Reservation::where('payment_status', 'paid')
-            ->orWhere('payment_status', 'verified')
-            ->count();
+        $unpaidCount = Reservation::where('payment_status', 'pending')->count();
+        $paidCount = Reservation::where('payment_status', 'paid')->count();
+        $verifiedCount = Reservation::where('payment_status', 'verified')->count();
         
         return view('admin.reservations.index', compact(
             'reservations',
             'totalCount',
             'pendingCount',
             'approvedCount',
-            'paidCount'
+            'unpaidCount',
+            'paidCount',
+            'verifiedCount'
         ));
     }
 
-    /**
-     * Show the form for creating a new reservation.
-     * (Ini untuk user, bukan admin - bisa dihapus jika tidak butuh)
-     */
-    public function create()
-    {
-        abort(404, 'Admin tidak dapat membuat reservasi baru');
-    }
-
-    /**
-     * Store a newly created reservation in storage.
-     * (Ini untuk user, bukan admin)
-     */
-    public function store(Request $request)
-    {
-        return redirect()->route('admin.reservations.index')
-            ->with('info', 'Admin tidak dapat membuat reservasi baru');
-    }
-
-    /**
-     * Display the specified reservation.
-     */
     public function show($id)
     {
-        $reservation = Reservation::with(['user', 'package'])->findOrFail($id);
+        $reservation = Reservation::with(['user', 'packages', 'payments'])
+                                  ->findOrFail($id);
         return view('admin.reservations.show', compact('reservation'));
     }
 
-    /**
-     * Show the form for editing the specified reservation.
-     */
     public function edit($id)
     {
         $reservation = Reservation::findOrFail($id);
-        $statuses = ['pending', 'approved', 'rejected'];
-        $paymentStatuses = ['unpaid', 'paid', 'verified'];
         
-        return view('admin.reservations.edit', compact('reservation', 'statuses', 'paymentStatuses'));
+        $statuses = ['pending', 'approved', 'rejected'];
+        $paymentStatuses = ['pending', 'paid', 'verified', 'expired', 'failed'];
+        $paymentMethods = ['transfer', 'bank', 'credit_card', 'cash', 'qris', null];
+        
+        return view('admin.reservations.edit', compact(
+            'reservation', 
+            'statuses', 
+            'paymentStatuses',
+            'paymentMethods'
+        ));
     }
 
-    /**
-     * Update the specified reservation in storage.
-     * (Admin update status)
-     */
     public function update(Request $request, $id)
     {
         $reservation = Reservation::findOrFail($id);
         
         $request->validate([
             'status' => 'required|in:pending,approved,rejected',
-            'payment_status' => 'required|in:unpaid,paid,verified',
+            'payment_status' => 'required|in:pending,paid,verified,expired,failed',
+            'payment_method' => 'nullable|in:transfer,bank,credit_card,cash,qris',
             'notes' => 'nullable|string|max:500',
         ]);
 
         $reservation->update([
             'status' => $request->status,
             'payment_status' => $request->payment_status,
+            'payment_method' => $request->payment_method,
             'notes' => $request->notes ?: $reservation->notes,
         ]);
 
@@ -115,9 +90,6 @@ class ReservationController extends Controller
             ->with('success', 'Status reservasi berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified reservation from storage.
-     */
     public function destroy($id)
     {
         $reservation = Reservation::findOrFail($id);
