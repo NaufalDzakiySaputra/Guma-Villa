@@ -1,4 +1,4 @@
-@extends('layouts.frontend') {{-- PERBAIKAN: Harus sesuai nama file frontend.blade.php --}}
+@extends('layouts.frontend') 
 
 @section('content')
 <section class="bg-package-section py-5">
@@ -9,12 +9,10 @@
 
         <div class="row g-4">
             @forelse($packages as $item)
-            <div class="col-lg-4 col-md-6">
+           <div class="col-lg-3 col-md-6">
                 <div class="card guma-card h-100 border-0 shadow-sm position-relative">
-                    
-                    <span class="badge-category">{{ strtoupper($item->service_type) }}</span>
 
-                    <div class="package-img-wrapper">
+                    <div >
                         <img src="{{ asset('storage/' . $item->image_path) }}" 
                              class="card-img-top" 
                              alt="{{ $item->nama }}" 

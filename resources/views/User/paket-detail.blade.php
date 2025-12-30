@@ -35,8 +35,6 @@
                             <h3 class="fw-bold text-accent mb-4">
                                 IDR {{ number_format($package->price, 0, ',', '.') }}
                             </h3>
-
-                            {{-- FORM PESAN SEKARANG --}}
                             @auth
                                 {{-- USER SUDAH LOGIN: Langsung ke form reservasi --}}
                                 <form action="{{ route('user.reservation.create') }}" method="GET">

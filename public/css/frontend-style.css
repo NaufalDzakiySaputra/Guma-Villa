@@ -1,12 +1,12 @@
 /* ============================================================
-   SECTION 1: HERO & GLOBAL STYLES (Existing)
+    bahagian 1 mantul
    ============================================================ */
 
 /* Hero Section */
 .hero-wrapper {
     background-size: cover;
     background-position: center;
-    min-height: 80vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
     position: relative;
@@ -35,8 +35,8 @@
 
 .btn-guma {
     background-color: var(--accent-color);
-    color: white;
-    border-radius: 50px;
+    color: rgb(243, 243, 243);
+    border-radius: 25px;
     padding: 12px 35px;
     font-weight: 600;
     border: none;
@@ -64,10 +64,11 @@
 
 .guma-card {
     border: none;
+    
     border-radius: 20px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #fafafa;
+    background-color: #e5e5e5;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -116,7 +117,7 @@
 
 /* Tombol Detail (Warna Olive Green sesuai referensi) */
 .btn-detail-guma {
-    background-color: #84752b; /* Warna Olive */
+    background-color: #84752b; /* */
     color: white !important;
     border-radius: 8px;
     padding: 10px 20px;
@@ -128,36 +129,8 @@
     transition: 0.3s;
 }
 
-.btn-detail-guma:hover {
-    background-color: #6d6023;
-    padding-right: 25px;
-}
-
-.btn-detail-guma i {
-    margin-left: 10px;
-}
 
 
-/* Warna Selang-Seling */
-.bg-guma-dark { 
-    background-color: #EBD9B4; 
-}
-.bg-guma-light { 
-    background-color: #ffffff; 
-}
-
-/* Menggunakan selector yang lebih spesifik agar menang dari Bootstrap tanpa !important */
-section.guma-menu-container .guma-menu-row {
-    margin: 0;
-    display: flex;
-    align-items: stretch;
-}
-
-/* Menghilangkan padding bawaan Bootstrap pada kolom secara halus */
-.guma-menu-row .col-md-5, 
-.guma-menu-row .col-md-7 {
-    padding: 0; 
-}
 
 .guma-menu-img-box {
     padding: 20px;
@@ -170,9 +143,8 @@ section.guma-menu-container .guma-menu-row {
     border-radius: 12px;
 }
 
-/* TEKS: Fokus pada kerapatan jarak */
 .guma-menu-info-top {
-    padding: 25px 30px 20px 10px; /* Atas 25px, Kiri 10px (Rapat ke gambar) */
+    padding: 25px 30px 20px 10px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -196,18 +168,18 @@ section.guma-menu-container .guma-menu-row {
     margin: 0;
     font-weight: 800;
 }
-
 /* ============================================================
    SECTION 3: GUMA MENU CARD (SQUARE & SPACED)
    ============================================================ */
 
-/* Background Krem Luas */
+/*cssssss menuuuuuuuu*/
+/* Backgroun menu*/
 .guma-menu-container {
     background-color: #f3e9d7; 
     padding: 40px 0;
 }
 
-/* Card Wrapper yang lebih fleksibel untuk 2 kolom */
+/* Card menu */
 .guma-menu-card-wrapper {
     background-color: #ffffff;
     display: flex;
@@ -240,6 +212,25 @@ section.guma-menu-container .guma-menu-row {
 .guma-menu-price {
     font-size: 1.1rem;
     font-weight: 800;
+/*buatgambar ya manteman gambar header yang di menu kami ok terimakaszeeeh*/
+}
+.guma-hero {
+    height: 300px; 
+    
+    /* Overlay Gelap agar teks terbaca jelas */
+    background-color: rgba(0, 0, 0, 0.6);
+    background-blend-mode: overlay;
+
+    /* Pengaturan Posisi Gambar */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Menaruh Teks di Tengah */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 /* ============================================================
