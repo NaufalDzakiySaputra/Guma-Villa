@@ -1,3 +1,7 @@
+/* ============================================================
+   SECTION 1: HERO & GLOBAL STYLES (Existing)
+   ============================================================ */
+
 /* Hero Section */
 .hero-wrapper {
     background-size: cover;
@@ -21,38 +25,12 @@
     z-index: 2;
 }
 
-/* Guma Custom Card - PERBAIKAN GAMBAR SEMPIT */
-.guma-card {
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    background-color: var(--bg-card);
-    height: 100%; /* Membuat semua kartu tingginya sama */
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-.guma-card:hover {
-    transform: translateY(-10px);
-}
-
-.guma-card img {
-    height: 250px; /* Ditambah tingginya agar lebih proporsional */
-    object-fit: cover; /* PENTING: Menghilangkan efek sempit/gepeng pada gambar */
-    width: 100%;
-    display: block;
-}
-
-.guma-card .card-body {
-    flex-grow: 1;
-    padding: 1.5rem;
-}
-
-/* Global Styles */
 .section-padding {
     padding: 80px 0;
+}
+
+.text-accent {
+    color: var(--accent-color);
 }
 
 .btn-guma {
@@ -73,6 +51,88 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.text-accent {
-    color: var(--accent-color);
+
+/* ============================================================
+   SECTION 2: GUMA PACKAGE CARD STYLES (New - Reference based)
+   Keterangan: Gaya kartu paket dengan warna Olive Green & Krem
+   ============================================================ */
+
+/* Latar Belakang Section Paket (Warna Krem sesuai referensi) */
+.bg-package-section {
+    background-color: #f3e9d7; /* */
+}
+
+.guma-card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.guma-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Solusi Gambar Sempit/Gepeng */
+.guma-card img {
+    height: 250px; 
+    object-fit: cover; /* */
+    width: 100%;
+    display: block;
+}
+
+.guma-card .card-body {
+    flex-grow: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.package-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.package-desc {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.package-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #84752b; /* Warna Olive Harga */
+    margin-bottom: 20px;
+}
+
+/* Tombol Detail (Warna Olive Green sesuai referensi) */
+.btn-detail-guma {
+    background-color: #84752b; /* */
+    color: white !important;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    transition: 0.3s;
+}
+
+.btn-detail-guma:hover {
+    background-color: #6d6023;
+    padding-right: 25px;
+}
+
+.btn-detail-guma i {
+    margin-left: 10px;
 }
