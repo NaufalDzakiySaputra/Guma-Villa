@@ -1,12 +1,12 @@
 @extends('layouts.frontend')
 
 @section('content')
-<section class="hero-wrapper" style="background-image: url('{{ asset('images/hero.jpg') }}');">
+<section class="hero-wrapper" style="background-image: url('{{ asset('images/hero/gum.jpg') }}');">
     <div class="hero-overlay"></div>
     <div class="container hero-content text-center text-md-start">
         <h1 class="display-3 fw-bold">Jelajahi Pesona <br> <span class="text-accent">Guma Landscape</span></h1>
         <p class="fs-5 mb-4">Villa eksklusif, Restoran mewah, dan Paket Wisata alam terbaik.</p>
-        <a href="#paket" class="btn btn-guma">Lihat Paket Kami</a>
+        <a href="#paket" class="btn btn-guma btn-lg fw-bold">Lihat Paket</a>
     </div>
 </section>
 
@@ -25,7 +25,7 @@
                         <span class="badge bg-light text-success mb-2 text-uppercase">{{ $p->service_type }}</span>
                         <h5 class="fw-bold mb-1">{{ $p->nama }}</h5>
                         <p class="text-accent fw-bold mb-3">Rp {{ number_format($p->price, 0, ',', '.') }}</p>
-                        <a href="#" class="btn btn-outline-dark btn-sm w-100 rounded-pill">Detail Paket</a>
+                        <a href="#" class="btn btn-detail-guma w-100">Detail Paket</a>
                     </div>
                 </div>
             </div>
