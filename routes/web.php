@@ -11,6 +11,8 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\UserReservationController;
+use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 // === ROUTE AUTH ===
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -27,7 +29,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
     Route::resource('news', NewsController::class);
     Route::resource('packages', PackagesController::class);
-    Route::resource('payments', PaymentsController::class);
+    
+    Route::prefix('payments')->name('payments.')->group(function () {
+        Route::get('/', [PaymentsController::class, 'index'])->name('index');
+        Route::get('/{id}/edit', [PaymentsController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [PaymentsController::class, 'update'])->name('update');
+        Route::get('/proof/{id}', [PaymentsController::class, 'showProof'])->name('proof.show');
+    });
+    
     Route::resource('menus', MenusController::class);
     Route::resource('gallery', GalleryController::class);
     
@@ -42,14 +51,33 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
 // ===================== ROUTE KHUSUS TAMPILAN USER (FRONTEND) ==================
 Route::group(['as' => 'user.'], function () {
+    // Public routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/paket-wisata', [HomeController::class, 'paket'])->name('paket');
-    
-    // --- TAMBAHAN ROUTE DETAIL DISINI ---
     Route::get('/paket-wisata/{id}', [HomeController::class, 'paketDetail'])->name('paket.detail');
-    
     Route::get('/daftar-menu', [HomeController::class, 'menu'])->name('menu');
     Route::get('/galeri-foto', [HomeController::class, 'galeri'])->name('galeri');
     Route::get('/berita-terbaru', [HomeController::class, 'berita'])->name('berita');
     Route::get('/tentang-kami', [HomeController::class, 'tentang'])->name('about');
+    
+    // =========== ROUTE RESERVASI ===========
+    // Untuk user BELUM login (simpan session → redirect ke login)
+    Route::post('/pesan-sekarang', [HomeController::class, 'pesanSekarang'])->name('pesan.sekarang');
+    
+    // Untuk user SUDAH login (langsung ke form reservasi)
+    Route::middleware(['auth'])->group(function () {
+        // Reservasi User
+        Route::prefix('reservasi')->name('reservation.')->group(function () {
+            Route::get('/', [UserReservationController::class, 'create'])->name('create');
+            Route::post('/', [UserReservationController::class, 'store'])->name('store');
+            Route::get('/saya', [UserReservationController::class, 'index'])->name('my');
+            Route::get('/{id}', [UserReservationController::class, 'show'])->name('show');
+        });
+        
+        // Pembayaran User
+        Route::prefix('pembayaran')->name('payment.')->group(function () {
+            Route::get('/upload/{id}', [UserPaymentController::class, 'upload'])->name('upload');
+            Route::post('/upload/{id}', [UserPaymentController::class, 'storeProof'])->name('store.proof');
+        });
+    });
 });

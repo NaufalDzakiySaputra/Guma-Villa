@@ -8,6 +8,8 @@ use App\Models\News;
 use App\Models\Gallery;
 use App\Models\Menus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,20 +23,15 @@ class HomeController extends Controller
         return view('user.beranda', compact('packages', 'news', 'galleries', 'menus'));
     }
 
-    // PERBAIKAN: Tambahkan pengambilan data agar tidak error "Undefined variable"
     public function paket() 
     { 
-        // Mengambil semua data paket dari database
         $packages = Packages::all(); 
-        
-        // Mengirim data ke view User.paket
         return view('user.paket', compact('packages')); 
     }
 
     public function paketDetail($id)
     {
         $package = Packages::findOrFail($id);
-
         return view('user.paket-detail', compact('package'));
     }
 
@@ -59,5 +56,30 @@ class HomeController extends Controller
     public function tentang() 
     { 
         return view('user.about'); 
+    }
+
+    /**
+     * Handle tombol "Pesan Sekarang" untuk user BELUM login
+     */
+    public function pesanSekarang(Request $request)
+    {
+        $request->validate([
+            'package_id' => 'required|exists:packages,id',
+            'service_type' => 'required|in:villa,wisata,nikah,mice',
+            'date' => 'required|date|after_or_equal:today',
+            'jumlah_orang' => 'required|integer|min:1',
+        ]);
+        
+        // Simpan data ke session
+        Session::put('pending_reservation', [
+            'package_id' => $request->package_id,
+            'service_type' => $request->service_type,
+            'date' => $request->date,
+            'jumlah_orang' => $request->jumlah_orang,
+        ]);
+        
+        // Redirect ke login (karena user belum login)
+        return redirect()->route('login')
+            ->with('info', 'Silakan login untuk melanjutkan reservasi.');
     }
 }
