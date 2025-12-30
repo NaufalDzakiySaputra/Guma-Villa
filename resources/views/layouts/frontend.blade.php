@@ -16,14 +16,14 @@
 
     <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold text-accent" href="/">GUMA LANDSCAPE</a>
+            <a class="navbar-brand fw-bold text-accent" href="{{ route('user.home') }}">GUMA LANDSCAPE</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto text-uppercase small fw-bold">
-                    <li class="nav-item"><a class="nav-link" href="/">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('user.home') }}">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('user.paket') }}">Paket</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('user.menu') }}">Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('user.galeri') }}">Galeri</a></li>
@@ -40,8 +40,19 @@
                                 <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 animate slideIn">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-id-card me-2"></i>Profil</a></li>
+                                <!-- PROFIL USER -->
+                                <li><a class="dropdown-item" href="#">
+                                    <i class="fas fa-id-card me-2"></i>Profil
+                                </a></li>
                                 
+                                <!-- RESERVASI SAYA (Hanya untuk user biasa) -->
+                                @if(Auth::user()->role === 'user')
+                                <li><a class="dropdown-item" href="{{ route('user.reservation.my') }}">
+                                    <i class="fas fa-calendar-check me-2"></i>Reservasi Saya
+                                </a></li>
+                                @endif
+                                
+                                <!-- PANEL ADMIN (hanya untuk admin) -->
                                 @if(Auth::user()->role === 'admin')
                                     <li><a class="dropdown-item text-primary fw-bold" href="{{ route('admin.dashboard') }}">
                                         <i class="fas fa-user-shield me-2"></i>Panel Admin
@@ -49,6 +60,8 @@
                                 @endif
 
                                 <li><hr class="dropdown-divider"></li>
+                                
+                                <!-- LOGOUT -->
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
