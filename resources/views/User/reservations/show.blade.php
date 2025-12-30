@@ -116,7 +116,15 @@
                                         <td>{{ ucfirst($payment->method) }}</td>
                                         <td>IDR {{ number_format($payment->amount, 0, ',', '.') }}</td>
                                         <td>
-                                            <span class="badge bg-{{ $payment->status == 'verified' ? 'success' : ($payment->status == 'pending' ? 'warning' : ($payment->status == 'success' ? 'info' : 'danger')) }}">
+                                            @php
+                                                // Warna badge yang konsisten
+                                                $badgeColor = 'warning'; // default
+                                                if ($payment->status == 'verified') $badgeColor = 'success';
+                                                elseif ($payment->status == 'paid') $badgeColor = 'info';
+                                                elseif ($payment->status == 'failed') $badgeColor = 'danger';
+                                                elseif ($payment->status == 'expired') $badgeColor = 'secondary';
+                                            @endphp
+                                            <span class="badge bg-{{ $badgeColor }}">
                                                 {{ strtoupper($payment->status) }}
                                             </span>
                                         </td>
@@ -127,9 +135,18 @@
                             </table>
                         </div>
                         
-                        @if($reservation->payment_status == 'pending' && in_array($reservation->payment_method, ['transfer', 'bank', 'qris']) && $reservation->payments->count() > 0)
+                        @php
+                            // Logika tombol upload
+                            $latestPayment = $reservation->payments->first();
+                            $showUploadButton = $reservation->payment_status == 'pending' && 
+                                               in_array($reservation->payment_method, ['transfer', 'bank', 'qris']) && 
+                                               $reservation->payments->count() > 0 &&
+                                               in_array($latestPayment->status, ['pending', 'expired']);
+                        @endphp
+                        
+                        @if($showUploadButton)
                         <div class="mt-3 text-center">
-                            <a href="{{ route('user.payment.upload', $reservation->payments->first()->id) }}" 
+                            <a href="{{ route('user.payment.upload', $latestPayment->id) }}" 
                                class="btn btn-warning">
                                 <i class="fas fa-upload me-2"></i> Upload Bukti Pembayaran
                             </a>

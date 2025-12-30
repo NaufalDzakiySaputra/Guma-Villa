@@ -86,7 +86,7 @@
                             <td>{{ $payment->method }}</td>
                             <td>
                                 @if($payment->status == 'pending') <span class="badge bg-warning">Pending</span>
-                                @elseif($payment->status == 'success') <span class="badge bg-success">Success</span>
+                                @elseif($payment->status == 'paid') <span class="badge bg-success">Paid</span>
                                 @elseif($payment->status == 'verified') <span class="badge bg-info">Verified</span>
                                 @else <span class="badge bg-danger">{{ ucfirst($payment->status) }}</span>
                                 @endif

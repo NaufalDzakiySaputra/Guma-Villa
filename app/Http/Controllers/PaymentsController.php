@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payments; // PERUBAHAN: Payments bukan Payment
+use App\Models\Payments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentsController extends Controller
 {
@@ -21,36 +22,99 @@ class PaymentsController extends Controller
         $payment = Payments::with(['reservation', 'reservation.user'])
                          ->findOrFail($id);
         
-        $statuses = ['pending', 'success', 'failed', 'verified', 'expired'];
+        // 🔥 UBAH: 'success' menjadi 'paid'
+        $statuses = ['pending', 'paid', 'failed', 'verified', 'expired'];
         
         return view('admin.payments.edit', compact('payment', 'statuses'));
     }
 
     public function update(Request $request, $id)
     {
-        $payment = Payments::findOrFail($id);
-        
+        // 🔥 UBAH: 'success' menjadi 'paid'
         $request->validate([
-            'status' => 'required|in:pending,success,failed,verified,expired',
+            'status' => 'required|in:pending,paid,failed,verified,expired',
             'payment_notes' => 'nullable|string|max:500',
         ]);
         
-        $updateData = [
-            'status' => $request->status,
-            'payment_notes' => $request->payment_notes,
-        ];
+        DB::beginTransaction();
         
-        if ($request->status === 'verified') {
-            $updateData['verified_at'] = now();
-            $updateData['verified_by'] = auth()->id();
+        try {
+            $payment = Payments::findOrFail($id);
             
-            // Update juga payment_status di reservation
-            $payment->reservation->update(['payment_status' => 'verified']);
+            $oldStatus = $payment->status;
+            $newStatus = $request->status;
+            
+            $updateData = [
+                'status' => $newStatus,
+                'payment_notes' => $request->payment_notes,
+            ];
+            
+            if ($newStatus === 'verified' && $oldStatus !== 'verified') {
+                $updateData['verified_at'] = now();
+                $updateData['verified_by'] = auth()->id();
+            }
+            
+            if ($oldStatus === 'verified' && $newStatus !== 'verified') {
+                $updateData['verified_at'] = null;
+                $updateData['verified_by'] = null;
+            }
+            
+            $payment->update($updateData);
+            
+            // 🔥 SEDERHANA: Langsung update reservation
+            $payment->reservation->update([
+                'payment_status' => $newStatus
+            ]);
+            
+            // 🔥 UBAH: 'success' menjadi 'paid'
+            if (in_array($newStatus, ['paid', 'verified'])) {
+                if ($payment->reservation && $payment->reservation->status !== 'approved') {
+                    $payment->reservation->update(['status' => 'approved']);
+                }
+            }
+            
+            DB::commit();
+            
+            return redirect()->route('admin.payments.index')
+                ->with('success', 'Status pembayaran berhasil diperbarui!');
+                
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+    
+    // 🔥 HAPUS method syncPaymentStatusToReservation (tidak perlu lagi)
+    
+    public function quickVerify($id)
+    {
+        DB::beginTransaction();
         
-        $payment->update($updateData);
-
-        return redirect()->route('admin.payments.index')
-            ->with('success', 'Status pembayaran diperbarui!');
+        try {
+            $payment = Payments::findOrFail($id);
+            
+            $payment->update([
+                'status' => 'verified',
+                'verified_at' => now(),
+                'verified_by' => auth()->id(),
+            ]);
+            
+            // 🔥 SEDERHANA: Langsung update
+            $payment->reservation->update([
+                'payment_status' => 'verified',
+                'status' => 'approved'
+            ]);
+            
+            DB::commit();
+            
+            return redirect()->back()
+                ->with('success', 'Pembayaran berhasil diverifikasi!');
+                
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }

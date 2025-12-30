@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Packages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
@@ -79,15 +80,50 @@ class ReservationController extends Controller
             'notes' => 'nullable|string|max:500',
         ]);
 
-        $reservation->update([
-            'status' => $request->status,
-            'payment_status' => $request->payment_status,
-            'payment_method' => $request->payment_method,
-            'notes' => $request->notes ?: $reservation->notes,
-        ]);
+        DB::beginTransaction();
+        
+        try {
+            // 1. Update reservation
+            $reservation->update([
+                'status' => $request->status,
+                'payment_status' => $request->payment_status,
+                'payment_method' => $request->payment_method,
+                'notes' => $request->notes ?: $reservation->notes,
+            ]);
 
-        return redirect()->route('admin.reservations.index')
-            ->with('success', 'Status reservasi berhasil diperbarui!');
+            // 2. Update juga status di tabel payments
+            if ($reservation->payments()->exists()) {
+                $reservation->payments()->update([
+                    'status' => $request->payment_status
+                ]);
+                
+                // Jika status verified, set verified_at dan verified_by
+                if ($request->payment_status == 'verified') {
+                    $reservation->payments()->update([
+                        'verified_at' => now(),
+                        'verified_by' => auth()->id()
+                    ]);
+                }
+                
+                // Jika bukan verified, reset verified fields
+                if ($request->payment_status != 'verified') {
+                    $reservation->payments()->update([
+                        'verified_at' => null,
+                        'verified_by' => null
+                    ]);
+                }
+            }
+            
+            DB::commit();
+
+            return redirect()->route('admin.reservations.index')
+                ->with('success', 'Status reservasi berhasil diperbarui!');
+                
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function destroy($id)

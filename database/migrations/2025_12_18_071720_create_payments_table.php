@@ -15,7 +15,7 @@ return new class extends Migration
             $table->decimal('amount', 12, 2);
             $table->string('method');
             $table->string('transaction_code')->unique();
-            $table->enum('status', ['pending', 'success', 'failed', 'verified', 'expired'])->default('pending');
+            $table->enum('status', ['pending', 'paid', 'failed', 'verified', 'expired'])->default('pending');
             
             // BUKTI PEMBAYARAN (BARU)
             $table->string('proof_image')->nullable();
