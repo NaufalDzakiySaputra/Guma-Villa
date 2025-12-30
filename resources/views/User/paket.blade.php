@@ -31,8 +31,9 @@
                         <div class="mt-auto">
                             <p class="package-price">IDR {{ number_format($item->price, 0, ',', '.') }}</p>
                             
-                            <a href="#" class="btn btn-detail-guma w-100 justify-content-center">
-                                Lihat Detail <i class="fas fa-arrow-right ms-2"></i>
+                            <a href="{{ route('user.paket.detail', $item->id) }}"
+                                 class="btn btn-detail-guma w-100">
+                                    Lihat Detail <i class="fas fa-arrow-right ms-2"></i>
                             </a>
                         </div>
                     </div>

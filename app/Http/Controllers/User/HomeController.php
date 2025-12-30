@@ -31,6 +31,13 @@ class HomeController extends Controller
         return view('user.paket', compact('packages')); 
     }
 
+    public function paketDetail($id)
+    {
+        $package = Packages::findOrFail($id);
+
+        return view('user.paket-detail', compact('package'));
+    }
+
     public function menu() 
     { 
         $menus = Menus::all();
