@@ -64,10 +64,11 @@
 
 .guma-card {
     border: none;
+    
     border-radius: 20px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #ffffff;
+    background-color: #fafafa;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -135,4 +136,108 @@
 
 .btn-detail-guma i {
     margin-left: 10px;
+}
+
+
+/* Warna Selang-Seling */
+.bg-guma-dark { 
+    background-color: #EBD9B4; 
+}
+.bg-guma-light { 
+    background-color: #ffffff; 
+}
+
+/* Menggunakan selector yang lebih spesifik agar menang dari Bootstrap tanpa !important */
+section.guma-menu-container .guma-menu-row {
+    margin: 0;
+    display: flex;
+    align-items: stretch;
+}
+
+/* Menghilangkan padding bawaan Bootstrap pada kolom secara halus */
+.guma-menu-row .col-md-5, 
+.guma-menu-row .col-md-7 {
+    padding: 0; 
+}
+
+.guma-menu-img-box {
+    padding: 20px;
+}
+
+.guma-menu-img-square {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* TEKS: Fokus pada kerapatan jarak */
+.guma-menu-info-top {
+    padding: 25px 30px 20px 10px; /* Atas 25px, Kiri 10px (Rapat ke gambar) */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.guma-menu-info-top h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 2px;
+    line-height: 1.1;
+}
+
+.guma-menu-info-top p {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.guma-menu-price {
+    margin: 0;
+    font-weight: 800;
+}
+/* ============================================================
+   SECTION 3: GUMA MENU CARD (SQUARE & SPACED)
+   ============================================================ */
+
+/* Background Krem Luas */
+.guma-menu-container {
+    background-color: #f3e9d7; 
+    padding: 40px 0;
+}
+
+/* Card Wrapper yang lebih fleksibel untuk 2 kolom */
+.guma-menu-card-wrapper {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border: none;
+    height: 100%; /* Agar tinggi card sama jika teks berbeda panjang */
+}
+
+/* Ukuran Gambar disesuaikan agar tidak terlalu besar di 2 kolom */
+.guma-menu-img-square {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.guma-menu-img-box {
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.guma-menu-info-top h3 {
+    font-size: 1.2rem; /* Ukuran font diperkecil sedikit agar pas */
+    margin-bottom: 5px;
+}
+
+.guma-menu-price {
+    font-size: 1.1rem;
+    font-weight: 800;
 }

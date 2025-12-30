@@ -42,7 +42,6 @@
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 animate slideIn">
                                 <li><a class="dropdown-item" href="#"><i class="fas fa-id-card me-2"></i>Profil</a></li>
                                 
-                                {{-- Jika Admin, Tambah Link Dashboard --}}
                                 @if(Auth::user()->role === 'admin')
                                     <li><a class="dropdown-item text-primary fw-bold" href="{{ route('admin.dashboard') }}">
                                         <i class="fas fa-user-shield me-2"></i>Panel Admin
