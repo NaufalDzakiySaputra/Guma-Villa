@@ -1,0 +1,78 @@
+/* Hero Section */
+.hero-wrapper {
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: white;
+}
+
+.hero-overlay {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2));
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Guma Custom Card - PERBAIKAN GAMBAR SEMPIT */
+.guma-card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    background-color: var(--bg-card);
+    height: 100%; /* Membuat semua kartu tingginya sama */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.guma-card:hover {
+    transform: translateY(-10px);
+}
+
+.guma-card img {
+    height: 250px; /* Ditambah tingginya agar lebih proporsional */
+    object-fit: cover; /* PENTING: Menghilangkan efek sempit/gepeng pada gambar */
+    width: 100%;
+    display: block;
+}
+
+.guma-card .card-body {
+    flex-grow: 1;
+    padding: 1.5rem;
+}
+
+/* Global Styles */
+.section-padding {
+    padding: 80px 0;
+}
+
+.btn-guma {
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50px;
+    padding: 12px 35px;
+    font-weight: 600;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.btn-guma:hover {
+    background-color: var(--accent-hover);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.text-accent {
+    color: var(--accent-color);
+}

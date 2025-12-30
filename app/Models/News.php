@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Relations\NewsRelation;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 
 class News extends Model
 {

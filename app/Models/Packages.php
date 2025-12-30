@@ -11,11 +11,11 @@ class Packages extends Model
     use HasFactory, PackagesRelation;
 
     protected $fillable = [
-        'nama',
-        'description',
-        'price',
-        'service_type',
-        'image_path',
-        'user-id',
-    ];
+    'nama',
+    'description',
+    'price',
+    'service_type',
+    'image_path',
+    'user_id', 
+];
 }
