@@ -2,25 +2,18 @@
 
 @section('page-title', 'Kelola Menu Cafe')
 @section('page-actions')
-    <a href="{{ route('menus.create') }}" class="btn btn-success">
+    <a href="{{ route('admin.menus.create') }}" class="btn btn-success">
         <i class="fas fa-plus"></i> Tambah Menu
     </a>
 @endsection
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
-
 <div class="card">
     @if($menus->isEmpty())
         <div class="card-body text-center py-5">
             <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
             <h5 class="text-muted mb-3">Belum ada menu</h5>
-            <a href="{{ route('menus.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.menus.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-1"></i> Tambah Menu Pertama
             </a>
         </div>
@@ -79,11 +72,11 @@
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
-                                    <a href="{{ route('menus.edit', $menu->id) }}" 
+                                    <a href="{{ route('admin.menus.edit', $menu->id) }}" 
                                        class="btn btn-sm btn-outline-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('menus.destroy', $menu->id) }}" 
+                                    <form action="{{ route('admin.menus.destroy', $menu->id) }}" 
                                           method="POST" 
                                           onsubmit="return confirm('Hapus menu ini?')">
                                         @csrf @method('DELETE')

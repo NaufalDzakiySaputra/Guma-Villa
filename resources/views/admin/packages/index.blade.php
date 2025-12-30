@@ -2,25 +2,18 @@
 
 @section('page-title', 'Kelola Paket')
 @section('page-actions')
-    <a href="{{ route('packages.create') }}" class="btn btn-success">
+    <a href="{{ route('admin.packages.create') }}" class="btn btn-success">
         <i class="fas fa-plus"></i> Tambah Paket
     </a>
 @endsection
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
-
 <div class="card">
     @if($packages->isEmpty())
         <div class="card-body text-center py-5">
             <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
             <h5 class="text-muted mb-3">Belum ada paket</h5>
-            <a href="{{ route('packages.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.packages.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-1"></i> Tambah Paket Pertama
             </a>
         </div>
@@ -80,11 +73,11 @@
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
-                                    <a href="{{ route('packages.edit', $package->id) }}" 
+                                    <a href="{{ route('admin.packages.edit', $package->id) }}" 
                                        class="btn btn-sm btn-outline-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('packages.destroy', $package->id) }}" 
+                                    <form action="{{ route('admin.packages.destroy', $package->id) }}" 
                                           method="POST" 
                                           onsubmit="return confirm('Hapus paket ini?')">
                                         @csrf @method('DELETE')

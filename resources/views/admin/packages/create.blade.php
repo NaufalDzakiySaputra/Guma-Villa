@@ -2,7 +2,7 @@
 
 @section('page-title', 'Tambah Paket Baru')
 @section('page-actions')
-    <a href="{{ route('packages.index') }}" class="btn btn-outline-secondary">
+    <a href="{{ route('admin.packages.index') }}" class="btn btn-outline-secondary">
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
 @endsection
@@ -10,7 +10,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('packages.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.packages.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="row g-3">
@@ -98,7 +98,7 @@
             <hr class="my-4">
             
             <div class="d-flex justify-content-end gap-2">
-                <a href="{{ route('packages.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.packages.index') }}" class="btn btn-secondary">Batal</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save me-1"></i> Simpan Paket
                 </button>

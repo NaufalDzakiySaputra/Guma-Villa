@@ -2,7 +2,7 @@
 
 @section('page-title', 'Edit Berita: ' . $news->title)
 @section('page-actions')
-    <a href="{{ route('news.index') }}" class="btn btn-outline-secondary">
+    <a href="{{ route('admin.news.index') }}" class="btn btn-outline-secondary">
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
 @endsection
@@ -21,7 +21,7 @@
         </div>
         @endif
         
-        <form action="{{ route('news.update', $news->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.news.update', $news->id) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             
             <div class="row g-3">
@@ -88,7 +88,7 @@
             <hr class="my-4">
             
             <div class="d-flex justify-content-end gap-2">
-                <a href="{{ route('news.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.news.index') }}" class="btn btn-secondary">Batal</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save me-1"></i> Update Berita
                 </button>

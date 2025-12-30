@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation; // ← SINGULAR Reservation
-use App\Models\Package;     // ← Juga singular jika model-mu Package (bukan Packages)
+use App\Models\Reservation;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -57,11 +57,6 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        // Hapus method ini jika admin tidak perlu buat reservasi
-        // Atau comment jika ingin di-disable sementara
-        // $packages = Package::where('status', true)->get();
-        // return view('reservations.create', compact('packages'));
-        
         abort(404, 'Admin tidak dapat membuat reservasi baru');
     }
 
@@ -71,9 +66,7 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        // Hapus method ini jika admin tidak perlu buat reservasi
-        // Atau redirect ke index
-        return redirect()->route('reservations.index')
+        return redirect()->route('admin.reservations.index')
             ->with('info', 'Admin tidak dapat membuat reservasi baru');
     }
 
@@ -118,7 +111,7 @@ class ReservationController extends Controller
             'notes' => $request->notes ?: $reservation->notes,
         ]);
 
-        return redirect()->route('reservations.index')
+        return redirect()->route('admin.reservations.index')
             ->with('success', 'Status reservasi berhasil diperbarui!');
     }
 
@@ -130,7 +123,7 @@ class ReservationController extends Controller
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
 
-        return redirect()->route('reservations.index')
+        return redirect()->route('admin.reservations.index')
             ->with('success', 'Reservasi berhasil dihapus!');
     }
 }

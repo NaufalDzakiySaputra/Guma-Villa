@@ -2,25 +2,18 @@
 
 @section('page-title', 'Kelola Berita & Event')
 @section('page-actions')
-    <a href="{{ route('news.create') }}" class="btn btn-success">
+    <a href="{{ route('admin.news.create') }}" class="btn btn-success">
         <i class="fas fa-plus"></i> Tambah Berita
     </a>
 @endsection
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
-
 <div class="card">
     @if($news->isEmpty())
         <div class="card-body text-center py-5">
             <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
             <h5 class="text-muted mb-3">Belum ada berita/event</h5>
-            <a href="{{ route('news.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.news.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus me-1"></i> Tambah Berita Pertama
             </a>
         </div>
@@ -76,7 +69,6 @@
                             </td>
                             <td>
                                 @php
-                                    // PERBAIKAN DI SINI!
                                     $today = \Carbon\Carbon::today();
                                     $eventDate = $item->event_date->startOfDay();
                                     
@@ -107,11 +99,11 @@
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-1 justify-content-end">
-                                    <a href="{{ route('news.edit', $item->id) }}" 
+                                    <a href="{{ route('admin.news.edit', $item->id) }}" 
                                        class="btn btn-sm btn-outline-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('news.destroy', $item->id) }}" 
+                                    <form action="{{ route('admin.news.destroy', $item->id) }}" 
                                           method="POST" 
                                           onsubmit="return confirm('Hapus berita ini?')">
                                         @csrf @method('DELETE')

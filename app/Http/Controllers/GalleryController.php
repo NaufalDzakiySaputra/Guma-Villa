@@ -36,7 +36,7 @@ class GalleryController extends Controller
         Gallery::create($validated);
 
         return redirect()
-            ->route('gallery.index')
+            ->route('admin.gallery.index')
             ->with('success', 'Gallery berhasil ditambahkan');
     }
 
@@ -63,7 +63,7 @@ class GalleryController extends Controller
         $gallery->update($validated);
 
         return redirect()
-            ->route('gallery.index')
+            ->route('admin.gallery.index')
             ->with('success', 'Gallery berhasil diupdate');
     }
 
@@ -73,7 +73,7 @@ class GalleryController extends Controller
         $gallery->delete();
 
         return redirect()
-            ->route('gallery.index')
+            ->route('admin.gallery.index')
             ->with('success', 'Gallery berhasil dihapus');
     }
 }

@@ -2,7 +2,7 @@
 
 <?php $__env->startSection('page-title', 'Tambah Paket Baru'); ?>
 <?php $__env->startSection('page-actions'); ?>
-    <a href="<?php echo e(route('packages.index')); ?>" class="btn btn-outline-secondary">
+    <a href="<?php echo e(route('admin.packages.index')); ?>" class="btn btn-outline-secondary">
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
 <?php $__env->stopSection(); ?>
@@ -10,7 +10,7 @@
 <?php $__env->startSection('content'); ?>
 <div class="card">
     <div class="card-body">
-        <form action="<?php echo e(route('packages.store')); ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?php echo e(route('admin.packages.store')); ?>" method="POST" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
             
             <div class="row g-3">
@@ -168,7 +168,7 @@ unset($__errorArgs, $__bag); ?>
             <hr class="my-4">
             
             <div class="d-flex justify-content-end gap-2">
-                <a href="<?php echo e(route('packages.index')); ?>" class="btn btn-secondary">Batal</a>
+                <a href="<?php echo e(route('admin.packages.index')); ?>" class="btn btn-secondary">Batal</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save me-1"></i> Simpan Paket
                 </button>

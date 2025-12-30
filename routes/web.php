@@ -8,10 +8,8 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\MenusController;
 use App\Http\Controllers\GalleryController;
-// === TAMBAHKAN INI ===
-use App\Http\Controllers\AuthController;  // Import AuthController
-use App\Http\Controllers\Admin\UserController;  // Import UserController untuk manage users
-// =====================
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\UserController;
 
 // === ROUTE AUTH MANUAL ===
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -19,23 +17,21 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-// =========================
 
 Route::get('/', function () {
-    return view('welcome'); // atau redirect ke admin
+    return view('welcome');
 });
 
-Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 // ===================== ADMIN ROUTES GROUP =====================
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    
     // Dashboard Admin
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
-    })->name('admin.dashboard');
+    })->name('dashboard');
     
-    // User Management (BARU)
-    Route::resource('users', UserController::class)->names('admin.users');
+    // User Management
+    Route::resource('users', UserController::class);
     
     // Admin CRUD routes yang sudah ada
     Route::resource('news', NewsController::class);
@@ -43,10 +39,20 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('payments', PaymentsController::class);
     Route::resource('menus', MenusController::class);
     Route::resource('gallery', GalleryController::class);
+    
+    // ========== ADMIN RESERVATION ROUTES ==========
+    Route::prefix('reservations')->name('reservations.')->group(function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('index');
+        Route::get('/{id}', [ReservationController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [ReservationController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
+    });
 });
 
-// Reservations routes (tetap di luar group kalau mau accessible tanpa prefix admin)
-Route::get('reservations', [ReservationController::class, 'index'])->name('reservations.index');
-Route::get('reservations/{id}', [ReservationController::class, 'show'])->name('reservations.show');
-Route::put('reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
-Route::delete('reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+// ===================== USER RESERVATION ROUTES (Jika dibutuhkan nanti) =====================
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/my-reservations', [ReservationController::class, 'userIndex'])->name('my.reservations');
+//     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
+//     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+// });

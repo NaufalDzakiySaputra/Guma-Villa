@@ -60,12 +60,13 @@
                                 </a>
                                 <form action="<?php echo e(route('admin.users.destroy', $user->id)); ?>" 
                                       method="POST" 
-                                      id="delete-form-<?php echo e($user->id); ?>">
+                                      onsubmit="return confirm('Hapus user <?php echo e(addslashes($user->name)); ?>?\\n\\nUser #<?php echo e($user->id); ?> akan dihapus permanen!')">
                                     <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
-                                    <button type="button" 
+                                    <button type="submit" 
                                             class="btn btn-sm btn-outline-danger"
-                                            onclick="confirmDelete(event, 'delete-form-<?php echo e($user->id); ?>')"
-                                            <?php echo e($user->id === auth()->id() ? 'disabled' : ''); ?>>
+                                            <?php echo e($user->id === auth()->id() ? 'disabled' : ''); ?>
+
+                                            title="<?php echo e($user->id === auth()->id() ? 'Tidak dapat menghapus akun sendiri' : 'Hapus user'); ?>">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -82,31 +83,5 @@
         Total: <?php echo e($users->count()); ?> user
     </div>
 </div>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('scripts'); ?>
-<script>
-    function confirmDelete(event, formId) {
-        event.preventDefault();
-        const form = document.getElementById(formId);
-        const userName = form.closest('tr').querySelector('.fw-bold').textContent;
-        
-        Swal.fire({
-            title: 'Hapus User?',
-            html: `<p>User <strong>"${userName}"</strong> akan dihapus permanen!</p>
-                   <p class="text-danger small">Tindakan ini tidak dapat dibatalkan.</p>`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#A0522D',
-            cancelButtonColor: '#8B7D6B',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
-        });
-    }
-</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/admin/users/index.blade.php ENDPATH**/ ?>

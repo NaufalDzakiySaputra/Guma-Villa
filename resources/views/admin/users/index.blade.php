@@ -58,12 +58,12 @@
                                 </a>
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" 
                                       method="POST" 
-                                      id="delete-form-{{ $user->id }}">
+                                      onsubmit="return confirm('Hapus user {{ addslashes($user->name) }}?\\n\\nUser #{{ $user->id }} akan dihapus permanen!')">
                                     @csrf @method('DELETE')
-                                    <button type="button" 
+                                    <button type="submit" 
                                             class="btn btn-sm btn-outline-danger"
-                                            onclick="confirmDelete(event, 'delete-form-{{ $user->id }}')"
-                                            {{ $user->id === auth()->id() ? 'disabled' : '' }}>
+                                            {{ $user->id === auth()->id() ? 'disabled' : '' }}
+                                            title="{{ $user->id === auth()->id() ? 'Tidak dapat menghapus akun sendiri' : 'Hapus user' }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -80,30 +80,4 @@
         Total: {{ $users->count() }} user
     </div>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    function confirmDelete(event, formId) {
-        event.preventDefault();
-        const form = document.getElementById(formId);
-        const userName = form.closest('tr').querySelector('.fw-bold').textContent;
-        
-        Swal.fire({
-            title: 'Hapus User?',
-            html: `<p>User <strong>"${userName}"</strong> akan dihapus permanen!</p>
-                   <p class="text-danger small">Tindakan ini tidak dapat dibatalkan.</p>`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#A0522D',
-            cancelButtonColor: '#8B7D6B',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
-        });
-    }
-</script>
 @endsection

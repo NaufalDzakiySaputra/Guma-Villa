@@ -1,112 +1,92 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Kelola Reservasi')
-@section('page-actions')
-    <button class="btn btn-outline-secondary" id="toggleFilter">
-        <i class="fas fa-filter"></i> Filter
-    </button>
-@endsection
+@section('title', 'Kelola Reservasi')
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-1">
+                <i class="fas fa-calendar-check me-2"></i>Reservasi
+            </h4>
+            <p class="text-muted mb-0">Total: {{ $reservations->total() }} reservasi</p>
+        </div>
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-arrow-left me-1"></i>Kembali
+        </a>
     </div>
-@endif
 
-<!-- Filter Section -->
-<div class="card mb-4 d-none" id="filterSection">
-    <div class="card-body">
-        <h6 class="card-title mb-3">Filter Reservasi</h6>
-        <form method="GET" action="{{ route('reservations.index') }}" class="row g-3">
-            <div class="col-md-3">
-                <label class="form-label">Status</label>
-                <select name="status" class="form-select">
-                    <option value="">Semua</option>
-                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                    <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
-                    <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
-                </select>
+    <!-- Simple Stats -->
+    <div class="row mb-4">
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Total</h6>
+                    <h4>{{ $totalCount ?? 0 }}</h4>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label">Jenis Layanan</label>
-                <select name="service_type" class="form-select">
-                    <option value="">Semua</option>
-                    <option value="villa" {{ request('service_type') == 'villa' ? 'selected' : '' }}>Villa</option>
-                    <option value="wisata" {{ request('service_type') == 'wisata' ? 'selected' : '' }}>Wisata</option>
-                    <option value="nikah" {{ request('service_type') == 'nikah' ? 'selected' : '' }}>Wedding</option>
-                    <option value="mice" {{ request('service_type') == 'mice' ? 'selected' : '' }}>MICE</option>
-                </select>
+        </div>
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Pending</h6>
+                    <h4 class="text-warning">{{ $pendingCount ?? 0 }}</h4>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label">Tanggal</label>
-                <input type="date" name="date" class="form-control" value="{{ request('date') }}">
+        </div>
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Approved</h6>
+                    <h4 class="text-success">{{ $approvedCount ?? 0 }}</h4>
+                </div>
             </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search"></i> Terapkan
-                </button>
-                <a href="{{ route('reservations.index') }}" class="btn btn-outline-secondary">
-                    Reset
-                </a>
+        </div>
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Paid</h6>
+                    <h4 class="text-info">{{ $paidCount ?? 0 }}</h4>
+                </div>
             </div>
-        </form>
-    </div>
-</div>
-
-@if($reservations->isEmpty())
-    <div class="card">
-        <div class="card-body text-center py-5">
-            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
-            <h5 class="text-muted">Belum ada reservasi</h5>
         </div>
     </div>
-@else
+
+    <!-- Tabel Reservasi -->
     <div class="card">
-        <div class="card-body p-0">
+        <div class="card-body">
+            @if($reservations->count() > 0)
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead class="table-light">
+                <table class="table table-hover">
+                    <thead>
                         <tr>
                             <th>ID</th>
                             <th>Customer</th>
-                            <th>Layanan</th>
+                            <th>Jenis</th>
                             <th>Tanggal</th>
                             <th>Status</th>
-                            <th width="100" class="text-end">Aksi</th>
+                            <th>Pembayaran</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($reservations as $reservation)
                         <tr>
-                            <td>
-                                <strong class="text-primary">
-                                    #{{ str_pad($reservation->id, 6, '0', STR_PAD_LEFT) }}
-                                </strong>
-                            </td>
-                            <td>
-                                <div class="fw-bold">{{ $reservation->user->name ?? 'Guest' }}</div>
-                                <small class="text-muted d-block">
-                                    {{ $reservation->user->email ?? '' }}
-                                </small>
-                            </td>
+                            <td>#{{ $reservation->id }}</td>
+                            <td>{{ $reservation->user->name ?? 'N/A' }}</td>
                             <td>
                                 @php
-                                    $badgeColors = [
-                                        'villa' => 'badge-villa',
-                                        'wisata' => 'badge-wisata', 
-                                        'nikah' => 'badge-nikah',
-                                        'mice' => 'badge-mice'
+                                    $jenis = [
+                                        'villa' => 'Villa',
+                                        'wisata' => 'Wisata', 
+                                        'nikah' => 'Nikah',
+                                        'mice' => 'MICE'
                                     ];
                                 @endphp
-                                <span class="badge {{ $badgeColors[$reservation->service_type] ?? 'badge-villa' }}">
-                                    {{ ucfirst($reservation->service_type) }}
-                                </span>
+                                {{ $jenis[$reservation->service_type] ?? $reservation->service_type }}
                             </td>
-                            <td>
-                                {{ \Carbon\Carbon::parse($reservation->date)->format('d/m/Y') }}
-                            </td>
+                            <td>{{ $reservation->date->format('d/m/Y') }}</td>
                             <td>
                                 @if($reservation->status == 'pending')
                                     <span class="badge bg-warning">Pending</span>
@@ -116,20 +96,25 @@
                                     <span class="badge bg-danger">Rejected</span>
                                 @endif
                             </td>
-                            <td class="text-end">
-                                <div class="d-flex gap-1 justify-content-end">
-                                    <a href="{{ route('reservations.edit', $reservation->id) }}" 
-                                       class="btn btn-sm btn-outline-warning">
+                            <td>
+                                @if($reservation->payment_status == 'unpaid')
+                                    <span class="badge bg-danger">Unpaid</span>
+                                @elseif($reservation->payment_status == 'paid')
+                                    <span class="badge bg-warning">Paid</span>
+                                @else
+                                    <span class="badge bg-success">Verified</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ route('admin.reservations.show', $reservation->id) }}" 
+                                       class="btn btn-info" title="Detail">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.reservations.edit', $reservation->id) }}" 
+                                       class="btn btn-warning" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('reservations.destroy', $reservation->id) }}" 
-                                          method="POST" 
-                                          onsubmit="return confirm('Hapus reservasi ini?')">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -137,27 +122,19 @@
                     </tbody>
                 </table>
             </div>
+            
+            <!-- Pagination -->
+            <div class="mt-3">
+                {{ $reservations->links() }}
+            </div>
+            
+            @else
+            <div class="text-center py-5">
+                <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Belum ada reservasi</h5>
+            </div>
+            @endif
         </div>
-        
-        @if($reservations->hasPages())
-        <div class="card-footer">
-            {{ $reservations->links() }}
-        </div>
-        @endif
     </div>
-@endif
-
-<script>
-document.getElementById('toggleFilter').addEventListener('click', function() {
-    document.getElementById('filterSection').classList.toggle('d-none');
-});
-
-// Show filter if active
-document.addEventListener('DOMContentLoaded', function() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.toString()) {
-        document.getElementById('filterSection').classList.remove('d-none');
-    }
-});
-</script>
+</div>
 @endsection

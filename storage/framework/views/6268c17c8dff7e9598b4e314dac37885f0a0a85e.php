@@ -1,117 +1,93 @@
 
 
-<?php $__env->startSection('page-title', 'Kelola Reservasi'); ?>
-<?php $__env->startSection('page-actions'); ?>
-    <button class="btn btn-outline-secondary" id="toggleFilter">
-        <i class="fas fa-filter"></i> Filter
-    </button>
-<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title', 'Kelola Reservasi'); ?>
 
 <?php $__env->startSection('content'); ?>
-<?php if(session('success')): ?>
-    <div class="alert alert-success alert-dismissible fade show">
-        <?php echo e(session('success')); ?>
-
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-1">
+                <i class="fas fa-calendar-check me-2"></i>Reservasi
+            </h4>
+            <p class="text-muted mb-0">Total: <?php echo e($reservations->total()); ?> reservasi</p>
+        </div>
+        <a href="<?php echo e(route('admin.dashboard')); ?>" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-arrow-left me-1"></i>Kembali
+        </a>
     </div>
-<?php endif; ?>
 
-<!-- Filter Section -->
-<div class="card mb-4 d-none" id="filterSection">
-    <div class="card-body">
-        <h6 class="card-title mb-3">Filter Reservasi</h6>
-        <form method="GET" action="<?php echo e(route('reservations.index')); ?>" class="row g-3">
-            <div class="col-md-3">
-                <label class="form-label">Status</label>
-                <select name="status" class="form-select">
-                    <option value="">Semua</option>
-                    <option value="pending" <?php echo e(request('status') == 'pending' ? 'selected' : ''); ?>>Pending</option>
-                    <option value="approved" <?php echo e(request('status') == 'approved' ? 'selected' : ''); ?>>Approved</option>
-                    <option value="rejected" <?php echo e(request('status') == 'rejected' ? 'selected' : ''); ?>>Rejected</option>
-                </select>
+    <!-- Simple Stats -->
+    <div class="row mb-4">
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Total</h6>
+                    <h4><?php echo e($totalCount ?? 0); ?></h4>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label">Jenis Layanan</label>
-                <select name="service_type" class="form-select">
-                    <option value="">Semua</option>
-                    <option value="villa" <?php echo e(request('service_type') == 'villa' ? 'selected' : ''); ?>>Villa</option>
-                    <option value="wisata" <?php echo e(request('service_type') == 'wisata' ? 'selected' : ''); ?>>Wisata</option>
-                    <option value="nikah" <?php echo e(request('service_type') == 'nikah' ? 'selected' : ''); ?>>Wedding</option>
-                    <option value="mice" <?php echo e(request('service_type') == 'mice' ? 'selected' : ''); ?>>MICE</option>
-                </select>
+        </div>
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Pending</h6>
+                    <h4 class="text-warning"><?php echo e($pendingCount ?? 0); ?></h4>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label">Tanggal</label>
-                <input type="date" name="date" class="form-control" value="<?php echo e(request('date')); ?>">
+        </div>
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Approved</h6>
+                    <h4 class="text-success"><?php echo e($approvedCount ?? 0); ?></h4>
+                </div>
             </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search"></i> Terapkan
-                </button>
-                <a href="<?php echo e(route('reservations.index')); ?>" class="btn btn-outline-secondary">
-                    Reset
-                </a>
+        </div>
+        <div class="col-3">
+            <div class="card text-center py-2">
+                <div class="card-body">
+                    <h6 class="text-muted mb-1">Paid</h6>
+                    <h4 class="text-info"><?php echo e($paidCount ?? 0); ?></h4>
+                </div>
             </div>
-        </form>
-    </div>
-</div>
-
-<?php if($reservations->isEmpty()): ?>
-    <div class="card">
-        <div class="card-body text-center py-5">
-            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
-            <h5 class="text-muted">Belum ada reservasi</h5>
         </div>
     </div>
-<?php else: ?>
+
+    <!-- Tabel Reservasi -->
     <div class="card">
-        <div class="card-body p-0">
+        <div class="card-body">
+            <?php if($reservations->count() > 0): ?>
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead class="table-light">
+                <table class="table table-hover">
+                    <thead>
                         <tr>
                             <th>ID</th>
                             <th>Customer</th>
-                            <th>Layanan</th>
+                            <th>Jenis</th>
                             <th>Tanggal</th>
                             <th>Status</th>
-                            <th width="100" class="text-end">Aksi</th>
+                            <th>Pembayaran</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $__currentLoopData = $reservations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reservation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td>
-                                <strong class="text-primary">
-                                    #<?php echo e(str_pad($reservation->id, 6, '0', STR_PAD_LEFT)); ?>
-
-                                </strong>
-                            </td>
-                            <td>
-                                <div class="fw-bold"><?php echo e($reservation->user->name ?? 'Guest'); ?></div>
-                                <small class="text-muted d-block">
-                                    <?php echo e($reservation->user->email ?? ''); ?>
-
-                                </small>
-                            </td>
+                            <td>#<?php echo e($reservation->id); ?></td>
+                            <td><?php echo e($reservation->user->name ?? 'N/A'); ?></td>
                             <td>
                                 <?php
-                                    $badgeColors = [
-                                        'villa' => 'badge-villa',
-                                        'wisata' => 'badge-wisata', 
-                                        'nikah' => 'badge-nikah',
-                                        'mice' => 'badge-mice'
+                                    $jenis = [
+                                        'villa' => 'Villa',
+                                        'wisata' => 'Wisata', 
+                                        'nikah' => 'Nikah',
+                                        'mice' => 'MICE'
                                     ];
                                 ?>
-                                <span class="badge <?php echo e($badgeColors[$reservation->service_type] ?? 'badge-villa'); ?>">
-                                    <?php echo e(ucfirst($reservation->service_type)); ?>
-
-                                </span>
-                            </td>
-                            <td>
-                                <?php echo e(\Carbon\Carbon::parse($reservation->date)->format('d/m/Y')); ?>
+                                <?php echo e($jenis[$reservation->service_type] ?? $reservation->service_type); ?>
 
                             </td>
+                            <td><?php echo e($reservation->date->format('d/m/Y')); ?></td>
                             <td>
                                 <?php if($reservation->status == 'pending'): ?>
                                     <span class="badge bg-warning">Pending</span>
@@ -121,20 +97,25 @@
                                     <span class="badge bg-danger">Rejected</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="text-end">
-                                <div class="d-flex gap-1 justify-content-end">
-                                    <a href="<?php echo e(route('reservations.edit', $reservation->id)); ?>" 
-                                       class="btn btn-sm btn-outline-warning">
+                            <td>
+                                <?php if($reservation->payment_status == 'unpaid'): ?>
+                                    <span class="badge bg-danger">Unpaid</span>
+                                <?php elseif($reservation->payment_status == 'paid'): ?>
+                                    <span class="badge bg-warning">Paid</span>
+                                <?php else: ?>
+                                    <span class="badge bg-success">Verified</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="<?php echo e(route('admin.reservations.show', $reservation->id)); ?>" 
+                                       class="btn btn-info" title="Detail">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="<?php echo e(route('admin.reservations.edit', $reservation->id)); ?>" 
+                                       class="btn btn-warning" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="<?php echo e(route('reservations.destroy', $reservation->id)); ?>" 
-                                          method="POST" 
-                                          onsubmit="return confirm('Hapus reservasi ini?')">
-                                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -142,29 +123,21 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        
-        <?php if($reservations->hasPages()): ?>
-        <div class="card-footer">
-            <?php echo e($reservations->links()); ?>
+            
+            <!-- Pagination -->
+            <div class="mt-3">
+                <?php echo e($reservations->links()); ?>
 
+            </div>
+            
+            <?php else: ?>
+            <div class="text-center py-5">
+                <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Belum ada reservasi</h5>
+            </div>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
     </div>
-<?php endif; ?>
-
-<script>
-document.getElementById('toggleFilter').addEventListener('click', function() {
-    document.getElementById('filterSection').classList.toggle('d-none');
-});
-
-// Show filter if active
-document.addEventListener('DOMContentLoaded', function() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.toString()) {
-        document.getElementById('filterSection').classList.remove('d-none');
-    }
-});
-</script>
+</div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/admin/reservations/index.blade.php ENDPATH**/ ?>

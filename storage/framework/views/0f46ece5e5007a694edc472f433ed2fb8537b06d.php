@@ -2,7 +2,7 @@
 
 <?php $__env->startSection('page-title', 'Edit Menu: ' . $menu->name); ?>
 <?php $__env->startSection('page-actions'); ?>
-    <a href="<?php echo e(route('menus.index')); ?>" class="btn btn-outline-secondary">
+    <a href="<?php echo e(route('admin.menus.index')); ?>" class="btn btn-outline-secondary">
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
 <?php $__env->stopSection(); ?>
@@ -21,7 +21,7 @@
         </div>
         <?php endif; ?>
         
-        <form action="<?php echo e(route('menus.update', $menu->id)); ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?php echo e(route('admin.menus.update', $menu->id)); ?>" method="POST" enctype="multipart/form-data">
             <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
             
             <div class="row g-3">
@@ -177,7 +177,7 @@ unset($__errorArgs, $__bag); ?>
             <hr class="my-4">
             
             <div class="d-flex justify-content-end gap-2">
-                <a href="<?php echo e(route('menus.index')); ?>" class="btn btn-secondary">Batal</a>
+                <a href="<?php echo e(route('admin.menus.index')); ?>" class="btn btn-secondary">Batal</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save me-1"></i> Update Menu
                 </button>

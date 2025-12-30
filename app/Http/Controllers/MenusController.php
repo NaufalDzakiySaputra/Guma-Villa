@@ -46,7 +46,7 @@ class MenusController extends Controller
         Menus::create($validated);
 
         return redirect()
-            ->route('menus.index')
+            ->route('admin.menus.index')
             ->with('success', 'Menu berhasil ditambahkan!');
     }
 
@@ -109,7 +109,7 @@ class MenusController extends Controller
         $menu->update($validated);
 
         return redirect()
-            ->route('menus.index')
+            ->route('admin.menus.index')
             ->with('success', 'Menu berhasil diperbarui!');
     }
 
@@ -124,7 +124,7 @@ class MenusController extends Controller
         $menu->delete();
 
         return redirect()
-            ->route('menus.index')
+            ->route('admin.menus.index')
             ->with('success', 'Menu berhasil dihapus!');
     }
 }

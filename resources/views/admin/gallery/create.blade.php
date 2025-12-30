@@ -2,7 +2,7 @@
 
 @section('page-title', 'Tambah Foto')
 @section('page-actions')
-    <a href="{{ route('gallery.index') }}" class="btn btn-outline-secondary">
+    <a href="{{ route('admin.gallery.index') }}" class="btn btn-outline-secondary">
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
 @endsection
@@ -10,7 +10,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.gallery.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="row g-3">
@@ -47,7 +47,7 @@
             <hr class="my-4">
             
             <div class="d-flex justify-content-end gap-2">
-                <a href="{{ route('gallery.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.gallery.index') }}" class="btn btn-secondary">Batal</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-upload me-1"></i> Upload Foto
                 </button>

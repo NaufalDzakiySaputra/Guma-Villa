@@ -40,7 +40,7 @@ class PackagesController extends Controller
 
         Packages::create($validated);
 
-        return redirect()->route('packages.index')
+        return redirect()->route('admin.packages.index')
             ->with('success', 'Paket berhasil ditambahkan');
     }
 
@@ -72,7 +72,7 @@ class PackagesController extends Controller
 
         $package->update($validated);
 
-        return redirect()->route('packages.index')
+        return redirect()->route('admin.packages.index')
             ->with('success', 'Paket berhasil diperbarui');
     }
 
@@ -85,7 +85,7 @@ class PackagesController extends Controller
 
         $package->delete();
 
-        return redirect()->route('packages.index')
+        return redirect()->route('admin.packages.index')
             ->with('success', 'Paket berhasil dihapus');
     }
 }

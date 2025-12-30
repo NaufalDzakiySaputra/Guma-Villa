@@ -51,7 +51,7 @@ class NewsController extends Controller
         News::create($validated);
 
         return redirect()
-            ->route('news.index')
+            ->route('admin.news.index')
             ->with('success', 'Berita berhasil ditambahkan!');
     }
 
@@ -112,7 +112,7 @@ class NewsController extends Controller
         $news->update($validated);
 
         return redirect()
-            ->route('news.index')
+            ->route('admin.news.index')
             ->with('success', 'Berita berhasil diupdate!');
     }
 
@@ -129,7 +129,7 @@ class NewsController extends Controller
         $news->delete();
 
         return redirect()
-            ->route('news.index')
+            ->route('admin.news.index')
             ->with('success', 'Berita berhasil dihapus!');
     }
 }
