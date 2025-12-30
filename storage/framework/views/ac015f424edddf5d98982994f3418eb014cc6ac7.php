@@ -58,12 +58,16 @@
                                    class="btn btn-sm btn-outline-warning">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                
+                                <!-- TOMBOL HAPUS PERSIS SEPERTI DI PACKAGES -->
                                 <form action="<?php echo e(route('admin.users.destroy', $user->id)); ?>" 
                                       method="POST" 
-                                      onsubmit="return confirm('Hapus user <?php echo e(addslashes($user->name)); ?>?\\n\\nUser #<?php echo e($user->id); ?> akan dihapus permanen!')">
-                                    <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                                      onsubmit="return confirm('Hapus user <?php echo e(addslashes($user->name)); ?>?\\n\\nUser #<?php echo e($user->id); ?> akan dihapus permanen!')"
+                                      class="d-inline">
+                                    <?php echo csrf_field(); ?> 
+                                    <?php echo method_field('DELETE'); ?>
                                     <button type="submit" 
-                                            class="btn btn-sm btn-outline-danger"
+                                            class="btn btn-sm btn-outline-danger px-2"
                                             <?php echo e($user->id === auth()->id() ? 'disabled' : ''); ?>
 
                                             title="<?php echo e($user->id === auth()->id() ? 'Tidak dapat menghapus akun sendiri' : 'Hapus user'); ?>">
@@ -83,5 +87,32 @@
         Total: <?php echo e($users->count()); ?> user
     </div>
 </div>
+
+<style>
+    /* HOVER EFFECT SAMA PERSIS DENGAN PACKAGES */
+    .btn-outline-danger:hover:not(:disabled) {
+        background-color: #dc3545;
+        color: white;
+        border-color: #dc3545;
+    }
+    
+    .btn-outline-warning:hover:not(:disabled) {
+        background-color: #ffc107;
+        color: black;
+        border-color: #ffc107;
+    }
+    
+    /* Tombol disabled */
+    .btn-outline-danger:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .btn-outline-danger:disabled:hover {
+        background-color: transparent !important;
+        color: #dc3545 !important;
+        border-color: #dc3545 !important;
+    }
+</style>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\guma\Guma-Villa\resources\views/admin/users/index.blade.php ENDPATH**/ ?>

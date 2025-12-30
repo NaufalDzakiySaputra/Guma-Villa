@@ -56,12 +56,16 @@
                                    class="btn btn-sm btn-outline-warning">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                
+                                <!-- TOMBOL HAPUS PERSIS SEPERTI DI PACKAGES -->
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" 
                                       method="POST" 
-                                      onsubmit="return confirm('Hapus user {{ addslashes($user->name) }}?\\n\\nUser #{{ $user->id }} akan dihapus permanen!')">
-                                    @csrf @method('DELETE')
+                                      onsubmit="return confirm('Hapus user {{ addslashes($user->name) }}?\\n\\nUser #{{ $user->id }} akan dihapus permanen!')"
+                                      class="d-inline">
+                                    @csrf 
+                                    @method('DELETE')
                                     <button type="submit" 
-                                            class="btn btn-sm btn-outline-danger"
+                                            class="btn btn-sm btn-outline-danger px-2"
                                             {{ $user->id === auth()->id() ? 'disabled' : '' }}
                                             title="{{ $user->id === auth()->id() ? 'Tidak dapat menghapus akun sendiri' : 'Hapus user' }}">
                                         <i class="fas fa-trash"></i>
@@ -80,4 +84,31 @@
         Total: {{ $users->count() }} user
     </div>
 </div>
+
+<style>
+    /* HOVER EFFECT SAMA PERSIS DENGAN PACKAGES */
+    .btn-outline-danger:hover:not(:disabled) {
+        background-color: #dc3545;
+        color: white;
+        border-color: #dc3545;
+    }
+    
+    .btn-outline-warning:hover:not(:disabled) {
+        background-color: #ffc107;
+        color: black;
+        border-color: #ffc107;
+    }
+    
+    /* Tombol disabled */
+    .btn-outline-danger:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .btn-outline-danger:disabled:hover {
+        background-color: transparent !important;
+        color: #dc3545 !important;
+        border-color: #dc3545 !important;
+    }
+</style>
 @endsection
