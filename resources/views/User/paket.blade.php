@@ -1,4 +1,4 @@
-@extends('layouts.frontend') {{-- PERBAIKAN: Harus sesuai nama file frontend.blade.php --}}
+@extends('layouts.frontend') 
 
 @section('content')
 <section class="bg-package-section py-5">

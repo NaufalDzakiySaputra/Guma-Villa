@@ -25,7 +25,9 @@
                         <span class="badge bg-light text-success mb-2 text-uppercase">{{ $p->service_type }}</span>
                         <h5 class="fw-bold mb-1">{{ $p->nama }}</h5>
                         <p class="text-accent fw-bold mb-3">Rp {{ number_format($p->price, 0, ',', '.') }}</p>
-                        <a href="#" class="btn btn-detail-guma w-100">Detail Paket</a>
+                        <a href="{{ route('user.paket.detail', $p->id) }}" class="btn btn-detail-guma w-100">
+    Lihat Detail <i class="fas fa-arrow-right ms-2"></i>
+</a>
                     </div>
                 </div>
             </div>
