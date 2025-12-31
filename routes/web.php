@@ -14,14 +14,14 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\UserReservationController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
-// === ROUTE AUTH ===
+// ROUTE AUTH
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// ===================== ADMIN ROUTES GROUP =====================
+// ADMIN ROUTES GROUP
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
@@ -49,7 +49,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     });
 });
 
-// ===================== ROUTE KHUSUS TAMPILAN USER (FRONTEND) ==================
+// ROUTE KHUSUS TAMPILAN USER (FRONTEND
 Route::group(['as' => 'user.'], function () {
     // Public routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -60,7 +60,7 @@ Route::group(['as' => 'user.'], function () {
     Route::get('/berita-terbaru', [HomeController::class, 'berita'])->name('berita');
     Route::get('/tentang-kami', [HomeController::class, 'tentang'])->name('about');
     
-    // =========== ROUTE RESERVASI ===========
+    // ROUTE RESERVASI
     // Untuk user BELUM login (simpan session → redirect ke login)
     Route::post('/pesan-sekarang', [HomeController::class, 'pesanSekarang'])->name('pesan.sekarang');
     
