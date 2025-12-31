@@ -16,7 +16,7 @@
                     <p class="text-muted mb-3">{{ $user->email }}</p>
 
                     <div class="mb-4">
-                        {{-- Badge dinamis berdasarkan kolom role di database --}}
+                        <!-- {{-- Badgeberdasarkan kolom role di database --}} -->
                         @if($user->role === 'admin')
                             <span class="badge bg-danger px-4 py-2" style="font-size: 0.8rem;">ADMINISTRATOR</span>
                         @else
@@ -27,16 +27,16 @@
                     <hr class="my-4" style="opacity: 0.1;">
 
                     <div class="d-grid gap-2">
-                        @if($user->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-dark py-2">
-                                <i class="fas fa-tachometer-alt me-2"></i> Ke Dashboard Admin
-                            </a>
-                        @endif
-
-                        {{-- Tombol Kembali ke Beranda --}}
-                        <a href="{{ url('/') }}" class="btn btn-outline-secondary py-2">
+                        @if(Auth::user()->role === 'admin')
+                            <a class="btn btn-outline-secondary py-2" href="{{ route('admin.dashboard') }}">
+                            <i class="fas fa-arrow-left me-2"></i> Kembali ke panel</a>
+                        @elseif(Auth::user()->role === 'user')
+                          <a href="{{ url('/') }}" class="btn btn-outline-secondary py-2">
                             <i class="fas fa-arrow-left me-2"></i> Kembali ke Beranda
                         </a>
+                        @endif
+
+                      
 
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
