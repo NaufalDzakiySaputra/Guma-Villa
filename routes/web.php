@@ -12,6 +12,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\UserReservationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
 
 // ROUTE AUTH
@@ -20,6 +21,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/profile', [ProfileController::class, 'index'])->name('user.profile');
+Route::put('/profile/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('user.profile.update');
 
 // ADMIN ROUTES GROUP
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

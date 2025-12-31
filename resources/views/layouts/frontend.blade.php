@@ -41,9 +41,7 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 animate slideIn">
                                 <!-- PROFIL USER -->
-                                <li><a class="dropdown-item" href="#">
-                                    <i class="fas fa-id-card me-2"></i>Profil
-                                </a></li>
+                                <a class="dropdown-item" href="{{ route('user.profile') }}"><i class="fas fa-user me-2"></i> Profil Saya</a>
                                 
                                 <!-- RESERVASI SAYA (Hanya untuk user biasa) -->
                                 @if(Auth::user()->role === 'user')
