@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- CSS Guma -->
+    <!-- CSS -->
     <link href="{{ asset('css/admin-colors.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
 </head>

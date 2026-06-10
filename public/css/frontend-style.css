@@ -1,619 +1,720 @@
 /* ============================================================
-    bahagian 1 mantul
-   ============================================================ */
+bahagian 1 mantul
+============================================================ */
 
 /* Hero Section */
 .hero-wrapper {
-    background-size: cover;
-    background-position: center;
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    color: white;
+background-size: cover;
+background-position: center;
+min-height: 60vh;
+display: flex;
+align-items: center;
+position: relative;
+color: white;
 }
 
 .hero-overlay {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2));
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1;
+background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2));
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
 }
 
 .hero-content {
-    position: relative;
-    z-index: 2;
+position: relative;
+z-index: 2;
 }
 
 .section-padding {
-    padding: 80px 0;
+padding: 80px 0;
 }
 
 .text-accent {
-    color: var(--accent-color);
+color: var(--accent-color);
 }
 
 .btn-guma {
-    background-color: var(--accent-color);
-    color: rgb(243, 243, 243);
-    border-radius: 25px;
-    padding: 12px 35px;
-    font-weight: 600;
-    border: none;
-    text-decoration: none;
-    display: inline-block;
-    transition: 0.3s;
+background-color: var(--accent-color);
+color: rgb(243, 243, 243);
+border-radius: 25px;
+padding: 12px 35px;
+font-weight: 600;
+border: none;
+text-decoration: none;
+
+
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+line-height: 1;
+text-align: center;
+transition: 0.3s;
+
+
 }
 
 .btn-guma:hover {
-    background-color: var(--accent-hover);
-    color: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+background-color: var(--accent-hover);
+color: white;
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
-
 /* ============================================================
-   SECTION 2: GUMA PACKAGE CARD STYLES (New - Reference based)
-   Keterangan: Gaya kartu paket dengan warna Olive Green & Krem
-   ============================================================ */
+SECTION 2: GUMA PACKAGE CARD STYLES
+Keterangan: Gaya kartu paket dengan warna Olive Green & Krem
+============================================================ */
 
-/* Latar Belakang Section Paket (Warna Krem sesuai referensi) */
+/* Latar Belakang Section Paket */
 .bg-package-section {
-    background-color: #f3e9d7; /* Warna Krem */
+background-color: #f3e9d7;
 }
 
 .guma-card {
-    border: none;
-    
-    border-radius: 20px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #e5e5e5;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+border: none;
+border-radius: 20px;
+overflow: hidden;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+background-color: #e5e5e5;
+height: 100%;
+display: flex;
+flex-direction: column;
+box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
 .guma-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+transform: translateY(-10px);
+box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
 /* Solusi Gambar Sempit/Gepeng */
 .guma-card img {
-    height: 250px; 
-    object-fit: cover; /* Potong gambar agar proporsional */
-    width: 100%;
-    display: block;
+height: 250px;
+object-fit: cover;
+width: 100%;
+display: block;
 }
 
 .guma-card .card-body {
-    flex-grow: 1;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
+flex-grow: 1;
+padding: 1.5rem;
+display: flex;
+flex-direction: column;
 }
 
 .package-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #333;
-    margin-bottom: 5px;
+font-size: 1.25rem;
+font-weight: 800;
+color: #333;
+margin-bottom: 5px;
 }
 
 .package-desc {
-    font-size: 0.9rem;
-    color: #777;
-    margin-bottom: 15px;
+font-size: 0.9rem;
+color: #777;
+margin-bottom: 15px;
 }
 
 .package-price {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #84752b; /* Warna Olive Harga */
-    margin-bottom: 20px;
+font-size: 1.15rem;
+font-weight: 700;
+color: #84752b;
+margin-bottom: 20px;
 }
 
-/* Tombol Detail (Warna Olive Green sesuai referensi) */
+/* Tombol Detail */
 .btn-detail-guma {
-    background-color: #84752b; /* */
-    color: white !important;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    transition: 0.3s;
+background-color: #84752b;
+color: white !important;
+border-radius: 8px;
+padding: 10px 20px;
+font-weight: 600;
+text-decoration: none;
+
+
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+width: fit-content;
+line-height: 1;
+text-align: center;
+transition: 0.3s;
+
 }
 
-
-
-
-.guma-menu-img-box {
-    padding: 20px;
+.btn-detail-guma:hover {
+background-color: #6f6324;
+color: white !important;
 }
 
-.guma-menu-img-square {
-    width: 280px;
-    height: 280px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.guma-menu-info-top {
-    padding: 25px 30px 20px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.guma-menu-info-top h3 {
-    font-size: 1.6rem;
-    font-weight: 800;
-    margin-top: 0;
-    margin-bottom: 2px;
-    line-height: 1.1;
-}
-
-.guma-menu-info-top p {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-    line-height: 1.4;
-}
-
-.guma-menu-price {
-    margin: 0;
-    font-weight: 800;
-}
 /* ============================================================
-   SECTION 3: GUMA MENU CARD (SQUARE & SPACED)
-   ============================================================ */
+SECTION 3: GUMA MENU CARD
+============================================================ */
 
-/*cssssss menuuuuuuuu*/
-/* Backgroun menu*/
+/* Background menu */
 .guma-menu-container {
-    background-color: #f3e9d7; 
-    padding: 40px 0;
+background-color: #f3e9d7;
+padding: 40px 0;
 }
 
 /* Card menu */
 .guma-menu-card-wrapper {
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-    border: none;
-    height: 100%; /* Agar tinggi card sama jika teks berbeda panjang */
+background-color: #ffffff;
+display: flex;
+align-items: center;
+padding: 20px;
+border-radius: 15px;
+box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+border: none;
+height: 100%;
 }
 
-/* Ukuran Gambar disesuaikan agar tidak terlalu besar di 2 kolom */
-.guma-menu-img-square {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
+/* Gambar menu */
 .guma-menu-img-box {
-    margin-right: 20px;
-    flex-shrink: 0;
+margin-right: 20px;
+flex-shrink: 0;
+}
+
+.guma-menu-img-square {
+width: 120px;
+height: 120px;
+object-fit: cover;
+border-radius: 12px;
+}
+
+.guma-menu-info-top {
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
 }
 
 .guma-menu-info-top h3 {
-    font-size: 1.2rem; /* Ukuran font diperkecil sedikit agar pas */
-    margin-bottom: 5px;
+font-size: 1.2rem;
+font-weight: 800;
+margin-top: 0;
+margin-bottom: 5px;
+line-height: 1.1;
+}
+
+.guma-menu-info-top p {
+font-size: 0.95rem;
+margin-bottom: 10px;
+line-height: 1.4;
 }
 
 .guma-menu-price {
-    font-size: 1.1rem;
-    font-weight: 800;
-/*buatgambar ya manteman gambar header yang di menu kami ok terimakaszeeeh*/
+margin: 0;
+font-size: 1.1rem;
+font-weight: 800;
 }
-.guma-hero {
-    height: 300px; 
-    
-    /* Overlay Gelap agar teks terbaca jelas */
-    background-color: rgba(0, 0, 0, 0.6);
-    background-blend-mode: overlay;
 
-    /* Pengaturan Posisi Gambar */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    /* Menaruh Teks di Tengah */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+/* Header gambar menu */
+.guma-hero {
+height: 300px;
+
+
+background-color: rgba(0, 0, 0, 0.6);
+background-blend-mode: overlay;
+
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+
+
 }
 
 /* ============================================================
-   SECTION 4: RESERVATION STYLES (NEW)
-   ============================================================ */
+SECTION 4: RESERVATION STYLES
+============================================================ */
 
 /* Price sticky for reservation form */
 .price-sticky {
-    position: sticky;
-    top: 20px;
-    transition: top 0.3s ease;
+position: sticky;
+top: 20px;
+transition: top 0.3s ease;
 }
 
 /* Reservation form specific styling */
 .reservation-form-card {
-    border: 2px solid #EBD9B4;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
-    overflow: hidden;
+border: 2px solid #EBD9B4;
+border-radius: 15px;
+box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+overflow: hidden;
 }
 
 .reservation-form-card .card-header {
-    background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
-    color: white;
-    border-bottom: none;
-    padding: 1.2rem 1.5rem;
+background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
+color: white;
+border-bottom: none;
+padding: 1.2rem 1.5rem;
 }
 
 .reservation-form-card .card-body {
-    padding: 1.8rem;
+padding: 1.8rem;
 }
 
 /* Form input styling for reservation */
 .reservation-form-control {
-    border: 1.5px solid #EBD9B4;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    transition: all 0.3s ease;
-    background-color: #FFFEF9;
+border: 1.5px solid #EBD9B4;
+border-radius: 8px;
+padding: 0.75rem 1rem;
+transition: all 0.3s ease;
+background-color: #FFFEF9;
 }
 
 .reservation-form-control:focus {
-    border-color: #A0522D;
-    box-shadow: 0 0 0 0.25rem rgba(160, 82, 45, 0.25);
-    background-color: white;
+border-color: #A0522D;
+box-shadow: 0 0 0 0.25rem rgba(160, 82, 45, 0.25);
+background-color: white;
 }
 
 .reservation-form-control.is-invalid {
-    border-color: #dc3545;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+border-color: #dc3545;
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
 }
 
 /* Reservation status badges */
 .status-badge {
-    font-size: 0.75rem;
-    padding: 0.35em 0.65em;
-    border-radius: 20px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+font-size: 0.75rem;
+padding: 0.35em 0.65em;
+border-radius: 20px;
+font-weight: 600;
+letter-spacing: 0.5px;
 }
 
 .status-pending {
-    background-color: #FFF3CD;
-    color: #856404;
-    border: 1px solid #FFEEBA;
+background-color: #FFF3CD;
+color: #856404;
+border: 1px solid #FFEEBA;
 }
 
 .status-approved {
-    background-color: #D4EDDA;
-    color: #155724;
-    border: 1px solid #C3E6CB;
+background-color: #D4EDDA;
+color: #155724;
+border: 1px solid #C3E6CB;
 }
 
 .status-rejected {
-    background-color: #F8D7DA;
-    color: #721C24;
-    border: 1px solid #F5C6CB;
+background-color: #F8D7DA;
+color: #721C24;
+border: 1px solid #F5C6CB;
 }
 
 .status-paid {
-    background-color: #CCE5FF;
-    color: #004085;
-    border: 1px solid #B8DAFF;
+background-color: #CCE5FF;
+color: #004085;
+border: 1px solid #B8DAFF;
 }
 
 .status-verified {
-    background-color: #D1ECF1;
-    color: #0C5460;
-    border: 1px solid #BEE5EB;
+background-color: #D1ECF1;
+color: #0C5460;
+border: 1px solid #BEE5EB;
 }
 
 /* Reservation info cards */
 .reservation-info-card {
-    border: none;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    height: 100%;
+border: none;
+border-radius: 12px;
+overflow: hidden;
+transition: transform 0.3s ease;
+height: 100%;
 }
 
 .reservation-info-card:hover {
-    transform: translateY(-5px);
+transform: translateY(-5px);
 }
 
 .reservation-info-card .card-header {
-    background-color: #F8F5F0;
-    border-bottom: 2px solid #EBD9B4;
-    padding: 1rem 1.25rem;
+background-color: #F8F5F0;
+border-bottom: 2px solid #EBD9B4;
+padding: 1rem 1.25rem;
 }
 
 .reservation-info-card .card-body {
-    padding: 1.25rem;
+padding: 1.25rem;
 }
 
 /* Date display in reservation */
 .date-display {
-    background: linear-gradient(135deg, #F8F5F0 0%, #FFFEF9 100%);
-    border: 2px solid #EBD9B4;
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-    transition: all 0.3s ease;
+background: linear-gradient(135deg, #F8F5F0 0%, #FFFEF9 100%);
+border: 2px solid #EBD9B4;
+border-radius: 10px;
+padding: 1rem;
+text-align: center;
+transition: all 0.3s ease;
 }
 
 .date-display:hover {
-    border-color: #A0522D;
-    transform: scale(1.02);
+border-color: #A0522D;
+transform: scale(1.02);
 }
 
 .date-display .day {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #A0522D;
-    line-height: 1;
+font-size: 2.5rem;
+font-weight: 800;
+color: #A0522D;
+line-height: 1;
 }
 
 .date-display .month {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #8B4513;
-    text-transform: uppercase;
+font-size: 1.1rem;
+font-weight: 600;
+color: #8B4513;
+text-transform: uppercase;
 }
 
 .date-display .weekday {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 0.5rem;
+font-size: 0.9rem;
+color: #666;
+margin-top: 0.5rem;
 }
 
 /* Payment proof upload */
 .upload-area {
-    border: 2px dashed #EBD9B4;
-    border-radius: 12px;
-    padding: 2.5rem;
-    text-align: center;
-    background-color: #FFFEF9;
-    transition: all 0.3s ease;
-    cursor: pointer;
+border: 2px dashed #EBD9B4;
+border-radius: 12px;
+padding: 2.5rem;
+text-align: center;
+background-color: #FFFEF9;
+transition: all 0.3s ease;
+cursor: pointer;
 }
 
 .upload-area:hover {
-    border-color: #A0522D;
-    background-color: #F8F5F0;
+border-color: #A0522D;
+background-color: #F8F5F0;
 }
 
 .upload-area.dragover {
-    border-color: #A0522D;
-    background-color: #F8F5F0;
-    transform: scale(1.02);
+border-color: #A0522D;
+background-color: #F8F5F0;
+transform: scale(1.02);
 }
 
 .upload-area .upload-icon {
-    font-size: 3rem;
-    color: #A0522D;
-    margin-bottom: 1rem;
+font-size: 3rem;
+color: #A0522D;
+margin-bottom: 1rem;
 }
 
 /* Reservation timeline */
 .reservation-timeline {
-    position: relative;
-    padding-left: 2rem;
+position: relative;
+padding-left: 2rem;
 }
 
 .reservation-timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: #EBD9B4;
+content: '';
+position: absolute;
+left: 0;
+top: 0;
+bottom: 0;
+width: 2px;
+background-color: #EBD9B4;
 }
 
 .timeline-item {
-    position: relative;
-    margin-bottom: 2rem;
-    padding-left: 1.5rem;
+position: relative;
+margin-bottom: 2rem;
+padding-left: 1.5rem;
 }
 
 .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -0.5rem;
-    top: 0.5rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    background-color: #A0522D;
-    border: 2px solid white;
-    box-shadow: 0 0 0 3px #EBD9B4;
+content: '';
+position: absolute;
+left: -0.5rem;
+top: 0.5rem;
+width: 1rem;
+height: 1rem;
+border-radius: 50%;
+background-color: #A0522D;
+border: 2px solid white;
+box-shadow: 0 0 0 3px #EBD9B4;
 }
 
 .timeline-item.completed::before {
-    background-color: #28a745;
+background-color: #28a745;
 }
 
 .timeline-item.pending::before {
-    background-color: #ffc107;
+background-color: #ffc107;
 }
 
 /* ============================================================
-   SECTION 5: ANIMATIONS & RESPONSIVE (NEW)
-   ============================================================ */
+SECTION 5: ANIMATIONS & RESPONSIVE
+============================================================ */
 
 /* Animations */
 @keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 @keyframes slideIn {
-    from { 
-        opacity: 0; 
-        transform: translateX(20px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateX(0); 
-    }
+from {
+opacity: 0;
+transform: translateX(20px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+0% {
+transform: scale(1);
+}
+50% {
+transform: scale(1.05);
+}
+100% {
+transform: scale(1);
+}
 }
 
 .animate-fade-in {
-    animation: fadeIn 0.5s ease-out;
+animation: fadeIn 0.5s ease-out;
 }
 
 .animate-slide-in {
-    animation: slideIn 0.3s ease-out;
+animation: slideIn 0.3s ease-out;
 }
 
 .animate-pulse {
-    animation: pulse 2s infinite;
+animation: pulse 2s infinite;
 }
 
 /* Alert notifications */
 .alert-guma {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid;
+border: none;
+border-radius: 10px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+border-left: 4px solid;
 }
 
 .alert-guma-success {
-    background-color: #D4EDDA;
-    border-left-color: #28a745;
-    color: #155724;
+background-color: #D4EDDA;
+border-left-color: #28a745;
+color: #155724;
 }
 
 .alert-guma-warning {
-    background-color: #FFF3CD;
-    border-left-color: #ffc107;
-    color: #856404;
+background-color: #FFF3CD;
+border-left-color: #ffc107;
+color: #856404;
 }
 
 .alert-guma-danger {
-    background-color: #F8D7DA;
-    border-left-color: #dc3545;
-    color: #721C24;
+background-color: #F8D7DA;
+border-left-color: #dc3545;
+color: #721C24;
 }
 
 .alert-guma-info {
-    background-color: #D1ECF1;
-    border-left-color: #17a2b8;
-    color: #0C5460;
+background-color: #D1ECF1;
+border-left-color: #17a2b8;
+color: #0C5460;
 }
 
 /* Loader for reservation process */
 .reservation-loader {
-    display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #A0522D;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+display: inline-block;
+width: 1.5rem;
+height: 1.5rem;
+border: 3px solid #f3f3f3;
+border-top: 3px solid #A0522D;
+border-radius: 50%;
+animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+0% {
+transform: rotate(0deg);
+}
+100% {
+transform: rotate(360deg);
+}
 }
 
-/* Responsive adjustments */
+/* ============================================================
+SECTION 6: NAVBAR AUTH BUTTONS FIX
+============================================================ */
+
+/* Pastikan area tombol di navbar sejajar tengah */
+.navbar .d-flex,
+.navbar .auth-buttons,
+.navbar .navbar-auth,
+.navbar .navbar-nav {
+align-items: center;
+}
+
+/* Fix tombol Masuk dan Daftar agar teks benar-benar center */
+.navbar a[href*="login"],
+.navbar a[href*="register"],
+.navbar .btn-login,
+.navbar .btn-register,
+.navbar .auth-btn-login,
+.navbar .auth-btn-register {
+display: inline-flex !important;
+align-items: center !important;
+justify-content: center !important;
+
+
+height: 48px;
+min-width: 96px;
+padding: 0 26px !important;
+
+line-height: 1 !important;
+text-align: center;
+vertical-align: middle;
+text-decoration: none;
+
+border-radius: 999px;
+font-weight: 600;
+white-space: nowrap;
+
+
+}
+
+/* Jarak antar tombol Masuk dan Daftar */
+.navbar a[href*="login"],
+.navbar .btn-login,
+.navbar .auth-btn-login {
+margin-right: 10px;
+}
+
+/* Supaya icon atau teks di dalam tombol tetap center */
+.navbar a[href*="login"] *,
+.navbar a[href*="register"] *,
+.navbar .btn-login *,
+.navbar .btn-register *,
+.navbar .auth-btn-login *,
+.navbar .auth-btn-register * {
+line-height: 1;
+}
+
+/* ============================================================
+SECTION 7: RESPONSIVE ADJUSTMENTS
+============================================================ */
+
 @media (max-width: 991.98px) {
-    .price-sticky {
-        position: static;
-        margin-top: 2rem;
-    }
-    
-    .reservation-form-card {
-        margin-bottom: 2rem;
-    }
-    
-    .date-display {
-        margin-bottom: 1rem;
-    }
-    
-    .guma-menu-img-square {
-        width: 100px;
-        height: 100px;
-    }
+.price-sticky {
+position: static;
+margin-top: 2rem;
+}
+
+
+.reservation-form-card {
+    margin-bottom: 2rem;
+}
+
+.date-display {
+    margin-bottom: 1rem;
+}
+
+.guma-menu-img-square {
+    width: 100px;
+    height: 100px;
+}
+
+.navbar a[href*="login"],
+.navbar a[href*="register"],
+.navbar .btn-login,
+.navbar .btn-register,
+.navbar .auth-btn-login,
+.navbar .auth-btn-register {
+    height: 44px;
+    min-width: 90px;
+    padding: 0 22px !important;
+    margin-top: 8px;
+}
+
+.navbar a[href*="login"],
+.navbar .btn-login,
+.navbar .auth-btn-login {
+    margin-right: 0;
+}
+
+
 }
 
 @media (max-width: 767.98px) {
-    .section-padding {
-        padding: 50px 0;
-    }
-    
-    .hero-wrapper {
-        min-height: 60vh;
-    }
-    
-    .guma-card {
-        margin-bottom: 1.5rem;
-    }
-    
-    .reservation-info-card {
-        margin-bottom: 1.5rem;
-    }
+.section-padding {
+padding: 50px 0;
+}
+
+
+.hero-wrapper {
+    min-height: 60vh;
+}
+
+.guma-card {
+    margin-bottom: 1.5rem;
+}
+
+.reservation-info-card {
+    margin-bottom: 1.5rem;
+}
+
+
 }
 
 @media (max-width: 575.98px) {
-    .guma-menu-card-wrapper {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .guma-menu-img-box {
-        margin-right: 0;
-        margin-bottom: 1rem;
-    }
-    
-    .upload-area {
-        padding: 1.5rem;
-    }
+.guma-menu-card-wrapper {
+flex-direction: column;
+text-align: center;
 }
 
-/* Print styles for reservation confirmation */
+
+.guma-menu-img-box {
+    margin-right: 0;
+    margin-bottom: 1rem;
+}
+
+.upload-area {
+    padding: 1.5rem;
+}
+
+
+}
+
+/* ============================================================
+SECTION 8: PRINT STYLES
+============================================================ */
+
 @media print {
-    .navbar,
-    .footer,
-    .btn,
-    .no-print {
-        display: none !important;
-    }
-    
-    .reservation-info-card {
-        border: 1px solid #ddd !important;
-        box-shadow: none !important;
-    }
-    
-    .date-display {
-        border: 1px solid #ddd !important;
-    }
+.navbar,
+.footer,
+.btn,
+.no-print {
+display: none !important;
+}
+
+
+.reservation-info-card {
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+}
+
+.date-display {
+    border: 1px solid #ddd !important;
+}
+
+
 }

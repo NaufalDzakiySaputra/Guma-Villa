@@ -32,80 +32,107 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
                             <p class="text-muted mb-1">Harga</p>
+
                             <h3 class="fw-bold text-accent mb-4">
                                 IDR {{ number_format($package->price, 0, ',', '.') }}
                             </h3>
+
                             @auth
-                                {{-- USER SUDAH LOGIN: Langsung ke form reservasi --}}
-                                <form action="{{ route('user.reservation.create') }}" method="GET">
-                                    <div class="mb-3">
-                                        <label class="form-label small fw-bold">
-                                            <i class="fas fa-calendar-alt me-1"></i> Tanggal Keberangkatan *
-                                        </label>
-                                        <input type="date" 
-                                               name="date" 
-                                               class="form-control form-control-sm"
-                                               min="{{ date('Y-m-d') }}"
-                                               value="{{ date('Y-m-d') }}"
-                                               required>
+                                @if(auth()->user()->role === 'admin')
+                                    {{-- ADMIN LOGIN: Tidak boleh melakukan reservasi --}}
+                                    <div class="alert alert-warning small mb-3">
+                                        <i class="fas fa-exclamation-triangle me-1"></i>
+                                        Anda login sebagai admin. Admin tidak dapat melakukan reservasi sebagai pelanggan.
                                     </div>
-                                    
-                                    <div class="mb-4">
-                                        <label class="form-label small fw-bold">
-                                            <i class="fas fa-users me-1"></i> Jumlah Orang *
-                                        </label>
-                                        <input type="number" 
-                                               name="jumlah_orang" 
-                                               class="form-control form-control-sm"
-                                               min="1" 
-                                               value="1"
-                                               required>
-                                    </div>
-                                    
-                                    <input type="hidden" name="package_id" value="{{ $package->id }}">
-                                    
-                                    <button type="submit" class="btn btn-guma w-100 py-3 fw-bold">
-                                        <i class="fas fa-shopping-cart me-2"></i> Pesan Sekarang
-                                    </button>
-                                    <p class="text-center small text-success mt-2 mb-0">
-                                        <i class="fas fa-user-check me-1"></i>
-                                        Anda sudah login, langsung lanjutkan reservasi
+
+                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary w-100 py-3 fw-bold">
+                                        <i class="fas fa-tachometer-alt me-2"></i> Masuk Dashboard Admin
+                                    </a>
+
+                                    <p class="text-center small text-muted mt-2 mb-0">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Gunakan dashboard admin untuk mengelola reservasi pelanggan.
                                     </p>
-                                </form>
+                                @else
+                                    {{-- USER SUDAH LOGIN: Langsung ke form reservasi --}}
+                                    <form action="{{ route('user.reservation.create') }}" method="GET">
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">
+                                                <i class="fas fa-calendar-alt me-1"></i> Tanggal Keberangkatan *
+                                            </label>
+
+                                            <input type="date"
+                                                   name="date"
+                                                   class="form-control form-control-sm"
+                                                   min="{{ date('Y-m-d') }}"
+                                                   value="{{ date('Y-m-d') }}"
+                                                   required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label small fw-bold">
+                                                <i class="fas fa-users me-1"></i> Jumlah Orang *
+                                            </label>
+
+                                            <input type="number"
+                                                   name="jumlah_orang"
+                                                   class="form-control form-control-sm"
+                                                   min="1"
+                                                   value="1"
+                                                   required>
+                                        </div>
+
+                                        <input type="hidden" name="package_id" value="{{ $package->id }}">
+                                        <input type="hidden" name="service_type" value="{{ $package->service_type }}">
+
+                                        <button type="submit" class="btn btn-guma w-100 py-3 fw-bold">
+                                            <i class="fas fa-shopping-cart me-2"></i> Pesan Sekarang
+                                        </button>
+
+                                        <p class="text-center small text-success mt-2 mb-0">
+                                            <i class="fas fa-user-check me-1"></i>
+                                            Anda sudah login, langsung lanjutkan reservasi
+                                        </p>
+                                    </form>
+                                @endif
                             @else
                                 {{-- USER BELUM LOGIN: Simpan dulu, lalu ke login --}}
                                 <form action="{{ route('user.pesan.sekarang') }}" method="POST">
                                     @csrf
+
                                     <div class="mb-3">
                                         <label class="form-label small fw-bold">
                                             <i class="fas fa-calendar-alt me-1"></i> Tanggal Keberangkatan *
                                         </label>
-                                        <input type="date" 
-                                               name="date" 
+
+                                        <input type="date"
+                                               name="date"
                                                class="form-control form-control-sm"
                                                min="{{ date('Y-m-d') }}"
                                                value="{{ date('Y-m-d') }}"
                                                required>
                                     </div>
-                                    
+
                                     <div class="mb-4">
                                         <label class="form-label small fw-bold">
                                             <i class="fas fa-users me-1"></i> Jumlah Orang *
                                         </label>
-                                        <input type="number" 
-                                               name="jumlah_orang" 
+
+                                        <input type="number"
+                                               name="jumlah_orang"
                                                class="form-control form-control-sm"
-                                               min="1" 
+                                               min="1"
                                                value="1"
                                                required>
                                     </div>
-                                    
+
                                     <input type="hidden" name="package_id" value="{{ $package->id }}">
                                     <input type="hidden" name="service_type" value="{{ $package->service_type }}">
-                                    
+
                                     <button type="submit" class="btn btn-guma w-100 py-3 fw-bold">
                                         <i class="fas fa-sign-in-alt me-2"></i> Login untuk Pesan
                                     </button>
+
                                     <p class="text-center small text-muted mt-2 mb-0">
                                         <i class="fas fa-info-circle me-1"></i>
                                         Anda akan diarahkan ke halaman login untuk melanjutkan
