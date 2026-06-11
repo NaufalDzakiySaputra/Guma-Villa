@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
 
-            // user_id dibuat nullable (DEV MODE, belum pakai auth)
             $table->foreignId('user_id')
                   ->nullable()
                   ->constrained()
@@ -20,9 +19,11 @@ return new class extends Migration
             $table->string('nama');
             $table->text('description')->nullable();
             $table->decimal('price', 12, 2);
-            $table->enum('service_type', ['villa', 'wisata', 'nikah', 'mice']);
 
-            // image_path HANYA DI SINI
+            // Batas maksimal jumlah orang untuk paket
+            $table->unsignedInteger('max_people')->default(1);
+
+            $table->enum('service_type', ['villa', 'wisata', 'nikah', 'mice']);
             $table->string('image_path')->nullable();
 
             $table->timestamps();
