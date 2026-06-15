@@ -39,6 +39,7 @@
                     <p><strong>Total Amount:</strong> Rp {{ number_format($reservation->total_amount, 0, ',', '.') }}</p>
                     <p><strong>Metode Bayar:</strong> {{ ucfirst($reservation->payment_method ?? '-') }}</p>
                     <p><strong>Status:</strong> 
+                        
                         @if($reservation->status == 'pending')
                             <span class="badge bg-warning">Pending</span>
                         @elseif($reservation->status == 'approved')

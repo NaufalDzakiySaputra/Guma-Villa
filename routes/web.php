@@ -57,11 +57,13 @@ Route::group(['as' => 'user.'], function () {
     // Public routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/paket-wisata', [HomeController::class, 'paket'])->name('paket');
+    Route::get('/weather-json', [App\Http\Controllers\WeatherController::class, 'getWeather'])->name('weather');
     Route::get('/paket-wisata/{id}', [HomeController::class, 'paketDetail'])->name('paket.detail');
     Route::get('/daftar-menu', [HomeController::class, 'menu'])->name('menu');
     Route::get('/galeri-foto', [HomeController::class, 'galeri'])->name('galeri');
     Route::get('/berita-terbaru', [HomeController::class, 'berita'])->name('berita');
     Route::get('/tentang-kami', [HomeController::class, 'tentang'])->name('about');
+    Route::get('/cuaca', [App\Http\Controllers\WeatherController::class, 'getWeather'])->name('cuaca');
     
     // ROUTE RESERVASI
     // Untuk user BELUM login (simpan session → redirect ke login)
