@@ -10,7 +10,7 @@ class Reservation extends Model
 {
     use HasFactory;
     use ReservationRelation;
-    
+
     protected $fillable = [
         'user_id',
         'nama_lengkap',
@@ -26,13 +26,14 @@ class Reservation extends Model
         'status',
         'notes',
         'payment_status',
-        'payment_method'
+        'payment_method',
     ];
 
     protected $casts = [
         'date' => 'date',
         'checkin_date' => 'date',
         'checkout_date' => 'date',
+        'jumlah_orang' => 'integer',
         'total_amount' => 'decimal:2',
     ];
 }

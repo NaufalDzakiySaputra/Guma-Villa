@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('page-title', 'Tambah Paket Baru')
+
 @section('page-actions')
     <a href="{{ route('admin.packages.index') }}" class="btn btn-outline-secondary">
         <i class="fas fa-arrow-left"></i> Kembali
@@ -14,7 +15,6 @@
             @csrf
             
             <div class="row g-3">
-                <!-- Kolom Kiri -->
                 <div class="col-lg-8">
                     <div class="mb-3">
                         <label class="form-label">Nama Paket *</label>
@@ -23,7 +23,9 @@
                                class="form-control @error('nama') is-invalid @enderror" 
                                value="{{ old('nama') }}"
                                required>
-                        @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        @error('nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     
                     <div class="mb-3">
@@ -31,11 +33,13 @@
                         <textarea name="description" 
                                   class="form-control @error('description') is-invalid @enderror" 
                                   rows="3">{{ old('description') }}</textarea>
-                        @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Harga (Rp) *</label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
@@ -46,10 +50,26 @@
                                        min="0" 
                                        required>
                             </div>
-                            @error('price')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('price')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Maksimal Orang *</label>
+                            <input type="number"
+                                   name="max_people"
+                                   class="form-control @error('max_people') is-invalid @enderror"
+                                   value="{{ old('max_people', 1) }}"
+                                   min="1"
+                                   max="1000"
+                                   required>
+                            @error('max_people')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Jenis Layanan *</label>
                             <select name="service_type" 
                                     class="form-select @error('service_type') is-invalid @enderror" 
@@ -60,12 +80,13 @@
                                 <option value="nikah" {{ old('service_type') == 'nikah' ? 'selected' : '' }}>Perkawinan</option>
                                 <option value="mice" {{ old('service_type') == 'mice' ? 'selected' : '' }}>MICE</option>
                             </select>
-                            @error('service_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('service_type')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
                 
-                <!-- Kolom Kanan -->
                 <div class="col-lg-4">
                     <div class="mb-4">
                         <label class="form-label">Gambar Paket</label>
@@ -74,7 +95,10 @@
                                class="form-control @error('image') is-invalid @enderror" 
                                accept="image/*"
                                onchange="previewImage(this, 'imagePreview')">
-                        @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
                         <div class="form-text small">Format: JPG, PNG. Maks. 2MB</div>
                         
                         <div class="mt-3 border rounded p-3" id="imagePreview">
@@ -84,10 +108,13 @@
                     
                     <div class="card bg-light border-0">
                         <div class="card-body">
-                            <h6 class="card-title small"><i class="fas fa-info-circle me-1"></i> Info</h6>
+                            <h6 class="card-title small">
+                                <i class="fas fa-info-circle me-1"></i> Info
+                            </h6>
                             <ul class="small text-muted mb-0">
                                 <li>Semua data wajib diisi (*)</li>
-                                <li>Harga bisa diupdate kapan saja</li>
+                                <li>Maksimal orang digunakan untuk batas reservasi user</li>
+                                <li>Harga akan dihitung otomatis berdasarkan jumlah orang</li>
                                 <li>Gambar akan ditampilkan di website</li>
                             </ul>
                         </div>
@@ -114,6 +141,7 @@ function previewImage(input, previewId) {
     
     if (file) {
         const reader = new FileReader();
+
         reader.onload = function(e) {
             preview.innerHTML = `
                 <div class="text-center">
@@ -124,6 +152,7 @@ function previewImage(input, previewId) {
                 </div>
             `;
         };
+
         reader.readAsDataURL(file);
     } else {
         preview.innerHTML = '<p class="text-muted small mb-0">Preview gambar</p>';

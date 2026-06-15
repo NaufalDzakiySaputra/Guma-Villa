@@ -16,44 +16,44 @@ class AuthController extends Controller
         if (Auth::check()) {
             return $this->showAlreadyLoggedIn();
         }
-        
+
         return view('auth.login');
     }
-    
+
     public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
+
         if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
             $request->session()->regenerate();
-            
+
             Log::info('User logged in', [
                 'user_id' => Auth::id(),
                 'email' => $request->email,
                 'role' => Auth::user()->role,
                 'ip' => $request->ip()
             ]);
-            
+
             return $this->redirectAfterLogin();
         }
-        
+
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->onlyInput('email');
     }
-    
+
     public function showRegister()
     {
         if (Auth::check()) {
             return $this->showAlreadyLoggedIn();
         }
-        
+
         return view('auth.register');
     }
-    
+
     public function register(Request $request)
     {
         $request->validate([
@@ -61,27 +61,28 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
-        
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'user',
         ]);
-        
+
         Log::info('User registered', [
             'user_id' => $user->id,
             'email' => $user->email,
             'name' => $user->name,
+            'role' => $user->role,
             'ip' => $request->ip()
         ]);
-        
+
         Auth::login($user);
-        
+
         return $this->redirectAfterLogin()
             ->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name . '!');
     }
-    
+
     public function logout(Request $request)
     {
         if (Auth::check()) {
@@ -92,37 +93,59 @@ class AuthController extends Controller
                 'ip' => $request->ip()
             ]);
         }
-        
+
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         return redirect('/')
             ->with('info', 'Anda telah berhasil logout.');
     }
-    
+
     private function showAlreadyLoggedIn()
     {
         return view('auth.already-logged-in', [
             'user' => Auth::user()
         ]);
     }
-    
+
     private function redirectAfterLogin()
     {
         $user = Auth::user();
-        
-        // CEK: Jika ada pending reservation
-        if (Session::has('pending_reservation')) {
-            return redirect()->route('user.reservation.create')
-                ->with('success', 'Login berhasil! Silakan lengkapi data reservasi.');
-        }
-        
+
+        /*
+        |--------------------------------------------------------------------------
+        | Admin Login
+        |--------------------------------------------------------------------------
+        | Admin tidak boleh masuk ke alur reservasi user.
+        | Jika sebelumnya ada session pending_reservation, hapus dulu.
+        */
         if ($user->role === 'admin') {
+            Session::forget('pending_reservation');
+
             return redirect()->route('admin.dashboard')
                 ->with('success', 'Selamat datang kembali, Admin ' . $user->name . '!');
         }
-        
+
+        /*
+        |--------------------------------------------------------------------------
+        | User Login dengan Pending Reservation
+        |--------------------------------------------------------------------------
+        | Pending reservation hanya boleh diproses oleh user biasa.
+        | Contoh kasus: user klik "Pesan Sekarang" sebelum login.
+        */
+        if ($user->role === 'user' && Session::has('pending_reservation')) {
+            return redirect()->route('user.reservation.create')
+                ->with('success', 'Login berhasil! Silakan lengkapi data reservasi.');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | User Login Normal
+        |--------------------------------------------------------------------------
+        | Kalau tidak ada pending reservation, user masuk ke homepage.
+        */
         return redirect()->route('user.home')
             ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
     }

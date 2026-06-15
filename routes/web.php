@@ -14,6 +14,7 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\UserReservationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\PaymentController as UserPaymentController;
+use App\Http\Controllers\WeatherViewController;
 
 // ROUTE AUTH
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -25,7 +26,7 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('user.profile'
 Route::put('/profile/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('user.profile.update');
 
 // ADMIN ROUTES GROUP
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
     Route::post('/users/store-new', [AdminController::class, 'storeUser'])->name('users.store_new');
@@ -52,7 +53,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     });
 });
 
-// ROUTE KHUSUS TAMPILAN USER (FRONTEND
+// ROUTE KHUSUS TAMPILAN USER (FRONTEND)
 Route::group(['as' => 'user.'], function () {
     // Public routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -70,7 +71,7 @@ Route::group(['as' => 'user.'], function () {
     Route::post('/pesan-sekarang', [HomeController::class, 'pesanSekarang'])->name('pesan.sekarang');
     
     // Untuk user SUDAH login (langsung ke form reservasi)
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'user'])->group(function () {
         // Reservasi User
         Route::prefix('reservasi')->name('reservation.')->group(function () {
             Route::get('/', [UserReservationController::class, 'create'])->name('create');
@@ -85,4 +86,16 @@ Route::group(['as' => 'user.'], function () {
             Route::post('/upload/{id}', [UserPaymentController::class, 'storeProof'])->name('store.proof');
         });
     });
+});
+
+// ========== ROUTE WEATHER / CUACA (TAMBAHAN BARU) ==========
+Route::group(['as' => 'weather.', 'prefix' => 'weather'], function () {
+    // Halaman form cek cuaca
+    Route::get('/', [WeatherViewController::class, 'halamanCuaca'])->name('index');
+    
+    // Proses cek cuaca berdasarkan kota (via AJAX / langsung)
+    Route::get('/cek', [WeatherViewController::class, 'cekCuaca'])->name('check');
+    
+    // Tampilkan cuaca untuk kota tertentu di halaman terpisah
+    Route::get('/{city}', [WeatherViewController::class, 'getWeatherView'])->name('show');
 });

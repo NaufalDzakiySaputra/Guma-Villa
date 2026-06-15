@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckAdmin
+class UserMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
@@ -13,8 +13,8 @@ class CheckAdmin
             return redirect()->route('login');
         }
 
-        if (auth()->user()->role !== 'admin') {
-            abort(403, 'Akses ditolak. Halaman ini hanya untuk admin.');
+        if (auth()->user()->role !== 'user') {
+            abort(403, 'Admin tidak dapat melakukan reservasi.');
         }
 
         return $next($request);

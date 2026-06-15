@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('page-title', 'Edit Paket: ' . $package->nama)
+
 @section('page-actions')
     <a href="{{ route('admin.packages.index') }}" class="btn btn-outline-secondary">
         <i class="fas fa-arrow-left"></i> Kembali
@@ -11,18 +12,19 @@
 <div class="card">
     <div class="card-body">
         @if($package->image_path)
-        <div class="text-center mb-4">
-            <p class="text-muted small mb-2">Gambar saat ini:</p>
-            <img src="{{ asset('storage/' . $package->image_path) }}" 
-                 alt="{{ $package->nama }}" 
-                 class="img-fluid rounded" 
-                 style="max-height: 150px;">
-            <p class="text-muted small mt-2">{{ basename($package->image_path) }}</p>
-        </div>
+            <div class="text-center mb-4">
+                <p class="text-muted small mb-2">Gambar saat ini:</p>
+                <img src="{{ asset('storage/' . $package->image_path) }}" 
+                     alt="{{ $package->nama }}" 
+                     class="img-fluid rounded" 
+                     style="max-height: 150px;">
+                <p class="text-muted small mt-2">{{ basename($package->image_path) }}</p>
+            </div>
         @endif
         
         <form action="{{ route('admin.packages.update', $package->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf @method('PUT')
+            @csrf
+            @method('PUT')
             
             <div class="row g-3">
                 <div class="col-lg-8">
@@ -33,7 +35,9 @@
                                class="form-control @error('nama') is-invalid @enderror" 
                                value="{{ old('nama', $package->nama) }}"
                                required>
-                        @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        @error('nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     
                     <div class="mb-3">
@@ -41,11 +45,13 @@
                         <textarea name="description" 
                                   class="form-control @error('description') is-invalid @enderror" 
                                   rows="3">{{ old('description', $package->description) }}</textarea>
-                        @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Harga (Rp) *</label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
@@ -56,10 +62,26 @@
                                        min="0" 
                                        required>
                             </div>
-                            @error('price')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('price')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Maksimal Orang *</label>
+                            <input type="number"
+                                   name="max_people"
+                                   class="form-control @error('max_people') is-invalid @enderror"
+                                   value="{{ old('max_people', $package->max_people ?? 1) }}"
+                                   min="1"
+                                   max="1000"
+                                   required>
+                            @error('max_people')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Jenis Layanan *</label>
                             <select name="service_type" 
                                     class="form-select @error('service_type') is-invalid @enderror" 
@@ -69,7 +91,9 @@
                                 <option value="nikah" {{ old('service_type', $package->service_type) == 'nikah' ? 'selected' : '' }}>Perkawinan</option>
                                 <option value="mice" {{ old('service_type', $package->service_type) == 'mice' ? 'selected' : '' }}>MICE</option>
                             </select>
-                            @error('service_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('service_type')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -82,7 +106,10 @@
                                class="form-control @error('image') is-invalid @enderror" 
                                accept="image/*"
                                onchange="previewImage(this, 'imagePreview')">
-                        @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
                         <div class="form-text small">Kosongkan jika tidak ingin mengubah</div>
                         
                         <div class="mt-3 border rounded p-3" id="imagePreview">
@@ -92,9 +119,12 @@
                     
                     <div class="card bg-light border-0">
                         <div class="card-body">
-                            <h6 class="card-title small"><i class="fas fa-info-circle me-1"></i> Info Paket</h6>
+                            <h6 class="card-title small">
+                                <i class="fas fa-info-circle me-1"></i> Info Paket
+                            </h6>
                             <ul class="small text-muted mb-0">
                                 <li>ID: {{ $package->id }}</li>
+                                <li>Maksimal orang: {{ $package->max_people ?? 1 }}</li>
                                 <li>Dibuat: {{ $package->created_at->format('d/m/Y') }}</li>
                                 <li>Diupdate: {{ $package->updated_at->format('d/m/Y') }}</li>
                             </ul>
@@ -122,6 +152,7 @@ function previewImage(input, previewId) {
     
     if (file) {
         const reader = new FileReader();
+
         reader.onload = function(e) {
             preview.innerHTML = `
                 <div class="text-center">
@@ -132,6 +163,7 @@ function previewImage(input, previewId) {
                 </div>
             `;
         };
+
         reader.readAsDataURL(file);
     } else {
         preview.innerHTML = '<p class="text-muted small mb-0">Preview gambar baru</p>';

@@ -13,14 +13,14 @@ class Payments extends Model
     
     protected $table = 'payments';
 
-    // 🔥 TAMBAHKAN CONSTANTS
+    //ONSTANTS
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';      // Dulu 'success'
     public const STATUS_FAILED = 'failed';
     public const STATUS_VERIFIED = 'verified';
     public const STATUS_EXPIRED = 'expired';
     
-    // 🔥 TAMBAHKAN HELPER METHOD
+    //TAMBAHKAN HELPER METHOD
     public static function getStatuses()
     {
         return [
@@ -51,7 +51,7 @@ class Payments extends Model
         'amount' => 'decimal:2',
     ];
     
-    // 🔥 TAMBAHKAN BOOT METHOD untuk auto sync
+    //TAMBAHKAN BOOT METHOD untuk auto sync
     protected static function booted()
     {
         parent::booted();
